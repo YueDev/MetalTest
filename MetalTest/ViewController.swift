@@ -84,7 +84,6 @@ class ViewController: UIViewController {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
             return
         }
-
         //设置renderEncoder 渲染编码
         //设置pipeline state
         renderEncoder.setRenderPipelineState(pipeLineState)
