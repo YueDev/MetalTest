@@ -2,4 +2,4 @@
 learn metal.
 
 progress:
-1. "hello, metal": draw a traigle.
+1. "hello, metal": draw a triangle.
