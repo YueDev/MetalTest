@@ -29,14 +29,20 @@ class ViewController: UIViewController {
 
     private var commandQueue: MTLCommandQueue? = nil
 
+    
 
+    override func viewDidLayoutSubviews() {
+        metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
+    }
+    
+    
+    
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         view.backgroundColor = .lightGray
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
-        metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
 
         view.layer.addSublayer(metalLayer)
         do {
@@ -45,7 +51,7 @@ class ViewController: UIViewController {
             print(error)
             return
         }
-
+        
         startRender()
     }
 
