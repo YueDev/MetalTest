@@ -1,5 +1,5 @@
 # MetalTest
 learn metal.
 
-progress:
+Completed:
 1. "hello, metal": draw a triangle.
