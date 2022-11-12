@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     private lazy var metalLayer = {
         CAMetalLayer()
     }()
-
+    
     private var vertexBuffer: MTLBuffer? = nil
 
     private var renderPass: MTLRenderPassDescriptor? = nil
@@ -29,12 +29,9 @@ class ViewController: UIViewController {
 
     private var commandQueue: MTLCommandQueue? = nil
 
-    
-
     override func viewDidLayoutSubviews() {
         metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
     }
-    
     
     
     override func viewSafeAreaInsetsDidChange() {
@@ -45,6 +42,7 @@ class ViewController: UIViewController {
         metalLayer.framebufferOnly = true
 
         view.layer.addSublayer(metalLayer)
+        
         do {
             try readyForDraw()
         } catch {
@@ -56,17 +54,24 @@ class ViewController: UIViewController {
     }
 
 
-
+    @MainActor
     private func startRender() {
         //game loop 根据屏幕的刷新来更新画面
         let timer = CADisplayLink(target: self, selector: #selector(gameLoop))
         timer.add(to: RunLoop.main, forMode: .default)
+        
+        //停止自动渲染
+//        Task {
+//            try! await Task.sleep(nanoseconds: 3_000_000_000)
+//        //释放监听。临时暂停可以使用isPause = true  这都需要主线程
+//            timer.remove(from: RunLoop.main, forMode: .default)
+//        }
     }
+    
 
     //渲染 draw call
-
-    func render() {
-
+    private func render() {
+        print("render once")
         guard let pipeLineState = pipeLineState,
               let vertexBuffer = vertexBuffer,
               let renderPass = renderPass
@@ -90,11 +95,13 @@ class ViewController: UIViewController {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
             return
         }
-        //设置renderEncoder 渲染编码
+        //设置renderEncoder 编码渲染的内容
         //设置pipeline state
         renderEncoder.setRenderPipelineState(pipeLineState)
         //发送顶点数据  这个好像没法和opengl一样在渲染之前设置
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+//        //发送片元数据，没找到fragmet从vertex取数据的途径，所以这里把数据传给片元
+//        renderEncoder.setFragmentBuffer(vertexBuffer, offset: 0, index: 0)
         //绘制三角形，1个
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
         //endEncoding 结束渲染编码
@@ -105,11 +112,13 @@ class ViewController: UIViewController {
         commandBuffer.commit()
     }
 
+    
     @objc func gameLoop() {
         autoreleasepool {
             render()
         }
     }
+    
 
     //渲染之前的准备
 
@@ -144,6 +153,7 @@ class ViewController: UIViewController {
         pipeLineDescriptor.vertexFunction = vertexProgram
         pipeLineDescriptor.fragmentFunction = fragmentProgram
         pipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        
 
         pipeLineState = try device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
 
