@@ -8,14 +8,34 @@
 #include <metal_stdlib>
 using namespace metal;
 
-vertex float4 basic_vertex(
-                           const device packed_float3* vertex_array [[ buffer(0) ]],
-                           unsigned int vid [[ vertex_id ]]
-                           ) {
-                               return float4(vertex_array[vid], 1.0);
-                           }
+struct VertexIn {
+    float3 position [[ attribute(0) ]];
+    float4 color1 [[ attribute(1) ]];
+    float4 color2 [[ attribute(2) ]];
+};
+
+struct VertexOut{
+    float4 position [[ position ]];
+    float4 color1;
+    float4 color2;
+};
 
 
-fragment half4 basic_fragment() {
-    return half4(0.8, 0.8, 0.3, 1.0);
+vertex VertexOut basic_vertex
+(
+ VertexIn in [[ stage_in ]]
+ ) {
+    VertexOut out;
+    out.position = float4(in.position, 1.0);
+    out.color1 = in.color1;
+    out.color2 = in.color2;
+    return out;
+}
+
+
+fragment half4 basic_fragment
+(
+ VertexOut in [[ stage_in ]]
+ ){
+    return half4(in.color2);
 }
