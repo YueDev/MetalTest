@@ -42,7 +42,6 @@ class ViewController: UIViewController {
         metalLayer.framebufferOnly = true
 
         view.layer.addSublayer(metalLayer)
-        
         do {
             try readyForDraw()
         } catch {
