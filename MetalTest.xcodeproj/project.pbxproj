@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D4C98E054B54946ABF96344 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */; };
 		8A5456B9291DF81300F47F14 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A5456B8291DF81300F47F14 /* Shader.metal */; };
 		8A978A5E291DDF1500161DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A978A5D291DDF1500161DE3 /* AppDelegate.swift */; };
 		8A978A62291DDF1500161DE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A978A61291DDF1500161DE3 /* ViewController.swift */; };
@@ -14,9 +15,11 @@
 		8A978A72291DE16B00161DE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A978A71291DE16B00161DE3 /* SceneDelegate.swift */; };
 		8AEE55332921D0CF00BB4873 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8AEE55322921D0CF00BB4873 /* RxCocoa */; };
 		8AEE55352921D0CF00BB4873 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8AEE55342921D0CF00BB4873 /* RxSwift */; };
+		8AEE5538292325E100BB4873 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8AEE5537292325E100BB4873 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		8A5456B8291DF81300F47F14 /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		8A978A5A291DDF1500161DE3 /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A978A5D291DDF1500161DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AEE5538292325E100BB4873 /* Kingfisher in Frameworks */,
 				8AEE55352921D0CF00BB4873 /* RxSwift in Frameworks */,
 				8AEE55332921D0CF00BB4873 /* RxCocoa in Frameworks */,
 			);
@@ -64,6 +68,7 @@
 				8A978A66291DDF1800161DE3 /* Assets.xcassets */,
 				8A978A6B291DDF1800161DE3 /* Info.plist */,
 				8A5456B8291DF81300F47F14 /* Shader.metal */,
+				1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */,
 			);
 			path = MetalTest;
 			sourceTree = "<group>";
@@ -87,6 +92,7 @@
 			packageProductDependencies = (
 				8AEE55322921D0CF00BB4873 /* RxCocoa */,
 				8AEE55342921D0CF00BB4873 /* RxSwift */,
+				8AEE5537292325E100BB4873 /* Kingfisher */,
 			);
 			productName = MetalTest;
 			productReference = 8A978A5A291DDF1500161DE3 /* MetalTest.app */;
@@ -118,6 +124,7 @@
 			mainGroup = 8A978A51291DDF1500161DE3;
 			packageReferences = (
 				8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				8AEE5536292325E100BB4873 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 8A978A5B291DDF1500161DE3 /* Products */;
 			projectDirPath = "";
@@ -148,6 +155,7 @@
 				8A978A62291DDF1500161DE3 /* ViewController.swift in Sources */,
 				8A978A5E291DDF1500161DE3 /* AppDelegate.swift in Sources */,
 				8A978A72291DE16B00161DE3 /* SceneDelegate.swift in Sources */,
+				1D4C98E054B54946ABF96344 /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +364,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		8AEE5536292325E100BB4873 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -368,6 +384,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		8AEE5537292325E100BB4873 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AEE5536292325E100BB4873 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

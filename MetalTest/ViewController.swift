@@ -7,6 +7,7 @@
 
 import UIKit
 import Metal
+import MetalKit
 import QuartzCore
 import Foundation
 import RxSwift
@@ -19,9 +20,10 @@ import simd
 //由于用的是MTLVertexDescriptor描述顶点数据，因此不需要定义oc结构给metal做桥接。
 //metal的着色器里有对应的结构 VertexIn
 //需要倒入simd　floatX被遗弃，提示用SIMD<FloatX>代替
-//尽量别用float2 有对齐 float3和float4没有
+//尽量别用float2, 用的话往后放有对齐 float3和float4没有
 struct VertexModel {
-    var position: SIMD3<Float>
+    //坐标和纹理的坐标
+    var positionAndUV: SIMD4<Float>
     var color1: SIMD4<Float>
     var color2: SIMD4<Float>
 }
@@ -46,9 +48,13 @@ class ViewController: UIViewController {
 
     private var commandQueue: MTLCommandQueue? = nil
 
+    private var texture: MTLTexture? = nil
+    private var samplerState: MTLSamplerState? = nil
+
     override func viewDidLayoutSubviews() {
         metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
         metalLayer.setNeedsDisplay()
+
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -117,6 +123,9 @@ class ViewController: UIViewController {
         renderEncoder.setRenderPipelineState(pipeLineState)
         //发送顶点数据  这个好像没法和opengl一样在渲染之前设置
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        //设置纹理和采样器
+        renderEncoder.setFragmentTexture(texture, index: 0)
+        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         //绘制三角形，1个
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
         //endEncoding 结束渲染编码
@@ -129,6 +138,7 @@ class ViewController: UIViewController {
 
 
     //渲染之前的准备
+
     private func readyForDraw() throws {
 
         guard let device = self.device else {
@@ -137,10 +147,10 @@ class ViewController: UIViewController {
 
         //顶点数据
         let vertexData = [
-            VertexModel(position: SIMD3<Float>(-0.5, 0.5, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.7, 0.0, 0.0, 0.0)),
-            VertexModel(position: SIMD3<Float>(-0.5, -0.5, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.7, 0.0, 0.0)),
-            VertexModel(position: SIMD3<Float>(0.5, 0.5, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.7, 0.0)),
-            VertexModel(position: SIMD3<Float>(0.5, -0.5, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(-0.5, 0.5, 0.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.7, 0.0, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(-0.5, -0.5, 0.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.7, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(0.5, 0.5, 1.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.7, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(0.5, -0.5, 1.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.0, 0.0)),
         ]
 
 
@@ -167,17 +177,17 @@ class ViewController: UIViewController {
         //float3 是16个字节 不需要对齐　float4也不需要对齐　
         let vertexDescriptor = MTLVertexDescriptor()
         //VertexModel的第一个数据 position
-        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].format = .float4
         vertexDescriptor.attributes[0].bufferIndex = 0
         vertexDescriptor.attributes[0].offset = 0
         //VertexModel的第二个数据 color1
         vertexDescriptor.attributes[1].format = .float4
         vertexDescriptor.attributes[1].bufferIndex = 0
-        vertexDescriptor.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
+        vertexDescriptor.attributes[1].offset = MemoryLayout<SIMD4<Float>>.size
         //VertexModel的第三个数据 color2
         vertexDescriptor.attributes[2].format = .float4
         vertexDescriptor.attributes[2].bufferIndex = 0
-        vertexDescriptor.attributes[2].offset = MemoryLayout<SIMD3<Float>>.size + MemoryLayout<SIMD4<Float>>.size
+        vertexDescriptor.attributes[2].offset = MemoryLayout<SIMD4<Float>>.size + MemoryLayout<SIMD4<Float>>.size
 
         // 每组数据的步长  这个layout应该和着色器里的buffer(0)一样
         vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0])
@@ -195,6 +205,45 @@ class ViewController: UIViewController {
         renderPass = MTLRenderPassDescriptor()
         renderPass?.colorAttachments[0].loadAction = .clear
         renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
+
+        //生成纹理 采样器
+        texture = ViewController.defaultTextureByAssets(device: device, name: "test2")
+        samplerState = ViewController.defaultSamplerState(device: device)
+    }
+
+
+    private static func defaultTextureByAssets(device: MTLDevice?, name: String) -> MTLTexture? {
+        
+//        guard let image = UIImage.init(named: name)?.centerInside(width: 2000, height:2000),
+//              let device = device
+//        else {
+//            return nil
+//        }
+
+        
+//        return try? loader.newTexture(cgImage: cgImage, options: [.textureUsage:])
+        
+        guard let image = UIImage.init(named: name)?.centerInside(width: 2000, height:2000) else {
+            return nil
+        }
+        return image.toMTLTexture(device: device)
+        
+    }
+
+
+    private static func defaultSamplerState(device: MTLDevice) -> MTLSamplerState? {
+        let samplerDescriptor = MTLSamplerDescriptor()
+        //线性采样 默认是临近采样
+        samplerDescriptor.minFilter = .linear
+        samplerDescriptor.magFilter = .linear
+        //以下的可以不写，默认值就很好
+        //s r t三个坐标的 环绕方式，默认就是clampToEdge
+        samplerDescriptor.sAddressMode = .clampToEdge
+        samplerDescriptor.rAddressMode = .clampToEdge
+        samplerDescriptor.tAddressMode = .clampToEdge
+        //标准化到0 1 默认true
+        samplerDescriptor.normalizedCoordinates = true
+        return device.makeSamplerState(descriptor: samplerDescriptor)
     }
 
 
@@ -223,9 +272,52 @@ class ViewController: UIViewController {
 
 
 //设置代理，刷新的时候用setNeedDisplay即可
+
 extension ViewController: CALayerDelegate {
     public func display(_ layer: CALayer) {
         render()
+    }
+}
+
+
+
+public extension UIImage {
+    
+    func toMTLTexture(device: MTLDevice?) -> MTLTexture? {
+        
+        guard let device = device else {
+            return nil
+        }
+
+        
+        let imageRef = (self.cgImage)!
+        let width = Int(size.width)
+        let height = Int(size.height)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let rawData = calloc(height * width * 4, MemoryLayout<UInt8>.size)
+        let bytesPerPixel: Int = 4
+        let bytesPerRow: Int = bytesPerPixel * width
+        let bitsPerComponent: Int = 8
+        let bitmapContext = CGContext(data: rawData,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: bitsPerComponent,
+                                      bytesPerRow: bytesPerRow,
+                                      space: colorSpace,
+                                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+        bitmapContext?.draw(imageRef, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
+        
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
+                                                                         width: width,
+                                                                         height: height,
+                                                                         mipmapped: false)
+        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        let texture: MTLTexture? = device.makeTexture(descriptor: textureDescriptor)
+        let region: MTLRegion = MTLRegionMake2D(0, 0, width, height)
+        texture?.replace(region: region, mipmapLevel: 0, withBytes: rawData!, bytesPerRow: bytesPerRow)
+        free(rawData)
+        
+        return texture
     }
 }
 
