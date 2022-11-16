@@ -28,6 +28,7 @@ struct VertexModel {
     var color2: SIMD4<Float>
 }
 
+
 class ViewController: UIViewController {
 
     let disposeBag = DisposeBag()
@@ -41,6 +42,7 @@ class ViewController: UIViewController {
     }()
 
     private var vertexBuffer: MTLBuffer? = nil
+    private var fragmentBuffer: MTLBuffer? = nil
 
     private var renderPass: MTLRenderPassDescriptor? = nil
 
@@ -48,9 +50,11 @@ class ViewController: UIViewController {
 
     private var commandQueue: MTLCommandQueue? = nil
 
-    private var texture: MTLTexture? = nil
+    private var texture1: MTLTexture? = nil
+    private var texture2: MTLTexture? = nil
     private var samplerState: MTLSamplerState? = nil
 
+    
     override func viewDidLayoutSubviews() {
         metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
         metalLayer.setNeedsDisplay()
@@ -84,6 +88,7 @@ class ViewController: UIViewController {
 
         do {
             try readyForDraw()
+            startRender()
         } catch {
             print(error)
             return
@@ -97,7 +102,6 @@ class ViewController: UIViewController {
     private func render() {
         print("render once")
         guard let pipeLineState = pipeLineState,
-              let vertexBuffer = vertexBuffer,
               let renderPass = renderPass
         else {
             return
@@ -123,8 +127,11 @@ class ViewController: UIViewController {
         renderEncoder.setRenderPipelineState(pipeLineState)
         //发送顶点数据  这个好像没法和opengl一样在渲染之前设置
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        //发送fragment的uniform， 也是通过buffer实现的
+        renderEncoder.setFragmentBuffer(fragmentBuffer, offset: 0, index: 0)
         //设置纹理和采样器
-        renderEncoder.setFragmentTexture(texture, index: 0)
+        renderEncoder.setFragmentTexture(texture1, index: 0)
+        renderEncoder.setFragmentTexture(texture2, index: 1)
         renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         //绘制三角形，1个
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
@@ -158,6 +165,11 @@ class ViewController: UIViewController {
 
         //生成顶点vertexBuffer
         vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
+
+        //生成fragment buffer 这里和opengl的uniform差不多，给fragment传随时刷新的数据
+        var fragmentData: Float = 0
+        //这里不是数组的话，必须加上&
+        fragmentBuffer = device.makeBuffer(bytes: &fragmentData, length: MemoryLayout.stride(ofValue: fragmentData), options: [])
 
         //生成shader program
         guard let defaultLibrary = device.makeDefaultLibrary() else {
@@ -205,9 +217,9 @@ class ViewController: UIViewController {
         renderPass = MTLRenderPassDescriptor()
         renderPass?.colorAttachments[0].loadAction = .clear
         renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
-
         //生成纹理 采样器
-        texture = ViewController.defaultTextureByAssets(device: device, name: "test2")
+        texture1 = ViewController.defaultTextureByAssets(device: device, name: "test1")
+        texture2 = ViewController.defaultTextureByAssets(device: device, name: "test2")
         samplerState = ViewController.defaultSamplerState(device: device)
     }
 
@@ -265,6 +277,14 @@ class ViewController: UIViewController {
 
     @objc func gameLoop() {
         autoreleasepool {
+            //改变progress
+            guard let fragmentBufferPtr = fragmentBuffer?.contents().bindMemory(to: Float.self, capacity: 1) else {
+                return
+            }
+            //让进度在0 - 1之间渐变
+            let time = CACurrentMediaTime()
+            let progress = (sin(time) + 1.0) / 2.0
+            fragmentBufferPtr.pointee = Float(progress)
             render()
         }
     }
@@ -288,7 +308,6 @@ public extension UIImage {
         guard let device = device else {
             return nil
         }
-
         
         let imageRef = (self.cgImage)!
         let width = Int(size.width)

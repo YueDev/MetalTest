@@ -38,8 +38,11 @@ vertex VertexOut basic_vertex
 fragment float4 basic_fragment
 (
  VertexOut in [[ stage_in ]],
- texture2d<float> texture [[ texture(0) ]],
- sampler sampler [[ sampler(0) ]]
+ texture2d<float> texture1 [[ texture(0) ]],
+ texture2d<float> texture2 [[ texture(1) ]],
+ sampler sampler [[ sampler(0) ]],
+ constant float& progress [[ buffer(0) ]]
  ){
-    return texture.sample(sampler, in.uv);
+    
+    return mix(texture1.sample(sampler, in.uv), texture2.sample(sampler, in.uv), progress);
 }
