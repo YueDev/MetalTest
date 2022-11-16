@@ -12,6 +12,7 @@ import QuartzCore
 import Foundation
 import RxSwift
 import RxCocoa
+import SnapKit
 
 import simd
 
@@ -32,6 +33,10 @@ struct VertexModel {
 class ViewController: UIViewController {
 
     let disposeBag = DisposeBag()
+
+    private lazy var slider = {
+        UISlider()
+    }()
 
     private lazy var device = {
         MTLCreateSystemDefaultDevice()
@@ -56,7 +61,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
@@ -64,22 +68,14 @@ class ViewController: UIViewController {
 
         view.layer.addSublayer(metalLayer)
 
-        let button = UIButton.init(type: .system)
-        button.setTitle("Refresh", for: .normal)
-        button.sizeToFit()
-        button.backgroundColor = .secondarySystemBackground
-        button.frame = button.frame.offsetBy(dx: 50, dy: 50)
+        slider.rx.value.subscribe { [weak self] in
+            self?.updateProgress($0)
+        }.disposed(by: disposeBag)
 
-        button.rx.tap.subscribe { [weak self] event in
-                self?.metalLayer.setNeedsDisplay()
-            }
-            .disposed(by: disposeBag)
-
-        view.addSubview(button)
+        view.addSubview(slider)
 
         do {
             try readyForDraw()
-            startRender()
         } catch {
             print(error)
             return
@@ -88,9 +84,15 @@ class ViewController: UIViewController {
 
 
     override func viewDidLayoutSubviews() {
-        metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
-        metalLayer.setNeedsDisplay()
 
+        slider.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.left.equalTo(view.safeAreaLayoutGuide).offset(32)
+            make.right.equalTo(view.safeAreaLayoutGuide).offset(-32 )
+        }
+
+        metalLayer.frame = view.layer.frame
+        metalLayer.setNeedsDisplay()
     }
 
 
@@ -213,7 +215,7 @@ class ViewController: UIViewController {
         //render pass 可以设置color clear之类的
         renderPass = MTLRenderPassDescriptor()
         renderPass?.colorAttachments[0].loadAction = .clear
-        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
+        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.4, 0.3, 0.5, 1.0)
         //生成纹理 采样器
         texture1 = ViewController.defaultTextureByAssets(device: device, name: "test1")
         texture2 = ViewController.defaultTextureByAssets(device: device, name: "test2")
@@ -222,21 +224,21 @@ class ViewController: UIViewController {
 
 
     private static func defaultTextureByAssets(device: MTLDevice?, name: String) -> MTLTexture? {
-        
+
 //        guard let image = UIImage.init(named: name)?.centerInside(width: 2000, height:2000),
 //              let device = device
 //        else {
 //            return nil
 //        }
 
-        
+
 //        return try? loader.newTexture(cgImage: cgImage, options: [.textureUsage:])
-        
-        guard let image = UIImage.init(named: name)?.centerInside(width: 2000, height:2000) else {
+
+        guard let image = UIImage.init(named: name)?.centerInside(width: 1000, height: 1000) else {
             return nil
         }
         return image.toMTLTexture(device: device)
-        
+
     }
 
 
@@ -253,6 +255,15 @@ class ViewController: UIViewController {
         //标准化到0 1 默认true
         samplerDescriptor.normalizedCoordinates = true
         return device.makeSamplerState(descriptor: samplerDescriptor)
+    }
+
+
+    private func updateProgress(_ value: Float) {
+        guard let fragmentBufferPtr = fragmentBuffer?.contents().bindMemory(to: Float.self, capacity: 1) else {
+            return
+        }
+        fragmentBufferPtr.pointee = value
+        metalLayer.setNeedsDisplay()
     }
 
 
@@ -275,14 +286,7 @@ class ViewController: UIViewController {
     @objc func gameLoop() {
         autoreleasepool {
             //改变progress
-            guard let fragmentBufferPtr = fragmentBuffer?.contents().bindMemory(to: Float.self, capacity: 1) else {
-                return
-            }
-            //让进度在0 - 1之间渐变
-            let time = CACurrentMediaTime()
-            let progress = (sin(time) + 1.0) / 2.0
-            fragmentBufferPtr.pointee = Float(progress)
-            render()
+            metalLayer.setNeedsDisplay()
         }
     }
 }
@@ -297,15 +301,14 @@ extension ViewController: CALayerDelegate {
 }
 
 
-
 public extension UIImage {
-    
+
     func toMTLTexture(device: MTLDevice?) -> MTLTexture? {
-        
+
         guard let device = device else {
             return nil
         }
-        
+
         let imageRef = (self.cgImage)!
         let width = Int(size.width)
         let height = Int(size.height)
@@ -315,24 +318,24 @@ public extension UIImage {
         let bytesPerRow: Int = bytesPerPixel * width
         let bitsPerComponent: Int = 8
         let bitmapContext = CGContext(data: rawData,
-                                      width: width,
-                                      height: height,
-                                      bitsPerComponent: bitsPerComponent,
-                                      bytesPerRow: bytesPerRow,
-                                      space: colorSpace,
-                                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+               width: width,
+               height: height,
+               bitsPerComponent: bitsPerComponent,
+               bytesPerRow: bytesPerRow,
+               space: colorSpace,
+               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
         bitmapContext?.draw(imageRef, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-        
+
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
-                                                                         width: width,
-                                                                         height: height,
-                                                                         mipmapped: false)
+               width: width,
+               height: height,
+               mipmapped: false)
         textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
         let texture: MTLTexture? = device.makeTexture(descriptor: textureDescriptor)
         let region: MTLRegion = MTLRegionMake2D(0, 0, width, height)
         texture?.replace(region: region, mipmapLevel: 0, withBytes: rawData!, bytesPerRow: bytesPerRow)
         free(rawData)
-        
+
         return texture
     }
 }
