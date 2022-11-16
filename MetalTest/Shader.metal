@@ -24,10 +24,11 @@ struct VertexOut{
 
 vertex VertexOut basic_vertex
 (
- VertexIn in [[ stage_in ]]
+ VertexIn in [[ stage_in ]],
+ constant float2& vertexScale [[ buffer(1) ]]
  ) {
     VertexOut out;
-    out.position = float4(in.positionAndUV.xy, 0.0, 1.0);
+    out.position = float4(in.positionAndUV.xy * vertexScale, 0.0, 1.0);
     out.color1 = in.color1;
     out.color2 = in.color2;
     out.uv = in.positionAndUV.zw;

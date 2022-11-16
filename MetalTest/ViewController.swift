@@ -48,6 +48,7 @@ class ViewController: UIViewController {
 
     private var vertexBuffer: MTLBuffer? = nil
     private var fragmentBuffer: MTLBuffer? = nil
+    private var vertexScaleBuffer: MTLBuffer? = nil
 
     private var renderPass: MTLRenderPassDescriptor? = nil
 
@@ -69,8 +70,9 @@ class ViewController: UIViewController {
         view.layer.addSublayer(metalLayer)
 
         slider.rx.value.subscribe { [weak self] in
-            self?.updateProgress($0)
-        }.disposed(by: disposeBag)
+                self?.updateProgress($0)
+            }
+            .disposed(by: disposeBag)
 
         view.addSubview(slider)
 
@@ -86,13 +88,28 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
 
         slider.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(32)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-32 )
+            make.right.equalTo(view.safeAreaLayoutGuide).offset(-32)
         }
 
         metalLayer.frame = view.layer.frame
-        metalLayer.setNeedsDisplay()
+
+        //计算图片的缩放
+        let w = Float(metalLayer.frame.width)
+        let h = Float(metalLayer.frame.height)
+
+        var scaleW: Float = 1.0
+        var scaleH: Float = 1.0
+        //图片比例改了只改这里即可 上边scaleW scaleH不要动
+        let picScale: Float = 1.0 / 1.0
+        if (w / h) > picScale {
+            //窗口比图片宽，图片被拉伸了，要缩放图片的宽
+            scaleW = scaleH * picScale * h / w
+        } else {
+            scaleH = scaleW / picScale * w / h
+        }
+        updateScale(scaleW, scaleH)
     }
 
 
@@ -126,8 +143,11 @@ class ViewController: UIViewController {
         renderEncoder.setRenderPipelineState(pipeLineState)
         //发送顶点数据  这个好像没法和opengl一样在渲染之前设置
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        //发送vertex的uniform
+        renderEncoder.setVertexBuffer(vertexScaleBuffer, offset: 0, index: 1)
         //发送fragment的uniform， 也是通过buffer实现的
         renderEncoder.setFragmentBuffer(fragmentBuffer, offset: 0, index: 0)
+
         //设置纹理和采样器
         renderEncoder.setFragmentTexture(texture1, index: 0)
         renderEncoder.setFragmentTexture(texture2, index: 1)
@@ -153,10 +173,10 @@ class ViewController: UIViewController {
 
         //顶点数据
         let vertexData = [
-            VertexModel(positionAndUV: SIMD4<Float>(-0.5, 0.5, 0.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.7, 0.0, 0.0, 0.0)),
-            VertexModel(positionAndUV: SIMD4<Float>(-0.5, -0.5, 0.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.7, 0.0, 0.0)),
-            VertexModel(positionAndUV: SIMD4<Float>(0.5, 0.5, 1.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.7, 0.0)),
-            VertexModel(positionAndUV: SIMD4<Float>(0.5, -0.5, 1.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(-0.9, 0.9, 0.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.7, 0.0, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(-0.9, -0.9, 0.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.7, 0.0, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(0.9, 0.9, 1.0, 0.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.7, 0.0)),
+            VertexModel(positionAndUV: SIMD4<Float>(0.9, -0.9, 1.0, 1.0), color1: SIMD4<Float>(0.8, 0.8, 0.2, 1.0), color2: SIMD4<Float>(0.0, 0.0, 0.0, 0.0)),
         ]
 
 
@@ -164,6 +184,10 @@ class ViewController: UIViewController {
 
         //生成顶点vertexBuffer
         vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
+
+        //缩放，这里没使用matrix，直接算的图片和layer的比例，传给顶点
+        var vertexScaleData = SIMD2<Float>(1.0, 1.0)
+        vertexScaleBuffer = device.makeBuffer(bytes: &vertexScaleData, length: MemoryLayout.stride(ofValue: vertexScaleData), options: [])
 
         //生成fragment buffer 这里和opengl的uniform差不多，给fragment传随时刷新的数据
         var fragmentData: Float = 0
@@ -215,7 +239,7 @@ class ViewController: UIViewController {
         //render pass 可以设置color clear之类的
         renderPass = MTLRenderPassDescriptor()
         renderPass?.colorAttachments[0].loadAction = .clear
-        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.4, 0.3, 0.5, 1.0)
+        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(0.4, 0.7, 0.4, 1.0)
         //生成纹理 采样器
         texture1 = ViewController.defaultTextureByAssets(device: device, name: "test1")
         texture2 = ViewController.defaultTextureByAssets(device: device, name: "test2")
@@ -234,7 +258,7 @@ class ViewController: UIViewController {
 
 //        return try? loader.newTexture(cgImage: cgImage, options: [.textureUsage:])
 
-        guard let image = UIImage.init(named: name)?.centerInside(width: 1000, height: 1000) else {
+        guard let image = UIImage.init(named: name)?.centerInside(width: 1024, height: 1024) else {
             return nil
         }
         return image.toMTLTexture(device: device)
@@ -257,6 +281,18 @@ class ViewController: UIViewController {
         return device.makeSamplerState(descriptor: samplerDescriptor)
     }
 
+    //更新图片比例
+
+    private func updateScale(_ scaleX: Float, _ scaleY: Float) {
+        guard let vertexBufferPtr = vertexScaleBuffer?.contents().bindMemory(to: SIMD2<Float>.self, capacity: 1) else {
+            return
+        }
+        print("\(scaleX) * \(scaleY)")
+        vertexBufferPtr.pointee = SIMD2<Float>(scaleX, scaleY)
+        metalLayer.setNeedsDisplay()
+    }
+
+    //更新进度
 
     private func updateProgress(_ value: Float) {
         guard let fragmentBufferPtr = fragmentBuffer?.contents().bindMemory(to: Float.self, capacity: 1) else {
@@ -265,7 +301,6 @@ class ViewController: UIViewController {
         fragmentBufferPtr.pointee = value
         metalLayer.setNeedsDisplay()
     }
-
 
     //game loop 根据屏幕的刷新来更新画面
 
