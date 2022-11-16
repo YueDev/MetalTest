@@ -3,6 +3,7 @@ learn metal.
 
 Completed:
 1. "hello metal": draw a triangle.
-2. explain vertex data with MTLVertexDescriptor, and Use struct to pass color from vertex to fragment.
+2. Explain vertex data with MTLVertexDescriptor, and Use struct to pass color from vertex to fragment.
 3. Simply add Texture. 
 4. Simply add Two textures.
+5. Use "constant Type& name [[ buffer(x)]]" to get data from cpu in shader. like uniform in OpenGL.
