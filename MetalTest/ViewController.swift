@@ -54,15 +54,8 @@ class ViewController: UIViewController {
     private var texture2: MTLTexture? = nil
     private var samplerState: MTLSamplerState? = nil
 
-    
-    override func viewDidLayoutSubviews() {
-        metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
-        metalLayer.setNeedsDisplay()
-
-    }
-
-    override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .lightGray
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
@@ -77,14 +70,12 @@ class ViewController: UIViewController {
         button.backgroundColor = .secondarySystemBackground
         button.frame = button.frame.offsetBy(dx: 50, dy: 50)
 
-
         button.rx.tap.subscribe { [weak self] event in
                 self?.metalLayer.setNeedsDisplay()
             }
             .disposed(by: disposeBag)
 
         view.addSubview(button)
-
 
         do {
             try readyForDraw()
@@ -93,6 +84,12 @@ class ViewController: UIViewController {
             print(error)
             return
         }
+    }
+
+
+    override func viewDidLayoutSubviews() {
+        metalLayer.frame = view.layer.frame.inset(by: view.safeAreaInsets)
+        metalLayer.setNeedsDisplay()
 
     }
 
