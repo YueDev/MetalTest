@@ -22,7 +22,7 @@ struct VertexOut{
 };
 
 
-vertex VertexOut basic_vertex
+vertex VertexOut simple_vertex
 (
  VertexIn in [[ stage_in ]],
  constant float2& vertexScale [[ buffer(1) ]]
@@ -36,7 +36,7 @@ vertex VertexOut basic_vertex
 }
 
 
-fragment float4 basic_fragment
+fragment float4 simple_fragment_mix
 (
  VertexOut in [[ stage_in ]],
  texture2d<float> texture1 [[ texture(0) ]],
@@ -46,4 +46,19 @@ fragment float4 basic_fragment
  ){
     
     return mix(texture1.sample(sampler, in.uv), texture2.sample(sampler, in.uv), progress);
+}
+
+
+
+fragment float4 simple_fragment_slide
+(
+ VertexOut in [[ stage_in ]],
+ texture2d<float> texture1 [[ texture(0) ]],
+ texture2d<float> texture2 [[ texture(1) ]],
+ sampler sampler [[ sampler(0) ]],
+ constant float& progress [[ buffer(0) ]]
+ ){
+    float2 p = in.uv + progress;
+    float2 f = fract(p);
+    return texture1.sample(sampler, f);
 }

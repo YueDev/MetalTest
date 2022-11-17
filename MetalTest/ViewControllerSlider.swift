@@ -16,21 +16,8 @@ import SnapKit
 
 import simd
 
-//顶点的结构
 
-//由于用的是MTLVertexDescriptor描述顶点数据，因此不需要定义oc结构给metal做桥接。
-//metal的着色器里有对应的结构 VertexIn
-//需要倒入simd　floatX被遗弃，提示用SIMD<FloatX>代替
-//尽量别用float2, 用的话往后放有对齐 float3和float4没有
-struct VertexModel {
-    //坐标和纹理的坐标
-    var positionAndUV: SIMD4<Float>
-    var color1: SIMD4<Float>
-    var color2: SIMD4<Float>
-}
-
-
-class ViewController: UIViewController {
+class ViewControllerSlider: UIViewController {
 
     let disposeBag = DisposeBag()
 
@@ -200,7 +187,7 @@ class ViewController: UIViewController {
         }
 
         let vertexProgram = defaultLibrary.makeFunction(name: "simple_vertex")
-        let fragmentProgram = defaultLibrary.makeFunction(name: "simple_fragment_mix")
+        let fragmentProgram = defaultLibrary.makeFunction(name: "simple_fragment_slide")
 
         //设置pipeLineDescriptor
         let pipeLineDescriptor = MTLRenderPipelineDescriptor()
@@ -294,99 +281,12 @@ class ViewController: UIViewController {
     }
 }
 
+
 //设置代理，刷新的时候用setNeedDisplay即可
 
-extension ViewController: CALayerDelegate {
+extension ViewControllerSlider: CALayerDelegate {
     public func display(_ layer: CALayer) {
         render()
-    }
-}
-
-
-
-
-
-
-
-
-
-
-//纹理相关方法
-extension ViewController {
-
-    public static func defaultTextureByAssets(device: MTLDevice?, name: String) -> MTLTexture? {
-
-//        guard let image = UIImage.init(named: name)?.centerInside(width: 2000, height:2000),
-//              let device = device
-//        else {
-//            return nil
-//        }
-
-
-//        return try? loader.newTexture(cgImage: cgImage, options: [.textureUsage:])
-
-        guard let image = UIImage.init(named: name)?.centerInside(width: 1024, height: 1024) else {
-            return nil
-        }
-        return image.toMTLTexture(device: device)
-
-    }
-
-
-    public static func defaultSamplerState(device: MTLDevice) -> MTLSamplerState? {
-        let samplerDescriptor = MTLSamplerDescriptor()
-        //线性采样 默认是临近采样
-        samplerDescriptor.minFilter = .linear
-        samplerDescriptor.magFilter = .linear
-        //以下的可以不写，默认值就很好
-        //s r t三个坐标的 环绕方式，默认就是clampToEdge
-        samplerDescriptor.sAddressMode = .clampToEdge
-        samplerDescriptor.rAddressMode = .clampToEdge
-        samplerDescriptor.tAddressMode = .clampToEdge
-        //标准化到0 1 默认true
-        samplerDescriptor.normalizedCoordinates = true
-        return device.makeSamplerState(descriptor: samplerDescriptor)
-    }
-}
-
-
-
-public extension UIImage {
-
-    func toMTLTexture(device: MTLDevice?) -> MTLTexture? {
-
-        guard let device = device else {
-            return nil
-        }
-
-        let imageRef = (self.cgImage)!
-        let width = Int(size.width)
-        let height = Int(size.height)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let rawData = calloc(height * width * 4, MemoryLayout<UInt8>.size)
-        let bytesPerPixel: Int = 4
-        let bytesPerRow: Int = bytesPerPixel * width
-        let bitsPerComponent: Int = 8
-        let bitmapContext = CGContext(data: rawData,
-               width: width,
-               height: height,
-               bitsPerComponent: bitsPerComponent,
-               bytesPerRow: bytesPerRow,
-               space: colorSpace,
-               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
-        bitmapContext?.draw(imageRef, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
-               width: width,
-               height: height,
-               mipmapped: false)
-        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
-        let texture: MTLTexture? = device.makeTexture(descriptor: textureDescriptor)
-        let region: MTLRegion = MTLRegionMake2D(0, 0, width, height)
-        texture?.replace(region: region, mipmapLevel: 0, withBytes: rawData!, bytesPerRow: bytesPerRow)
-        free(rawData)
-
-        return texture
     }
 }
 

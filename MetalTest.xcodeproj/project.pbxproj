@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D4C98E054B54946ABF96344 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */; };
-		8A5456B9291DF81300F47F14 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A5456B8291DF81300F47F14 /* Shader.metal */; };
+		8A392A1D2925D62A0028123A /* ViewControllerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A392A1C2925D6290028123A /* ViewControllerSlider.swift */; };
+		8A5456B9291DF81300F47F14 /* SimpleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A5456B8291DF81300F47F14 /* SimpleShader.metal */; };
 		8A978A5E291DDF1500161DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A978A5D291DDF1500161DE3 /* AppDelegate.swift */; };
 		8A978A62291DDF1500161DE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A978A61291DDF1500161DE3 /* ViewController.swift */; };
 		8A978A67291DDF1800161DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A978A66291DDF1800161DE3 /* Assets.xcassets */; };
@@ -20,7 +21,8 @@
 
 /* Begin PBXFileReference section */
 		1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
-		8A5456B8291DF81300F47F14 /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
+		8A392A1C2925D6290028123A /* ViewControllerSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSlider.swift; sourceTree = "<group>"; };
+		8A5456B8291DF81300F47F14 /* SimpleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShader.metal; sourceTree = "<group>"; };
 		8A978A5A291DDF1500161DE3 /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A978A5D291DDF1500161DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A978A61291DDF1500161DE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A392A1B2925CC3A0028123A /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				8A5456B8291DF81300F47F14 /* SimpleShader.metal */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
 		8A978A51291DDF1500161DE3 = {
 			isa = PBXGroup;
 			children = (
@@ -62,12 +72,13 @@
 		8A978A5C291DDF1500161DE3 /* MetalTest */ = {
 			isa = PBXGroup;
 			children = (
+				8A392A1B2925CC3A0028123A /* Shader */,
 				8A978A71291DE16B00161DE3 /* SceneDelegate.swift */,
+				8A392A1C2925D6290028123A /* ViewControllerSlider.swift */,
 				8A978A5D291DDF1500161DE3 /* AppDelegate.swift */,
 				8A978A61291DDF1500161DE3 /* ViewController.swift */,
 				8A978A66291DDF1800161DE3 /* Assets.xcassets */,
 				8A978A6B291DDF1800161DE3 /* Info.plist */,
-				8A5456B8291DF81300F47F14 /* Shader.metal */,
 				1D4C9DEC99830D424D4E9D16 /* UIImageExtension.swift */,
 			);
 			path = MetalTest;
@@ -151,7 +162,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A5456B9291DF81300F47F14 /* Shader.metal in Sources */,
+				8A5456B9291DF81300F47F14 /* SimpleShader.metal in Sources */,
+				8A392A1D2925D62A0028123A /* ViewControllerSlider.swift in Sources */,
 				8A978A62291DDF1500161DE3 /* ViewController.swift in Sources */,
 				8A978A5E291DDF1500161DE3 /* AppDelegate.swift in Sources */,
 				8A978A72291DE16B00161DE3 /* SceneDelegate.swift in Sources */,
