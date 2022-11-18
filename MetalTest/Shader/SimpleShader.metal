@@ -53,12 +53,12 @@ fragment float4 simple_fragment_slide_left
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float2 f = fract(uv + float2(progress, 0.0));
-
+    
     float4 out1 = texture1.sample(sampler, f);
     float4 out2 = texture2.sample(sampler, f);
-
+    
     return mix(out1, out2, step(1.0 - uv.x, progress));
 }
 
@@ -72,12 +72,12 @@ fragment float4 simple_fragment_slide_right
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float2 f = fract(uv - float2(progress, 0.0));
-
+    
     float4 out1 = texture1.sample(sampler, f);
     float4 out2 = texture2.sample(sampler, f);
-
+    
     return mix(out1, out2, step(uv.x, progress));
 }
 
@@ -91,12 +91,12 @@ fragment float4 simple_fragment_slide_up
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float2 f = fract(uv + float2(0.0, progress));
-
+    
     float4 out1 = texture1.sample(sampler, f);
     float4 out2 = texture2.sample(sampler, f);
-
+    
     return mix(out1, out2, step(1.0 - uv.y, progress));
 }
 
@@ -110,12 +110,12 @@ fragment float4 simple_fragment_slide_down
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float2 f = fract(uv - float2(0.0, progress));
-
+    
     float4 out1 = texture1.sample(sampler, f);
     float4 out2 = texture2.sample(sampler, f);
-
+    
     return mix(out1, out2, step(uv.y, progress));
 }
 
@@ -129,10 +129,10 @@ fragment float4 simple_fragment_cover_left
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float4 out1 = texture1.sample(sampler, uv);
     float4 out2 = texture2.sample(sampler, uv);
-
+    
     return mix(out1, out2, step(uv.x, progress));
 }
 
@@ -145,10 +145,10 @@ fragment float4 simple_fragment_cover_right
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float4 out1 = texture1.sample(sampler, uv);
     float4 out2 = texture2.sample(sampler, uv);
-
+    
     return mix(out1, out2, step(1.0 - uv.x, progress));
 }
 
@@ -161,10 +161,10 @@ fragment float4 simple_fragment_cover_up
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float4 out1 = texture1.sample(sampler, uv);
     float4 out2 = texture2.sample(sampler, uv);
-
+    
     return mix(out1, out2, step(1.0 - uv.y, progress));
 }
 
@@ -177,9 +177,49 @@ fragment float4 simple_fragment_cover_down
  constant float& progress [[ buffer(0) ]]
  ){
     float2 uv = in.uv;
-
+    
     float4 out1 = texture1.sample(sampler, uv);
     float4 out2 = texture2.sample(sampler, uv);
-
+    
     return mix(out1, out2, step(uv.y, progress));
 }
+
+//=======================心形===================================
+
+float inHeart (float2 p, float2 center, float size, float ratio) {
+        if (size==0.0) return 0.0;
+        p.y=1.-p.y;
+
+        float2 change=(p-center)*0.9;
+        if(ratio>1.0){
+            change.y=change.y/ratio;
+        }else{
+            change.x=change.x*ratio;
+        }
+        p=center+change;
+    
+        float showmax=1.6;
+        float2 o = (p-center)/(showmax*size);
+        float a = o.x*o.x+o.y*o.y-0.3;
+        return step(a*a*a, o.x*o.x*o.y*o.y*o.y);
+
+}
+
+fragment float4 simple_fragment_heart_out
+(
+ VertexOut in [[ stage_in ]],
+ texture2d<float> texture1 [[ texture(0) ]],
+ texture2d<float> texture2 [[ texture(1) ]],
+ sampler sampler [[ sampler(0) ]],
+ constant float& progress [[ buffer(0) ]],
+ constant float& ratio [[ buffer(1) ]]
+ ) {
+    float2 uv = in.uv;
+    
+    float4 texColor1 = texture1.sample(sampler, uv);
+    float4 texColor2 = texture2.sample(sampler, uv);
+    
+    return mix(texColor1,texColor2,inHeart(uv, float2(0.5, 0.45), progress, ratio));
+}
+
+//==================================================================================

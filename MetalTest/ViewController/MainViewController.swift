@@ -19,11 +19,12 @@ class MainViewController: UIViewController {
             ("向右覆盖", "simple_vertex", "simple_fragment_cover_right"),
             ("向上覆盖", "simple_vertex", "simple_fragment_cover_up"),
             ("向下覆盖", "simple_vertex", "simple_fragment_cover_down"),
+            ("心形", "simple_vertex", "simple_fragment_heart_out"),
         ],
     ]
 
     private let headData = [
-        "简单",
+        "基础",
     ]
 
     private let cellReuseIdentifier = "SwiftCell";
@@ -37,11 +38,10 @@ class MainViewController: UIViewController {
         tableView.backgroundColor = .lightGray
         tableView.delegate = self
         tableView.dataSource = self
-
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-
         view.addSubview(tableView)
     }
+    
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -64,11 +64,13 @@ extension MainViewController: UITableViewDataSource {
 
 
     //每一组的cell数量
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         allData[section].count
     }
 
     //cell的视图
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         //cell尾部的指示图标
