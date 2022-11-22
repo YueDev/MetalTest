@@ -10,27 +10,40 @@ class MainViewController: UIViewController {
     private let allData = [
         //简单组
         [
-            ("渐变", "simple_vertex", "simple_fragment_mix"),
-            ("向左滑动", "simple_vertex", "simple_fragment_slide_left"),
-            ("向右滑动", "simple_vertex", "simple_fragment_slide_right"),
-            ("向上滑动", "simple_vertex", "simple_fragment_slide_up"),
-            ("向下滑动", "simple_vertex", "simple_fragment_slide_down"),
-            ("向左覆盖", "simple_vertex", "simple_fragment_cover_left"),
-            ("向右覆盖", "simple_vertex", "simple_fragment_cover_right"),
-            ("向上覆盖", "simple_vertex", "simple_fragment_cover_up"),
-            ("向下覆盖", "simple_vertex", "simple_fragment_cover_down"),
-            ("心形", "simple_vertex", "simple_fragment_heart_out"),
+            ("渐变", "TransitionSimple::simple_mix_kernel"),
+            ("向左滑动", "TransitionSimple::simple_slide_left_kernel"),
+            ("向右滑动", "TransitionSimple::simple_slide_right_kernel"),
+            ("向上滑动", "TransitionSimple::simple_slide_up_kernel"),
+            ("向下滑动", "TransitionSimple::simple_slide_down_kernel"),
+            ("向左覆盖", "TransitionSimple::simple_cover_left_kernel"),
+            ("向右覆盖", "TransitionSimple::simple_cover_right_kernel"),
+            ("向上覆盖", "TransitionSimple::simple_cover_up_kernel"),
+            ("向下覆盖", "TransitionSimple::simple_cover_down_kernel"),
+            ("心形", "TransitionSimple::simple_heart_out_kernel"),
+            ("圆形", "TransitionSimple::simple_circle_out_kernel"),
+            ("放大缩小", "TransitionSimple::simple_zoom_out_in_kernel"),
+        ],
+        [
+            ("遮罩1", "TransitionMark01::mark_01"),
+            ("遮罩2", "TransitionMark02::mark_02"),
+            ("遮罩3", "TransitionMark03::mark_03"),
+            ("遮罩4", "TransitionMark04::mark_04"),
+            ("遮罩5", "TransitionMark05::mark_05"),
+            ("遮罩6", "TransitionMark06::mark_06"),
+            ("遮罩7", "TransitionMark07::mark_07"),
+            ("遮罩8", "TransitionMark08::mark_08"),
         ],
     ]
 
     private let headData = [
         "基础",
+        "遮罩",
     ]
 
     private let cellReuseIdentifier = "SwiftCell";
 
     private lazy var tableView = {
-        UITableView.init(frame: .zero, style: .grouped)
+        UITableView.init(frame: .zero, style: .insetGrouped)
     }()
 
     override func viewDidLoad() {
@@ -53,24 +66,24 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource {
 
-    //分组数量
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        headData.count
-    }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        headData[section]
-    }
+    //分组 需要分组打开
+//    public func numberOfSections(in tableView: UITableView) -> Int {
+//        1
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        headData[section]
+//    }
 
 
     //每一组的cell数量
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        allData[section].count
+        headData.count
     }
 
     //cell的视图
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         //cell尾部的指示图标
@@ -78,18 +91,20 @@ extension MainViewController: UITableViewDataSource {
         cell.backgroundColor = .lightGray
         cell.selectionStyle = .none
 
-        cell.textLabel?.text = allData[indexPath.section][indexPath.row].0
+        cell.textLabel?.text = headData[indexPath.row]
         return cell
     }
 }
 
 extension MainViewController: UITableViewDelegate {
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //选中cell
-        let vertex = allData[indexPath.section][indexPath.row].1
-        let fragment = allData[indexPath.section][indexPath.row].2
-        let vc = MetalViewController()
-        vc.setShaderName(vertex, fragment)
+        let data = allData[indexPath.row]
+        let group = headData[indexPath.row]
+
+        let vc = ListViewController()
+        vc.setData(title: group, data: data)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

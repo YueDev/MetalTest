@@ -16,6 +16,25 @@ import SnapKit
 
 import simd
 
+//最早的渲染vc 后来改成计算函数生成纹理，这个暂时不用了　
+//     如果用的话 把首页的数改成这个
+//    private let allData = [
+//        //简单组
+//        [
+//            ("渐变", "simple_vertex", "simple_fragment_mix"),
+//            ("向左滑动", "simple_vertex", "simple_fragment_slide_left"),
+//            ("向右滑动", "simple_vertex", "simple_fragment_slide_right"),
+//            ("向上滑动", "simple_vertex", "simple_fragment_slide_up"),
+//            ("向下滑动", "simple_vertex", "simple_fragment_slide_down"),
+//            ("向左覆盖", "simple_vertex", "simple_fragment_cover_left"),
+//            ("向右覆盖", "simple_vertex", "simple_fragment_cover_right"),
+//            ("向上覆盖", "simple_vertex", "simple_fragment_cover_up"),
+//            ("向下覆盖", "simple_vertex", "simple_fragment_cover_down"),
+//            ("心形", "simple_vertex", "simple_fragment_heart_out"),
+//        ],
+//    ]
+
+
 //顶点的结构
 
 //由于用的是MTLVertexDescriptor描述顶点数据，因此不需要定义oc结构给metal做桥接。
@@ -26,17 +45,9 @@ import simd
 
 class MetalViewController: UIViewController {
 
-    var animator: CADisplayLink? = nil
 
-    let colors = [
-        (0.2, 0.3, 0.4, 1.0),
-        (0.5, 0.5, 0.3, 1.0),
-        (0.6, 0.3, 0.6, 1.0),
-        (0.3, 0.7, 0.5, 1.0),
-        (0.4, 0.5, 0.2, 1.0),
-        (0.6, 0.2, 0.1, 1.0),
-        (0.5, 0.7, 0.3, 1.0),
-    ]
+
+    var animator: CADisplayLink? = nil
 
     private var vertexShaderName = "simple_vertex"
     private var fragmentShaderName = "simple_fragment_mix"
@@ -69,7 +80,6 @@ class MetalViewController: UIViewController {
     
     //图片的比例 fragment用
     private var ratioBuffer: MTLBuffer? = nil
-
 
 
     private var renderPass: MTLRenderPassDescriptor? = nil
@@ -116,7 +126,7 @@ class MetalViewController: UIViewController {
         view.addSubview(playButton)
 
         do {
-            try readyForDraw()
+            try readyForRender()
         } catch {
             print(error)
             return
@@ -160,6 +170,90 @@ class MetalViewController: UIViewController {
         updateRatio(picScale)
     }
 
+
+    //渲染之前的准备
+
+    private func readyForRender() throws {
+
+        guard let device = self.device else {
+            return
+        }
+
+        //顶点数据
+        let vertexData = [
+            SIMD4<Float>(-0.9, 0.9, 0.0, 0.0),
+            SIMD4<Float>(-0.9, -0.9, 0.0, 1.0),
+            SIMD4<Float>(0.9, 0.9, 1.0, 0.0),
+            SIMD4<Float>(0.9, -0.9, 1.0, 1.0),
+        ]
+
+
+        let dataSize = MemoryLayout.stride(ofValue: vertexData[0]) * vertexData.count
+
+        //生成顶点vertexBuffer
+        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
+
+        //缩放，这里没使用matrix，直接算的图片和layer的比例，传给顶点
+        var vertexScaleData = SIMD2<Float>(1.0, 1.0)
+        scaleBuffer = device.makeBuffer(bytes: &vertexScaleData, length: MemoryLayout.stride(ofValue: vertexScaleData), options: [])
+
+
+
+        //生成fragment buffer 这里和opengl的uniform差不多，给fragment传随时刷新的数据
+        var fragmentData: Float = 0
+        //这里不是数组的话，必须加上&
+        fragmentBuffer = device.makeBuffer(bytes: &fragmentData, length: MemoryLayout.stride(ofValue: fragmentData), options: [])
+
+        var ratio = vertexScaleData.x / vertexScaleData.y
+        ratioBuffer = device.makeBuffer(bytes: &ratio, length: MemoryLayout.stride(ofValue: ratio), options: [])
+
+
+        //生成shader program
+        guard let defaultLibrary = device.makeDefaultLibrary() else {
+            return
+        }
+
+        let vertexProgram = defaultLibrary.makeFunction(name: vertexShaderName)
+        let fragmentProgram = defaultLibrary.makeFunction(name: fragmentShaderName)
+
+        //设置pipeLineDescriptor
+        let pipeLineDescriptor = MTLRenderPipelineDescriptor()
+        pipeLineDescriptor.vertexFunction = vertexProgram
+        pipeLineDescriptor.fragmentFunction = fragmentProgram
+
+        //用MTLVertexDescriptor来描述顶点数据 有点类似OPENGL的描述buffer的方法
+        //尽量别用float2  float2 需要8个字节来对其，所以需要size+alignment
+        //float3 是16个字节 不需要对齐　float4也不需要对齐　
+        let vertexDescriptor = MTLVertexDescriptor()
+        //VertexModel的第一个数据 position
+        vertexDescriptor.attributes[0].format = .float4
+        vertexDescriptor.attributes[0].bufferIndex = 0
+        vertexDescriptor.attributes[0].offset = 0
+
+        // 每组数据的步长  这个layout应该和着色器里的buffer(0)一样
+        vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0])
+
+        pipeLineDescriptor.vertexDescriptor = vertexDescriptor
+
+        pipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+
+        pipeLineState = try device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
+
+        //生成命令队列 和 命令buffer
+        commandQueue = device.makeCommandQueue()
+
+        //render pass 可以设置color clear之类的
+        renderPass = MTLRenderPassDescriptor()
+        renderPass?.colorAttachments[0].loadAction = .clear
+
+        let bgColor = TextureManager.getRandomBgColor()
+
+        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(bgColor.0, bgColor.1, bgColor.2, bgColor.3)
+        //生成纹理 采样器
+        texture1 = TextureManager.defaultTextureByAssets(device: device, name: "test1")
+        texture2 = TextureManager.defaultTextureByAssets(device: device, name: "test2")
+        samplerState = TextureManager.defaultSamplerState(device: device)
+    }
 
     //渲染 draw call
 
@@ -211,91 +305,6 @@ class MetalViewController: UIViewController {
         commandBuffer.commit()
     }
 
-
-    //渲染之前的准备
-
-    private func readyForDraw() throws {
-
-        guard let device = self.device else {
-            return
-        }
-
-        //顶点数据
-        let vertexData = [
-            SIMD4<Float>(-0.9, 0.9, 0.0, 0.0),
-            SIMD4<Float>(-0.9, -0.9, 0.0, 1.0),
-            SIMD4<Float>(0.9, 0.9, 1.0, 0.0),
-            SIMD4<Float>(0.9, -0.9, 1.0, 1.0),
-        ]
-
-
-        let dataSize = MemoryLayout.stride(ofValue: vertexData[0]) * vertexData.count
-
-        //生成顶点vertexBuffer
-        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
-
-        //缩放，这里没使用matrix，直接算的图片和layer的比例，传给顶点
-        var vertexScaleData = SIMD2<Float>(1.0, 1.0)
-        scaleBuffer = device.makeBuffer(bytes: &vertexScaleData, length: MemoryLayout.stride(ofValue: vertexScaleData), options: [])
-        
-        
-
-        //生成fragment buffer 这里和opengl的uniform差不多，给fragment传随时刷新的数据
-        var fragmentData: Float = 0
-        //这里不是数组的话，必须加上&
-        fragmentBuffer = device.makeBuffer(bytes: &fragmentData, length: MemoryLayout.stride(ofValue: fragmentData), options: [])
-
-        var ratio = vertexScaleData.x / vertexScaleData.y
-        ratioBuffer = device.makeBuffer(bytes: &ratio, length: MemoryLayout.stride(ofValue: ratio), options: [])
-
-        
-        //生成shader program
-        guard let defaultLibrary = device.makeDefaultLibrary() else {
-            return
-        }
-
-        let vertexProgram = defaultLibrary.makeFunction(name: vertexShaderName)
-        let fragmentProgram = defaultLibrary.makeFunction(name: fragmentShaderName)
-
-        //设置pipeLineDescriptor
-        let pipeLineDescriptor = MTLRenderPipelineDescriptor()
-        pipeLineDescriptor.vertexFunction = vertexProgram
-        pipeLineDescriptor.fragmentFunction = fragmentProgram
-
-        //用MTLVertexDescriptor来描述顶点数据 有点类似OPENGL的描述buffer的方法
-        //尽量别用float2  float2 需要8个字节来对其，所以需要size+alignment
-        //float3 是16个字节 不需要对齐　float4也不需要对齐　
-        let vertexDescriptor = MTLVertexDescriptor()
-        //VertexModel的第一个数据 position
-        vertexDescriptor.attributes[0].format = .float4
-        vertexDescriptor.attributes[0].bufferIndex = 0
-        vertexDescriptor.attributes[0].offset = 0
-
-        // 每组数据的步长  这个layout应该和着色器里的buffer(0)一样
-        vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0])
-
-        pipeLineDescriptor.vertexDescriptor = vertexDescriptor
-
-        pipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-
-        pipeLineState = try device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
-
-        //生成命令队列 和 命令buffer
-        commandQueue = device.makeCommandQueue()
-
-        //render pass 可以设置color clear之类的
-        renderPass = MTLRenderPassDescriptor()
-        renderPass?.colorAttachments[0].loadAction = .clear
-
-        let index = Int.random(in: 0...colors.count - 1)
-        let bgColor = colors[index]
-
-        renderPass?.colorAttachments[0].clearColor = MTLClearColorMake(bgColor.0, bgColor.1, bgColor.2, bgColor.3)
-        //生成纹理 采样器
-        texture1 = MetalViewController.defaultTextureByAssets(device: device, name: "test1")
-        texture2 = MetalViewController.defaultTextureByAssets(device: device, name: "test2")
-        samplerState = MetalViewController.defaultSamplerState(device: device)
-    }
 
 
     //更新顶点的缩放
@@ -358,7 +367,6 @@ class MetalViewController: UIViewController {
         }
     }
 
-
 }
 
 //设置代理，刷新的时候用setNeedDisplay即可
@@ -366,77 +374,6 @@ class MetalViewController: UIViewController {
 extension MetalViewController: CALayerDelegate {
     public func display(_ layer: CALayer) {
         render()
-    }
-}
-
-
-//纹理相关方法
-
-extension MetalViewController {
-
-    public static func defaultTextureByAssets(device: MTLDevice?, name: String) -> MTLTexture? {
-
-        guard let image = UIImage.init(named: name)?.centerInside(width: 1024, height: 1024) else {
-            return nil
-        }
-        return image.toMTLTexture(device: device)
-
-    }
-
-
-    public static func defaultSamplerState(device: MTLDevice) -> MTLSamplerState? {
-        let samplerDescriptor = MTLSamplerDescriptor()
-        //线性采样 默认是临近采样
-        samplerDescriptor.minFilter = .linear
-        samplerDescriptor.magFilter = .linear
-        //以下的可以不写，默认值就很好
-        //s r t三个坐标的 环绕方式，默认就是clampToEdge
-        samplerDescriptor.sAddressMode = .clampToEdge
-        samplerDescriptor.rAddressMode = .clampToEdge
-        samplerDescriptor.tAddressMode = .clampToEdge
-        //标准化到0 1 默认true
-        samplerDescriptor.normalizedCoordinates = true
-        return device.makeSamplerState(descriptor: samplerDescriptor)
-    }
-}
-
-
-public extension UIImage {
-
-    func toMTLTexture(device: MTLDevice?) -> MTLTexture? {
-
-        guard let device = device else {
-            return nil
-        }
-
-        let imageRef = (cgImage)!
-        let width = Int(size.width)
-        let height = Int(size.height)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let rawData = calloc(height * width * 4, MemoryLayout<UInt8>.size)
-        let bytesPerPixel: Int = 4
-        let bytesPerRow: Int = bytesPerPixel * width
-        let bitsPerComponent: Int = 8
-        let bitmapContext = CGContext(data: rawData,
-               width: width,
-               height: height,
-               bitsPerComponent: bitsPerComponent,
-               bytesPerRow: bytesPerRow,
-               space: colorSpace,
-               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
-        bitmapContext?.draw(imageRef, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
-               width: width,
-               height: height,
-               mipmapped: false)
-        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
-        let texture: MTLTexture? = device.makeTexture(descriptor: textureDescriptor)
-        let region: MTLRegion = MTLRegionMake2D(0, 0, width, height)
-        texture?.replace(region: region, mipmapLevel: 0, withBytes: rawData!, bytesPerRow: bytesPerRow)
-        free(rawData)
-
-        return texture
     }
 }
 
