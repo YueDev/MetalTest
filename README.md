@@ -7,3 +7,4 @@ Completed:
 3. Simply add Texture. 
 4. Simply add Two textures.
 5. Use "constant Type& name [[ buffer(x)]]" to get data from cpu in shader. like uniform in OpenGL.
+6. Add some transitions like https://gl-transitions.com/
