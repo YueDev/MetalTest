@@ -785,7 +785,7 @@ namespace TransitionMark08 {
          moveleft = doroate(movecenter, PI*(0.66), ratio);
          moveright = doroate(movecenter, -PI*(0.66), ratio);
          float isin = isin_triangle(uv, center + movecenter, center + moveleft, center + moveright) ? 1.0 : 0.0;
-        
+         
          
          center = float2(0.5);
          float2 useto = center + (uv - center) * (1.0 - (useprogress - 1.0) * 0.2);

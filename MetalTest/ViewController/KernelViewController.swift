@@ -163,8 +163,8 @@ class KernelViewController: UIViewController {
 
         button16_9.snp.makeConstraints { make in
             make.centerY.equalTo(button1_1)
-            make.left.equalTo(button1_1.snp.right)
-            make.right.equalTo(button9_16.snp.left)
+            make.centerX.equalTo(slider)
+
         }
 
     }
