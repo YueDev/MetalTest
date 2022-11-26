@@ -4,6 +4,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MainViewController: UIViewController {
 
@@ -64,6 +66,8 @@ class MainViewController: UIViewController {
         "分割"
     ]
 
+    private let disposeBag = DisposeBag()
+
     private let cellReuseIdentifier = "SwiftCell";
 
     private lazy var tableView = {
@@ -72,13 +76,35 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.backgroundColor = UIColor.init
-        tableView.delegate = self
-        tableView.dataSource = self
+
+        tableView.backgroundColor = COLOR_APP_BG
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+
+        Observable.just(headData).bind(to: tableView.rx
+                .items(cellIdentifier: cellReuseIdentifier, cellType: UITableViewCell.self)) { (row, text, cell) in
+                cell.accessoryType = .disclosureIndicator
+                cell.selectionStyle = .none
+                cell.backgroundColor = COLOR_APP_BG
+                cell.textLabel?.text = text
+            }
+            .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected.bind { [weak self] indexPath in
+                guard let data = self?.allData[indexPath.row],
+                      let group = self?.headData[indexPath.row]
+                else {
+                    return
+                }
+                let vc = ListViewController()
+                vc.setData(title: group, data: data)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+
         view.addSubview(tableView)
+
     }
-    
+
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -88,46 +114,3 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: UITableViewDataSource {
-
-
-    //分组 需要分组打开
-//    public func numberOfSections(in tableView: UITableView) -> Int {
-//        1
-//    }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        headData[section]
-//    }
-
-
-    //每一组的cell数量
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        headData.count
-    }
-
-    //cell的视图
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        //cell尾部的指示图标
-        cell.accessoryType = .disclosureIndicator
-        cell.selectionStyle = .none
-
-        cell.textLabel?.text = headData[indexPath.row]
-        return cell
-    }
-}
-
-extension MainViewController: UITableViewDelegate {
-
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //选中cell
-        let data = allData[indexPath.row]
-        let group = headData[indexPath.row]
-
-        let vc = ListViewController()
-        vc.setData(title: group, data: data)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}

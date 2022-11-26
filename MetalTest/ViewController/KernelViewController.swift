@@ -94,13 +94,13 @@ class KernelViewController: UIViewController {
 
         //右上角的播放按钮
         let barButton = UIBarButtonItem.init(title: "Play")
-        barButton.rx.tap.subscribe { [weak self] event in
-                self?.play()
-            }
-            .disposed(by: disposeBag)
+        barButton.rx.tap.bind { [weak self] in
+            self?.play()
+        }.disposed(by: disposeBag)
+
         navigationItem.rightBarButtonItem = barButton
         //slider
-        slider.rx.value.subscribe { [weak self] in
+        slider.rx.value.bind { [weak self] in
                 //给slider设置value
                 self?.finishPlay()
                 self?.updateProgress($0)

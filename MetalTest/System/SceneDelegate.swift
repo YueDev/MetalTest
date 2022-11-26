@@ -7,6 +7,8 @@
 
 import UIKit
 
+let COLOR_APP_BG = UIColor.init(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -18,9 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let s = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: s)
-        window?.backgroundColor = .white
+        window?.backgroundColor = COLOR_APP_BG
         let nav = UINavigationController(rootViewController: MainViewController());
-        nav.navigationBar.barTintColor = .white
+        nav.navigationBar.barTintColor = COLOR_APP_BG
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }

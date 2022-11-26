@@ -4,8 +4,12 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ListViewController: UIViewController {
+
+    private let disposeBag = DisposeBag()
 
     private var allData = [(String, String)]()
 
@@ -22,55 +26,39 @@ class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-        tableView.backgroundColor = .lightGray
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.backgroundColor = COLOR_APP_BG
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+
+        Observable.just(allData).bind(to: tableView.rx.items(
+                   cellIdentifier: cellReuseIdentifier,
+                   cellType: UITableViewCell.self)
+            ) { row, data, cell in
+                cell.accessoryType = .disclosureIndicator
+                cell.backgroundColor = COLOR_APP_BG
+                cell.selectionStyle = .none
+                cell.textLabel?.text = data.0
+            }
+            .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected.bind { [weak self] indexPath in
+                guard let data = self?.allData[indexPath.row] else {
+                    return
+                }
+                let vc = KernelViewController()
+                vc.setShaderName(data.0, data.1)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+
         view.addSubview(tableView)
     }
-    
+
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-}
-
-extension ListViewController: UITableViewDataSource {
-
-
-
-    //每一组的cell数量
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        allData.count
-    }
-
-    //cell的视图
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        //cell尾部的指示图标
-        cell.accessoryType = .disclosureIndicator
-        cell.backgroundColor = .lightGray
-        cell.selectionStyle = .none
-
-        cell.textLabel?.text = allData[indexPath.row].0
-        return cell
-    }
-}
-
-extension ListViewController: UITableViewDelegate {
-
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //选中cell
-        let data = allData[indexPath.row]
-        let vc = KernelViewController()
-        vc.setShaderName(data.0, data.1)
-        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
