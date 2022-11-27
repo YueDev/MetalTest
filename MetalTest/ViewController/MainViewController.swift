@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
         button.rx.tap.bind {
                 let vc = TransitionVC()
                 vc.modalPresentationStyle = .overFullScreen
-                self.present(vc, animated: false)
+                self.present(vc, animated: true)
         }.disposed(by: disposeBag)
     }
 

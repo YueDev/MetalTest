@@ -13,36 +13,42 @@ import RxCocoa
 class TransitionVC: UIViewController {
 
     private let disposeBag = DisposeBag()
-    private let bgColorStart = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
-    private let bgColorEnd = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
 
     private let contentView = UIView()
+    private let button = UIButton.init(type: .roundedRect)
 
     override func viewDidLoad() {
-        view.backgroundColor = bgColorStart
+        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.0)
         contentView.backgroundColor = .black
         view.addSubview(contentView)
+
+        button.sizeToFit()
+        button.setTitle("OK", for: .normal)
+        button.rx.tap.bind {
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        contentView.addSubview(button)
+
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        contentView.snp.makeConstraints {make in
 
+        button.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-8)
+            make.top.equalToSuperview().offset(8)
+        }
+
+        contentView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.top.equalTo(view.center)
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("YUEDEVTAG viewWillAppear")
-    }
-
-    private func finish() {
-        UIView.animate(withDuration: 0.3) { [self] in
-            view.backgroundColor = bgColorStart
-        } completion: { _ in
-            self.dismiss(animated: false)
-        }
-    }
 
 }
 
