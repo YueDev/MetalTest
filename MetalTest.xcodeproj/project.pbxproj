@@ -15,6 +15,7 @@
 		1D4C9751E888EB5621B63756 /* TransitionMask.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C910B13B400D700B801BA /* TransitionMask.metal */; };
 		1D4C9785AF7F9148940BD8E6 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */; };
 		1D4C9818F25891CC4EDFA88A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C96B10F1D81786B94352E /* MainViewController.swift */; };
+		1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */; };
 		1D4C9DBE7D8336E423375A84 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9C96065691058008C691 /* UIImageExtension.swift */; };
 		1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */; };
 		8A486A61292B1BA90042D1A4 /* Model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A486A60292B1BA90042D1A4 /* Model.metal */; };
@@ -37,6 +38,7 @@
 		1D4C96B10F1D81786B94352E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransitionSimple.metal; sourceTree = "<group>"; };
+		1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionVC.swift; sourceTree = "<group>"; };
 		1D4C9C96065691058008C691 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KernelViewController.swift; sourceTree = "<group>"; };
 		8A486A60292B1BA90042D1A4 /* Model.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Model.metal; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				1D4C96B10F1D81786B94352E /* MainViewController.swift */,
 				1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */,
 				1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */,
+				1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				1D4C9204156B63FCCF4AA196 /* MetalViewController.swift in Sources */,
 				1D4C9785AF7F9148940BD8E6 /* ListViewController.swift in Sources */,
 				1D4C9751E888EB5621B63756 /* TransitionMask.metal in Sources */,
+				1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

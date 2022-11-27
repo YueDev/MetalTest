@@ -103,6 +103,18 @@ class MainViewController: UIViewController {
 
         view.addSubview(tableView)
 
+        let button = UIButton(type: .roundedRect)
+        button.setTitle("text", for: .normal)
+        button.sizeToFit()
+        button.frame.origin.x = 100
+        button.frame.origin.y = 100
+        view.addSubview(button)
+
+        button.rx.tap.bind {
+                let vc = TransitionVC()
+                vc.modalPresentationStyle = .overFullScreen
+                self.present(vc, animated: false)
+        }.disposed(by: disposeBag)
     }
 
 

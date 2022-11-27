@@ -29,6 +29,7 @@ class ListViewController: UIViewController {
         tableView.backgroundColor = COLOR_APP_BG
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
 
+
         Observable.just(allData).bind(to: tableView.rx.items(
                    cellIdentifier: cellReuseIdentifier,
                    cellType: UITableViewCell.self)

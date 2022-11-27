@@ -92,6 +92,7 @@ class KernelViewController: UIViewController {
 
         view.layer.addSublayer(metalLayer)
 
+
         //右上角的播放按钮
         let barButton = UIBarButtonItem.init(title: "Play")
         barButton.rx.tap.bind { [weak self] in
