@@ -272,7 +272,7 @@ namespace TransitionSimple {
          float s = pow(0.5 + (progress - 0.5) * 0.8, 3.0);
          float dist = length((uv - 0.5) * ratio2);
          
-         float4 out = mix(texColor1, texColor2, step(s, dist));
+         float4 out = mix(texColor2, texColor1, step(s, dist));
          outTexture.write(out, grid);
      }
     
