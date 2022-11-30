@@ -7,7 +7,7 @@
 
 import UIKit
 
-let COLOR_APP_BG = UIColor.init(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
+let COLOR_APP_BG = UIColor.lightGray
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

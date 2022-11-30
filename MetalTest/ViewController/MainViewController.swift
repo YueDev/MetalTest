@@ -63,7 +63,8 @@ class MainViewController: UIViewController {
     private let headData = [
         "基础",
         "遮罩",
-        "分割"
+        "分割",
+        "运镜", 
     ]
 
     private let disposeBag = DisposeBag()
