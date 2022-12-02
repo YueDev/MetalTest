@@ -171,3 +171,76 @@ namespace Transition3D02 {
          outTexture.write(out, grid);
      }
 }
+
+
+namespace Transition3D03 {
+    
+    // uniform float reflection;// 中间底部倒影的反射清 晰度= 0.4
+    // uniform float perspective;// 切开图片中间部位的错切程度 透视= 0.4
+    // uniform float depth;// 中间出现图片的原始缩放程度 1/depth 深度= 3
+
+    constant float reflection = 0.4;
+    constant float perspective = 0.4;
+    constant float depth = 3.0;
+
+    constant  float4 black = float4(0.0, 0.0, 0.0, 1.0);
+    constant  float2 boundMin = float2(0.0, 0.0);
+    constant  float2 boundMax = float2(1.0, 1.0);
+    
+    bool inBounds (float2 p) {
+        return all(boundMin < p) && all(p < boundMax);
+    }
+    
+    float2 project (float2 p) {
+        float2 rtn= p * float2(1.0, (1.0-depth/100.)) ;
+        rtn.y=2.-rtn.y;
+        return rtn;
+    }
+    
+    float4 bgColor (float2 p, float2 pto, texture2d<float> inTexture2, sampler sampler) {
+        float4 c = black;
+        pto = project(pto);
+        if (inBounds(pto)) {
+            c += mix(black, Transition3D01::getToColor(pto, inTexture2, sampler), reflection * mix(0.0, 1.0, pto.y));
+        }
+        return c;
+    }
+    
+    
+    kernel void t3d_03
+    (
+     texture2d<float, access::sample> inTexture1 [[texture(0)]],
+     texture2d<float, access::sample> inTexture2 [[texture(1)]],
+     texture2d<float, access::write> outTexture [[texture(2)]],
+     sampler sampler [[ sampler(0) ]],
+     uint2 grid [[thread_position_in_grid]],
+     constant float& progress [[ buffer(0) ]],
+     constant float& ratio [[ buffer(1) ]]
+     ) {
+         float2 uv = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
+         
+         float2 pfr = float2(-1.), pto = float2(-1.);
+         float middleSlit = 2.0 * abs(uv.x-0.5) - progress;
+         if (middleSlit > 0.0) {
+             pfr = uv + (uv.x > 0.5 ? -1.0 : 1.0) * float2(0.5*progress, 0.0);
+             float d = 1.0/(1.0+perspective*progress*(1.0-middleSlit));
+             pfr.y -= d/2.;
+             pfr.y *= d;
+             pfr.y += d/2.;
+         }
+         float size = mix(1.0, depth, 1.-progress);
+         pto = (uv + float2(-0.5, -0.5)) * float2(size, size) + float2(0.5, 0.5);
+         
+         float4 out;
+         
+         if (inBounds(pfr)) {
+             out = Transition3D01::getFromColor(pfr, inTexture1, sampler);
+         } else if (inBounds(pto)) {
+             out = Transition3D01::getToColor(pto, inTexture2, sampler);
+         } else {
+             out = bgColor(uv, pto, inTexture2, sampler);
+         }
+         
+         outTexture.write(out, grid);
+     }
+}
