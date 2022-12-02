@@ -457,7 +457,8 @@ namespace TransitionCamera05 {
 //             mrp = float2(.5) + Rotate(mrp-float2(.5), ang);
 //         }
          
-         //原逻辑好像是gl repeat，这里的sampler是clamp2edge 这里模仿下repeat
+         //opengl默认的纹理环绕是repeat，这里的sampler是clamp2edge 这里模仿下repeat
+         //直接更改sampler的纹理环绕最简单
          if (mrp.x < 0.0) {
              mrp.x += 1.0;
          }
