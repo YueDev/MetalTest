@@ -39,7 +39,7 @@ namespace Transition3D01 {
         return inTexture1.sample(sampler, uv);
         
     }
-
+    
     float4 bgColor (float2 p, float2 pfr, float2 pto, texture2d<float> inTexture1, texture2d<float> inTexture2,sampler sampler) {
         float4 c = float4(0.0, 0.0, 0.0, 1.0);
         pfr = project(pfr);
@@ -56,13 +56,13 @@ namespace Transition3D01 {
     float2 xskew (float2 p, float persp, float center) {
         float x = mix(p.x, 1.0-p.x, center);
         return (
-        (
-         float2(x, (p.y - 0.5*(1.0-persp) * x) / (1.0+(persp-1.0)*x))
-        - float2(0.5 - abs(center - 0.5), 0.0)
-        )
-        * float2(0.5 / abs(center - 0.5) * (center<0.5 ? 1.0 : -1.0), 1.0)
-        + float2(center<0.5 ? 0.0 : 1.0, 0.0)
-        );
+                (
+                 float2(x, (p.y - 0.5*(1.0-persp) * x) / (1.0+(persp-1.0)*x))
+                 - float2(0.5 - abs(center - 0.5), 0.0)
+                 )
+                * float2(0.5 / abs(center - 0.5) * (center<0.5 ? 1.0 : -1.0), 1.0)
+                + float2(center<0.5 ? 0.0 : 1.0, 0.0)
+                );
     }
     
     
@@ -83,15 +83,15 @@ namespace Transition3D01 {
          float uz = unzoom * 2.0*(0.5-abs(newProgress - 0.5));
          float2 p = -uz*0.5+(1.0+uz) * uv;
          float2 fromP = xskew(
-         (p - float2(newProgress, 0.0)) / float2(1.0-newProgress, 1.0),
-         1.0-mix(newProgress, 0.0, persp),
-         0.0
-         );
+                              (p - float2(newProgress, 0.0)) / float2(1.0-newProgress, 1.0),
+                              1.0-mix(newProgress, 0.0, persp),
+                              0.0
+                              );
          float2 toP = xskew(
-         p / float2(newProgress, 1.0),
-         mix(pow(newProgress, 2.0), 1.0, persp),
-         1.0
-         );
+                            p / float2(newProgress, 1.0),
+                            mix(pow(newProgress, 2.0), 1.0, persp),
+                            1.0
+                            );
          // FIXME avoid branching might help perf!
          float4 out;
          if (inBounds(fromP)) {
@@ -108,6 +108,26 @@ namespace Transition3D01 {
 namespace Transition3D02 {
     
     
+    float4 getToColor(float2 uv, texture2d<float> inTexture2, sampler sampler){
+        return inTexture2.sample(sampler, float2(1.0 - uv.x, uv.y));
+    }
+    float4 getFromColor(float2 uv, texture2d<float> inTexture1, sampler sampler){
+        return inTexture1.sample(sampler, float2(1.0 - uv.x, uv.y));
+        
+    }
+    
+    float4 bgColor (float2 p, float2 pfr, float2 pto, texture2d<float> inTexture1, texture2d<float> inTexture2,sampler sampler) {
+        float4 c = float4(0.0, 0.0, 0.0, 1.0);
+        pfr = Transition3D01::project(pfr);
+        if (Transition3D01::inBounds(pfr)) {
+            c += mix(float4(0.0), getFromColor(pfr, inTexture1, sampler), Transition3D01::reflection * mix(0.0, 1.0, pfr.y));
+        }
+        pto = Transition3D01::project(pto);
+        if (Transition3D01::inBounds(pto)) {
+            c += mix(float4(0.0), getToColor(pto, inTexture2, sampler), Transition3D01::reflection * mix(0.0, 1.0, pto.y));
+        }
+        return c;
+    }
     
     
     
@@ -122,6 +142,7 @@ namespace Transition3D02 {
      constant float& ratio [[ buffer(1) ]]
      ) {
          float2 uv = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
+         float2 originUV = uv;
          uv.x = 1.0 - uv.x;
          
          
@@ -129,23 +150,23 @@ namespace Transition3D02 {
          float uz = Transition3D01::unzoom * 2.0*(0.5-abs(newProgress - 0.5));
          float2 p = -uz*0.5+(1.0+uz) * uv;
          float2 fromP = Transition3D01::xskew(
-         (p - float2(newProgress, 0.0)) / float2(1.0-newProgress, 1.0),
-                              1.0-mix(newProgress, 0.0, Transition3D01::persp),
-         0.0
-         );
+                                              (p - float2(newProgress, 0.0)) / float2(1.0-newProgress, 1.0),
+                                              1.0-mix(newProgress, 0.0, Transition3D01::persp),
+                                              0.0
+                                              );
          float2 toP = Transition3D01::xskew(
-         p / float2(newProgress, 1.0),
-                            mix(pow(newProgress, 2.0), 1.0, Transition3D01::persp),
-         1.0
-         );
+                                            p / float2(newProgress, 1.0),
+                                            mix(pow(newProgress, 2.0), 1.0, Transition3D01::persp),
+                                            1.0
+                                            );
          // FIXME avoid branching might help perf!
          float4 out;
          if (Transition3D01::inBounds(fromP)) {
-             out = Transition3D01::getToColor(fromP, inTexture2, sampler);
+             out = getToColor(fromP, inTexture2, sampler);
          } else if (Transition3D01::inBounds(toP)) {
-             out = Transition3D01::getFromColor(toP, inTexture1, sampler);
+             out = getFromColor(toP, inTexture1, sampler);
          } else{
-             out = Transition3D01::bgColor(uv, toP, fromP, inTexture1, inTexture2, sampler);
+             out = bgColor(originUV, toP, fromP, inTexture1, inTexture2, sampler);
          }
          outTexture.write(out, grid);
      }
