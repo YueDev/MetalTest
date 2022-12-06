@@ -74,8 +74,6 @@ namespace TransitionGL01 {
         
     }
     
-    
-    
     kernel void gl_01
     (
      texture2d<float, access::sample> inTexture1 [[texture(0)]],
