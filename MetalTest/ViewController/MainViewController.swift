@@ -64,6 +64,13 @@ class MainViewController: UIViewController {
             ("3D 03", "Transition3D03::t3d_03"),
             ("3D 04", "Transition3D04::t3d_04"),
             ("3D 05", "Transition3D05::t3d_05"),
+        ],
+        [
+            ("GL 01", "TransitionGL01::gl_01"),
+            ("GL 02", "TransitionGL02::gl_02"),
+            ("GL 03", "TransitionGL03::gl_03"),
+            ("GL 04", "TransitionGL04::gl_04"),
+            ("GL 05", "TransitionGL05::gl_05"),
         ]
     ]
 
@@ -73,6 +80,7 @@ class MainViewController: UIViewController {
         "分割",
         "运镜",
         "3D",
+        "GL-Transition",
     ]
 
     private let disposeBag = DisposeBag()

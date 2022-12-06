@@ -18,6 +18,7 @@
 		1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */; };
 		1D4C9DBE7D8336E423375A84 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9C96065691058008C691 /* UIImageExtension.swift */; };
 		1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */; };
+		8A0DC2C9293EE73D00FD3310 /* TransitionGL.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */; };
 		8A2029DA2939CBF500389AE6 /* Transition3D.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A2029D92939CBF500389AE6 /* Transition3D.metal */; };
 		8A486A61292B1BA90042D1A4 /* Model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A486A60292B1BA90042D1A4 /* Model.metal */; };
 		8A5456B9291DF81300F47F14 /* SimpleShaderRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A5456B8291DF81300F47F14 /* SimpleShaderRender.metal */; };
@@ -42,6 +43,7 @@
 		1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionVC.swift; sourceTree = "<group>"; };
 		1D4C9C96065691058008C691 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KernelViewController.swift; sourceTree = "<group>"; };
+		8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionGL.metal; sourceTree = "<group>"; };
 		8A2029D92939CBF500389AE6 /* Transition3D.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Transition3D.metal; sourceTree = "<group>"; };
 		8A486A60292B1BA90042D1A4 /* Model.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Model.metal; sourceTree = "<group>"; };
 		8A5456B8291DF81300F47F14 /* SimpleShaderRender.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShaderRender.metal; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				8AB1BA93292C9990006B3D4D /* TransitionSplit.metal */,
 				8ABC6D29292DF350005F46FE /* TransitionCamera.metal */,
 				8A2029D92939CBF500389AE6 /* Transition3D.metal */,
+				8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				8AB1BA94292C9990006B3D4D /* TransitionSplit.metal in Sources */,
 				8ABC6D2A292DF350005F46FE /* TransitionCamera.metal in Sources */,
 				1D4C92257B06EDBFBBBFCC37 /* KernelViewController.swift in Sources */,
+				8A0DC2C9293EE73D00FD3310 /* TransitionGL.metal in Sources */,
 				1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */,
 				1D4C91A1BB0E6482C90F8409 /* TextureManager.swift in Sources */,
 				1D4C9204156B63FCCF4AA196 /* MetalViewController.swift in Sources */,
