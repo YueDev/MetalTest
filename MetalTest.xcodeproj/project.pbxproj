@@ -7,181 +7,105 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D4C91A1BB0E6482C90F8409 /* TextureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C90DF1667A67D60E9982C /* TextureManager.swift */; };
-		1D4C9204156B63FCCF4AA196 /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C93999731916B97F066B8 /* MetalViewController.swift */; };
-		1D4C920A9890E3205F99EC5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C90F2C77C63749C3F2A2E /* SceneDelegate.swift */; };
-		1D4C92257B06EDBFBBBFCC37 /* KernelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */; };
-		1D4C9731C6A660BBC7FDD47D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C928F83C33279274DF56C /* AppDelegate.swift */; };
-		1D4C9751E888EB5621B63756 /* TransitionMask.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C910B13B400D700B801BA /* TransitionMask.metal */; };
-		1D4C9785AF7F9148940BD8E6 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */; };
-		1D4C9818F25891CC4EDFA88A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C96B10F1D81786B94352E /* MainViewController.swift */; };
-		1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */; };
-		1D4C9DBE7D8336E423375A84 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9C96065691058008C691 /* UIImageExtension.swift */; };
-		1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */; };
-		8A0DC2C9293EE73D00FD3310 /* TransitionGL.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */; };
-		8A2029DA2939CBF500389AE6 /* Transition3D.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A2029D92939CBF500389AE6 /* Transition3D.metal */; };
-		8A486A61292B1BA90042D1A4 /* Model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A486A60292B1BA90042D1A4 /* Model.metal */; };
-		8A5456B9291DF81300F47F14 /* SimpleShaderRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A5456B8291DF81300F47F14 /* SimpleShaderRender.metal */; };
-		8A978A67291DDF1800161DE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A978A66291DDF1800161DE3 /* Assets.xcassets */; };
-		8AB1BA94292C9990006B3D4D /* TransitionSplit.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1BA93292C9990006B3D4D /* TransitionSplit.metal */; };
-		8ABC6D2A292DF350005F46FE /* TransitionCamera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8ABC6D29292DF350005F46FE /* TransitionCamera.metal */; };
-		8AEE55332921D0CF00BB4873 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8AEE55322921D0CF00BB4873 /* RxCocoa */; };
-		8AEE55352921D0CF00BB4873 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8AEE55342921D0CF00BB4873 /* RxSwift */; };
-		8AF4233A29247D7900974405 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AF4233929247D7900974405 /* SnapKit */; };
+		8A7A261A2946CE1C005F7D80 /* MetalTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7A26192946CE1C005F7D80 /* MetalTestApp.swift */; };
+		8A7A261C2946CE1C005F7D80 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7A261B2946CE1C005F7D80 /* ContentView.swift */; };
+		8A7A261E2946CE1D005F7D80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A261D2946CE1D005F7D80 /* Assets.xcassets */; };
+		8A7A26212946CE1D005F7D80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A26202946CE1D005F7D80 /* Preview Assets.xcassets */; };
+		8A7A26282946CF40005F7D80 /* UIKit in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A26272946CF40005F7D80 /* UIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D4C90DF1667A67D60E9982C /* TextureManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureManager.swift; sourceTree = "<group>"; };
-		1D4C90F2C77C63749C3F2A2E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1D4C910B13B400D700B801BA /* TransitionMask.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransitionMask.metal; sourceTree = "<group>"; };
-		1D4C928F83C33279274DF56C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1D4C93999731916B97F066B8 /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
-		1D4C95B476BEA42A2D6779DE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		1D4C96B10F1D81786B94352E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransitionSimple.metal; sourceTree = "<group>"; };
-		1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionVC.swift; sourceTree = "<group>"; };
-		1D4C9C96065691058008C691 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
-		1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KernelViewController.swift; sourceTree = "<group>"; };
-		8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionGL.metal; sourceTree = "<group>"; };
-		8A2029D92939CBF500389AE6 /* Transition3D.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Transition3D.metal; sourceTree = "<group>"; };
-		8A486A60292B1BA90042D1A4 /* Model.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Model.metal; sourceTree = "<group>"; };
-		8A5456B8291DF81300F47F14 /* SimpleShaderRender.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShaderRender.metal; sourceTree = "<group>"; };
-		8A978A5A291DDF1500161DE3 /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A978A66291DDF1800161DE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8AB1BA93292C9990006B3D4D /* TransitionSplit.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionSplit.metal; sourceTree = "<group>"; };
-		8ABC6D29292DF350005F46FE /* TransitionCamera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionCamera.metal; sourceTree = "<group>"; };
+		8A7A26162946CE1C005F7D80 /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A7A26192946CE1C005F7D80 /* MetalTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTestApp.swift; sourceTree = "<group>"; };
+		8A7A261B2946CE1C005F7D80 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8A7A261D2946CE1D005F7D80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A7A26202946CE1D005F7D80 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8A7A26272946CF40005F7D80 /* UIKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UIKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8A978A57291DDF1500161DE3 /* Frameworks */ = {
+		8A7A26132946CE1C005F7D80 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AF4233A29247D7900974405 /* SnapKit in Frameworks */,
-				8AEE55352921D0CF00BB4873 /* RxSwift in Frameworks */,
-				8AEE55332921D0CF00BB4873 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D4C988FCB9450FAEE42DB79 /* ViewController */ = {
+		8A7A260D2946CE1C005F7D80 = {
 			isa = PBXGroup;
 			children = (
-				1D4C96B10F1D81786B94352E /* MainViewController.swift */,
-				1D4C9E57C965F52A42C0A316 /* KernelViewController.swift */,
-				1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */,
-				1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		1D4C9E68DC84EB0267DE6F09 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				1D4C9C96065691058008C691 /* UIImageExtension.swift */,
-				1D4C90DF1667A67D60E9982C /* TextureManager.swift */,
-				1D4C93999731916B97F066B8 /* MetalViewController.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		1D4C9F882A29D19F847882E5 /* System */ = {
-			isa = PBXGroup;
-			children = (
-				1D4C90F2C77C63749C3F2A2E /* SceneDelegate.swift */,
-				1D4C928F83C33279274DF56C /* AppDelegate.swift */,
-			);
-			path = System;
-			sourceTree = "<group>";
-		};
-		8A392A1B2925CC3A0028123A /* Shader */ = {
-			isa = PBXGroup;
-			children = (
-				1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */,
-				8A5456B8291DF81300F47F14 /* SimpleShaderRender.metal */,
-				8A486A60292B1BA90042D1A4 /* Model.metal */,
-				1D4C910B13B400D700B801BA /* TransitionMask.metal */,
-				8AB1BA93292C9990006B3D4D /* TransitionSplit.metal */,
-				8ABC6D29292DF350005F46FE /* TransitionCamera.metal */,
-				8A2029D92939CBF500389AE6 /* Transition3D.metal */,
-				8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */,
-			);
-			path = Shader;
-			sourceTree = "<group>";
-		};
-		8A978A51291DDF1500161DE3 = {
-			isa = PBXGroup;
-			children = (
-				8A978A5C291DDF1500161DE3 /* MetalTest */,
-				8A978A5B291DDF1500161DE3 /* Products */,
+				8A7A26182946CE1C005F7D80 /* MetalTest */,
+				8A7A26172946CE1C005F7D80 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8A978A5B291DDF1500161DE3 /* Products */ = {
+		8A7A26172946CE1C005F7D80 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A978A5A291DDF1500161DE3 /* MetalTest.app */,
+				8A7A26162946CE1C005F7D80 /* MetalTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A978A5C291DDF1500161DE3 /* MetalTest */ = {
+		8A7A26182946CE1C005F7D80 /* MetalTest */ = {
 			isa = PBXGroup;
 			children = (
-				8A392A1B2925CC3A0028123A /* Shader */,
-				8A978A66291DDF1800161DE3 /* Assets.xcassets */,
-				1D4C9E68DC84EB0267DE6F09 /* Util */,
-				1D4C988FCB9450FAEE42DB79 /* ViewController */,
-				1D4C9F882A29D19F847882E5 /* System */,
-				1D4C95B476BEA42A2D6779DE /* Info.plist */,
+				8A7A26272946CF40005F7D80 /* UIKit */,
+				8A7A26192946CE1C005F7D80 /* MetalTestApp.swift */,
+				8A7A261B2946CE1C005F7D80 /* ContentView.swift */,
+				8A7A261D2946CE1D005F7D80 /* Assets.xcassets */,
+				8A7A261F2946CE1D005F7D80 /* Preview Content */,
 			);
 			path = MetalTest;
+			sourceTree = "<group>";
+		};
+		8A7A261F2946CE1D005F7D80 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				8A7A26202946CE1D005F7D80 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A978A59291DDF1500161DE3 /* MetalTest */ = {
+		8A7A26152946CE1C005F7D80 /* MetalTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A978A6E291DDF1800161DE3 /* Build configuration list for PBXNativeTarget "MetalTest" */;
+			buildConfigurationList = 8A7A26242946CE1D005F7D80 /* Build configuration list for PBXNativeTarget "MetalTest" */;
 			buildPhases = (
-				8A978A56291DDF1500161DE3 /* Sources */,
-				8A978A57291DDF1500161DE3 /* Frameworks */,
-				8A978A58291DDF1500161DE3 /* Resources */,
+				8A7A26122946CE1C005F7D80 /* Sources */,
+				8A7A26132946CE1C005F7D80 /* Frameworks */,
+				8A7A26142946CE1C005F7D80 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MetalTest;
-			packageProductDependencies = (
-				8AEE55322921D0CF00BB4873 /* RxCocoa */,
-				8AEE55342921D0CF00BB4873 /* RxSwift */,
-				8AF4233929247D7900974405 /* SnapKit */,
-			);
 			productName = MetalTest;
-			productReference = 8A978A5A291DDF1500161DE3 /* MetalTest.app */;
+			productReference = 8A7A26162946CE1C005F7D80 /* MetalTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8A978A52291DDF1500161DE3 /* Project object */ = {
+		8A7A260E2946CE1C005F7D80 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
-					8A978A59291DDF1500161DE3 = {
+					8A7A26152946CE1C005F7D80 = {
 						CreatedOnToolsVersion = 14.1;
 					};
 				};
 			};
-			buildConfigurationList = 8A978A55291DDF1500161DE3 /* Build configuration list for PBXProject "MetalTest" */;
+			buildConfigurationList = 8A7A26112946CE1C005F7D80 /* Build configuration list for PBXProject "MetalTest" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -189,60 +113,43 @@
 				en,
 				Base,
 			);
-			mainGroup = 8A978A51291DDF1500161DE3;
-			packageReferences = (
-				8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				8AF4233829247D7900974405 /* XCRemoteSwiftPackageReference "SnapKit" */,
-			);
-			productRefGroup = 8A978A5B291DDF1500161DE3 /* Products */;
+			mainGroup = 8A7A260D2946CE1C005F7D80;
+			productRefGroup = 8A7A26172946CE1C005F7D80 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A978A59291DDF1500161DE3 /* MetalTest */,
+				8A7A26152946CE1C005F7D80 /* MetalTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8A978A58291DDF1500161DE3 /* Resources */ = {
+		8A7A26142946CE1C005F7D80 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A978A67291DDF1800161DE3 /* Assets.xcassets in Resources */,
+				8A7A26282946CF40005F7D80 /* UIKit in Resources */,
+				8A7A26212946CE1D005F7D80 /* Preview Assets.xcassets in Resources */,
+				8A7A261E2946CE1D005F7D80 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8A978A56291DDF1500161DE3 /* Sources */ = {
+		8A7A26122946CE1C005F7D80 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A486A61292B1BA90042D1A4 /* Model.metal in Sources */,
-				8A5456B9291DF81300F47F14 /* SimpleShaderRender.metal in Sources */,
-				1D4C9DBE7D8336E423375A84 /* UIImageExtension.swift in Sources */,
-				1D4C9818F25891CC4EDFA88A /* MainViewController.swift in Sources */,
-				1D4C920A9890E3205F99EC5C /* SceneDelegate.swift in Sources */,
-				8A2029DA2939CBF500389AE6 /* Transition3D.metal in Sources */,
-				1D4C9731C6A660BBC7FDD47D /* AppDelegate.swift in Sources */,
-				8AB1BA94292C9990006B3D4D /* TransitionSplit.metal in Sources */,
-				8ABC6D2A292DF350005F46FE /* TransitionCamera.metal in Sources */,
-				1D4C92257B06EDBFBBBFCC37 /* KernelViewController.swift in Sources */,
-				8A0DC2C9293EE73D00FD3310 /* TransitionGL.metal in Sources */,
-				1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */,
-				1D4C91A1BB0E6482C90F8409 /* TextureManager.swift in Sources */,
-				1D4C9204156B63FCCF4AA196 /* MetalViewController.swift in Sources */,
-				1D4C9785AF7F9148940BD8E6 /* ListViewController.swift in Sources */,
-				1D4C9751E888EB5621B63756 /* TransitionMask.metal in Sources */,
-				1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */,
+				8A7A261C2946CE1C005F7D80 /* ContentView.swift in Sources */,
+				8A7A261A2946CE1C005F7D80 /* MetalTestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		8A978A6C291DDF1800161DE3 /* Debug */ = {
+		8A7A26222946CE1D005F7D80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -292,7 +199,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -302,7 +209,7 @@
 			};
 			name = Debug;
 		};
-		8A978A6D291DDF1800161DE3 /* Release */ = {
+		8A7A26232946CE1D005F7D80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -346,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -356,21 +263,23 @@
 			};
 			name = Release;
 		};
-		8A978A6F291DDF1800161DE3 /* Debug */ = {
+		8A7A26252946CE1D005F7D80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetalTest/Preview Content\"";
 				DEVELOPMENT_TEAM = 68LDDARFYB;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MetalTest/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -384,21 +293,23 @@
 			};
 			name = Debug;
 		};
-		8A978A70291DDF1800161DE3 /* Release */ = {
+		8A7A26262946CE1D005F7D80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetalTest/Preview Content\"";
 				DEVELOPMENT_TEAM = 68LDDARFYB;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MetalTest/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -415,62 +326,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A978A55291DDF1500161DE3 /* Build configuration list for PBXProject "MetalTest" */ = {
+		8A7A26112946CE1C005F7D80 /* Build configuration list for PBXProject "MetalTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8A978A6C291DDF1800161DE3 /* Debug */,
-				8A978A6D291DDF1800161DE3 /* Release */,
+				8A7A26222946CE1D005F7D80 /* Debug */,
+				8A7A26232946CE1D005F7D80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A978A6E291DDF1800161DE3 /* Build configuration list for PBXNativeTarget "MetalTest" */ = {
+		8A7A26242946CE1D005F7D80 /* Build configuration list for PBXNativeTarget "MetalTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8A978A6F291DDF1800161DE3 /* Debug */,
-				8A978A70291DDF1800161DE3 /* Release */,
+				8A7A26252946CE1D005F7D80 /* Debug */,
+				8A7A26262946CE1D005F7D80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
-			};
-		};
-		8AF4233829247D7900974405 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		8AEE55322921D0CF00BB4873 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		8AEE55342921D0CF00BB4873 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8AEE55312921D0CF00BB4873 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		8AF4233929247D7900974405 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8AF4233829247D7900974405 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 8A978A52291DDF1500161DE3 /* Project object */;
+	rootObject = 8A7A260E2946CE1C005F7D80 /* Project object */;
 }
