@@ -53,7 +53,7 @@ namespace TransitionGL01 {
         uv *= z;
         uv = rot(uv, float2(0.0), progress*speed);
         // uv.x = fract(uv.x/l/3.0)*l*3.0;
-        float theta = progress*6.+PI/.5;
+//        float theta = progress*6.+PI/.5;
         for(int iter = 0; iter < 10; iter++) {
             for(float i = 0.; i < 2. * PI; i+=deg) {
                 float ts = sign(asin(cos(i))) == 1.0 ? 1.0 : 0.0;
@@ -87,6 +87,37 @@ namespace TransitionGL01 {
          float2 uv = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
          
          float4 out = mainImage(uv, progress, ratio, inTexture1, inTexture2, sampler);
+         outTexture.write(out, grid);
+     }
+}
+
+
+namespace TransitionGL02 {
+    
+    
+    
+    kernel void gl_02
+    (
+     texture2d<float, access::sample> inTexture1 [[texture(0)]],
+     texture2d<float, access::sample> inTexture2 [[texture(1)]],
+     texture2d<float, access::write> outTexture [[texture(2)]],
+     sampler sampler [[ sampler(0) ]],
+     uint2 grid [[thread_position_in_grid]],
+     constant float& progress [[ buffer(0) ]],
+     constant float& ratio [[ buffer(1) ]]
+     ) {
+         float2 uv = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
+         
+         float count = 10.0;
+         float smoothness = 0.5;
+         
+         float pr = smoothstep(-smoothness, 0.0, uv.x - progress * (1.0 + smoothness));
+         float s = step(pr, fract(count * uv.x));
+         
+         float4 out1 = inTexture1.sample(sampler, uv);
+         float4 out2 = inTexture2.sample(sampler, uv);
+         
+         float4 out =  mix(out1, out2, s);
          outTexture.write(out, grid);
      }
 }
