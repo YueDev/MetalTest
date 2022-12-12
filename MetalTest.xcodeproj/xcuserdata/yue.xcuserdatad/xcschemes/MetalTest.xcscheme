@@ -7,7 +7,7 @@
             buildForRunning = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A7A26152946CE1C005F7D80"
+               BlueprintIdentifier = "8A0C73F62946E281000A7ADB"
                BuildableName = "MetalTest.app"
                BlueprintName = "MetalTest"
                ReferencedContainer = "container:MetalTest.xcodeproj">
@@ -22,7 +22,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8A7A26152946CE1C005F7D80"
+            BlueprintIdentifier = "8A0C73F62946E281000A7ADB"
             BuildableName = "MetalTest.app"
             BlueprintName = "MetalTest"
             ReferencedContainer = "container:MetalTest.xcodeproj">
