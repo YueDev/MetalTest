@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */; };
-		8A0C73FD2946E281000A7ADB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0C73FC2946E281000A7ADB /* ContentView.swift */; };
+		8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0C73FC2946E281000A7ADB /* HomeView.swift */; };
 		8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C73FE2946E282000A7ADB /* Assets.xcassets */; };
 		8A0C74022946E282000A7ADB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
 		8A0C74092946E313000A7ADB /* UIKit in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74082946E313000A7ADB /* UIKit */; };
+		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8A0C73F72946E281000A7ADB /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTestApp.swift; sourceTree = "<group>"; };
-		8A0C73FC2946E281000A7ADB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8A0C73FC2946E281000A7ADB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8A0C73FE2946E282000A7ADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0C74012946E282000A7ADB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A0C74082946E313000A7ADB /* UIKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UIKit; sourceTree = "<group>"; };
+		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,11 +55,10 @@
 		8A0C73F92946E281000A7ADB /* MetalTest */ = {
 			isa = PBXGroup;
 			children = (
-				8A0C74082946E313000A7ADB /* UIKit */,
-				8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */,
-				8A0C73FC2946E281000A7ADB /* ContentView.swift */,
-				8A0C73FE2946E282000A7ADB /* Assets.xcassets */,
+				8AC41C44294951CD00C5E98B /* System */,
 				8A0C74002946E282000A7ADB /* Preview Content */,
+				8AC41C432949516600C5E98B /* SWIFTUI */,
+				8A0C74082946E313000A7ADB /* UIKit */,
 			);
 			path = MetalTest;
 			sourceTree = "<group>";
@@ -68,6 +69,32 @@
 				8A0C74012946E282000A7ADB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8AC41C432949516600C5E98B /* SWIFTUI */ = {
+			isa = PBXGroup;
+			children = (
+				8AC41C482949530700C5E98B /* WWDC */,
+				8A0C73FC2946E281000A7ADB /* HomeView.swift */,
+			);
+			path = SWIFTUI;
+			sourceTree = "<group>";
+		};
+		8AC41C44294951CD00C5E98B /* System */ = {
+			isa = PBXGroup;
+			children = (
+				8A0C73FE2946E282000A7ADB /* Assets.xcassets */,
+				8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		8AC41C482949530700C5E98B /* WWDC */ = {
+			isa = PBXGroup;
+			children = (
+				8AC41C452949521C00C5E98B /* WWDC22View.swift */,
+			);
+			path = WWDC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +168,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A0C73FD2946E281000A7ADB /* ContentView.swift in Sources */,
+				8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */,
 				8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */,
+				8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
