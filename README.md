@@ -10,3 +10,8 @@ Completed:
 6. Add some transitions like https://gl-transitions.com/ .
 7. Use kernel func to compute transitions.
 8. basic transitions. copy from my another app and rewrite by Metal.  
+
+#SWIFTUI
+I aslo add swiftui in this project.
+
+1.WWDC2022:some new feature on iOS16.
