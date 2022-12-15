@@ -13,6 +13,10 @@
 		8A0C74022946E282000A7ADB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
 		8A0C74092946E313000A7ADB /* UIKit in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74082946E313000A7ADB /* UIKit */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
+		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
+		8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */; };
+		8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B228294AA7FF00B03C14 /* KirbyView.swift */; };
+		8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		8A0C74012946E282000A7ADB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A0C74082946E313000A7ADB /* UIKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UIKit; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
+		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
+		8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyRepository.swift; sourceTree = "<group>"; };
+		8AF9B228294AA7FF00B03C14 /* KirbyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyView.swift; sourceTree = "<group>"; };
+		8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyCharaView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,9 +63,9 @@
 		8A0C73F92946E281000A7ADB /* MetalTest */ = {
 			isa = PBXGroup;
 			children = (
-				8AC41C44294951CD00C5E98B /* System */,
 				8A0C74002946E282000A7ADB /* Preview Content */,
 				8AC41C432949516600C5E98B /* SWIFTUI */,
+				8AC41C44294951CD00C5E98B /* System */,
 				8A0C74082946E313000A7ADB /* UIKit */,
 			);
 			path = MetalTest;
@@ -74,8 +82,10 @@
 		8AC41C432949516600C5E98B /* SWIFTUI */ = {
 			isa = PBXGroup;
 			children = (
-				8AC41C482949530700C5E98B /* WWDC */,
+				8AF9B22D294AA9D200B03C14 /* Kirby */,
 				8A0C73FC2946E281000A7ADB /* HomeView.swift */,
+				8AC41C4B294AA4D000C5E98B /* VLineShape.swift */,
+				8AC41C482949530700C5E98B /* WWDC */,
 			);
 			path = SWIFTUI;
 			sourceTree = "<group>";
@@ -95,6 +105,16 @@
 				8AC41C452949521C00C5E98B /* WWDC22View.swift */,
 			);
 			path = WWDC;
+			sourceTree = "<group>";
+		};
+		8AF9B22D294AA9D200B03C14 /* Kirby */ = {
+			isa = PBXGroup;
+			children = (
+				8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */,
+				8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */,
+				8AF9B228294AA7FF00B03C14 /* KirbyView.swift */,
+			);
+			path = Kirby;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,8 +189,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */,
+				8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */,
+				8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */,
 				8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */,
+				8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */,
 				8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */,
+				8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
