@@ -12,13 +12,24 @@ struct HomeView: View {
         NavigationView {
             VStack(spacing:16) {
                 NavigationLink(destination: WWDC22View()) {
-                    Text("WWDC22(iOS16)")
+                    homeText("WWDC22(iOS16)")
                 }
                 NavigationLink(destination: KirbyView()) {
-                    Text("Kirby")
+                    homeText("Kirby")
+                }
+                NavigationLink(destination: ShapeStyleView()) {
+                    homeText("ShapeStyle")
                 }
             }.padding()
         }
+    }
+    
+    func homeText(_ text: String) -> some View {
+        Text(text)
+            .foregroundColor(.white)
+            .font(.callout)
+            .padding(12)
+            .roundedRectBackground(radius: CGFloat.infinity, style: .orange)
     }
 }
 
@@ -26,4 +37,13 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
+}
+
+
+extension View {
+    
+
+    func roundedRectBackground(radius: CGFloat = 8.0, style:some ShapeStyle) -> some View {
+        background(RoundedRectangle(cornerRadius: radius).fill(style))
+     }
 }

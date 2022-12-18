@@ -12,6 +12,7 @@
 		8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C73FE2946E282000A7ADB /* Assets.xcassets */; };
 		8A0C74022946E282000A7ADB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
 		8A0C74092946E313000A7ADB /* UIKit in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74082946E313000A7ADB /* UIKit */; };
+		8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */; };
@@ -26,6 +27,7 @@
 		8A0C73FE2946E282000A7ADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0C74012946E282000A7ADB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A0C74082946E313000A7ADB /* UIKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UIKit; sourceTree = "<group>"; };
+		8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeStyleView.swift; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyRepository.swift; sourceTree = "<group>"; };
@@ -84,8 +86,8 @@
 			children = (
 				8AF9B22D294AA9D200B03C14 /* Kirby */,
 				8A0C73FC2946E281000A7ADB /* HomeView.swift */,
-				8AC41C4B294AA4D000C5E98B /* VLineShape.swift */,
 				8AC41C482949530700C5E98B /* WWDC */,
+				8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */,
 			);
 			path = SWIFTUI;
 			sourceTree = "<group>";
@@ -110,6 +112,7 @@
 		8AF9B22D294AA9D200B03C14 /* Kirby */ = {
 			isa = PBXGroup;
 			children = (
+				8AC41C4B294AA4D000C5E98B /* VLineShape.swift */,
 				8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */,
 				8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */,
 				8AF9B228294AA7FF00B03C14 /* KirbyView.swift */,
@@ -192,6 +195,7 @@
 				8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */,
 				8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */,
 				8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */,
+				8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */,
 				8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */,
 				8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */,
 				8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */,

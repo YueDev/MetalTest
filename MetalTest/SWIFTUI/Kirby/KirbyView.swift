@@ -9,9 +9,9 @@ import SwiftUI
 
 struct KirbyView: View {
     
-    private let kirby = KirbyRepository.shared
-    
     @State private var isShowChara = false
+    
+    private let kirby = KirbyRepository.shared
     
     var body: some View {
         
@@ -19,24 +19,22 @@ struct KirbyView: View {
             VStack(spacing: 32) {
                 logoView
                 descriptionView
-                //下边的图片clipped，但是图片好像按照原图的大小会挡住这个buttton
+                //下边的图片clipped，但是触摸区域好像按照原图的大小会挡住这个button
                 //button设置z的坐标大于图片的即可，即大于默认值0即可
                 charaButtonView.zIndex(1)
                 gameView
             }
             .padding(EdgeInsets(top: 0, leading: 32, bottom: 0, trailing: 32))
-            
         }
         .overlay {
-            if isShowChara {
-                charaView.edgesIgnoringSafeArea(.all)
-            }
+            charaView
         }
         .animation(.easeInOut, value: isShowChara)
     }
-    
-    //MARK: - SubView
-    
+}
+
+//MARK: - SubView
+private extension KirbyView{
     var logoView: some View {
         HStack {
             Image(kirby.logo)
@@ -76,8 +74,6 @@ struct KirbyView: View {
                 .padding(16)
                 .background(RoundedRectangle.init(cornerRadius: 16).foregroundColor(.red.opacity(0.75)))
         }
-        
-        
     }
     
     var gameView: some View {
@@ -93,7 +89,7 @@ struct KirbyView: View {
                                 index == kirby.games.count - 1 ? .bottom : .middle)
                     .frame(width: 64)
                     .foregroundColor(Color.gray)
-
+                    
                     VStack(spacing:8) {
                         Image(game.icon)
                             .resizable()
@@ -119,13 +115,15 @@ struct KirbyView: View {
         }
     }
     
-    var charaView: some View {
-        ZStack(){
-            Color.black.frame(maxWidth: .infinity, maxHeight: .infinity).opacity(0.5)
-                .onTapGesture {
-                    isShowChara = false
-                }
-            KirbyCharaView(isShowChara: $isShowChara)
+    @ViewBuilder var charaView: some View {
+        if isShowChara {
+            ZStack(){
+                Color.black.frame(maxWidth: .infinity, maxHeight: .infinity).opacity(0.5)
+                    .onTapGesture {
+                        isShowChara = false
+                    }
+                KirbyCharaView(isShowChara: $isShowChara)
+            }
         }
     }
     
@@ -135,8 +133,7 @@ struct KirbyView: View {
 
 
 //MARK: - Preview
-
-struct KirbyViewView_Previews: PreviewProvider {
+struct KirbyView_Previews: PreviewProvider {
     static var previews: some View {
         KirbyView()
     }
