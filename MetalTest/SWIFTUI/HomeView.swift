@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationView {
+                        
             VStack(spacing:16) {
                 NavigationLink(destination: WWDC22View()) {
                     homeText("WWDC22(iOS16)")
