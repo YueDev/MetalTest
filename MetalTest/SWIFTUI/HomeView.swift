@@ -21,6 +21,9 @@ struct HomeView: View {
                 NavigationLink(destination: ShapeStyleView()) {
                     homeText("ShapeStyle")
                 }
+                NavigationLink(destination: ListView()) {
+                    homeText("ListView")
+                }
             }.padding()
         }
     }
