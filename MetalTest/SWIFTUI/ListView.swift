@@ -17,43 +17,61 @@ struct ListView: View {
         return data
     }()
     
-    @State private var style: any ListStyle = .insetGrouped
+    @State private var style = 0
     
     var body: some View {
         VStack {
-            List(models) { model in
-                Text(model.name)
-            }.listStyle(.insetGrouped)
+            
+            switch style {
+            case 0:
+                List(models) { model in
+                    Text(model.name)
+                }.listStyle(.insetGrouped)
+            case 1:
+                List(models) { model in
+                    Text(model.name)
+                }.listStyle(.inset)
+            case 2:
+                List(models) { model in
+                    Text(model.name)
+                }.listStyle(.plain)
+            default :
+                List(models) { model in
+                    Text(model.name)
+                }.listStyle(.grouped)
+            }
             
             HStack {
                 Button {
-                    style = .insetGrouped
+                    style = 0
                 } label: {
                     Text("insetGrouped")
                 }.buttonStyle(.borderedProminent)
                 
                 Button {
-                    style = .inset
+                    style = 1
                 } label: {
                     Text("inset")
                 }.buttonStyle(.borderedProminent)
                 
                 Button {
-                    style = .plain
+                    style = 2
                 } label: {
                     Text("plain")
                 }.buttonStyle(.borderedProminent)
                 
                 Button {
-                    style = .grouped
+                    style = 3
                 } label: {
                     Text("grouped")
                 }.buttonStyle(.borderedProminent)
             }
             .padding()
         }
-        
+        .animation(.easeInOut, value: style)
     }
+    
+    
 }
 
 struct Model:Identifiable {

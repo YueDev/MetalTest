@@ -12,7 +12,7 @@ import SwiftUI
 struct ShapeStyleView: View {
     var body: some View {
         VStack {
-            // 用颜色的ShaopeStyle去填充形状
+            // 用颜色的ShapeStyle去填充形状
             Circle().fill(.orange)
             // 用图片去填充形状。
             // 对形状来说，fill效率更高, fill适合形状调用，foregroundStyle适合所有View，
