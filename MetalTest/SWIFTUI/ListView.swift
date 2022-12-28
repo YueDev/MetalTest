@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListView: View {
-    
+
     private let models = {
         var data = [Model]()
         for i in (1...100) {
@@ -16,68 +16,76 @@ struct ListView: View {
         }
         return data
     }()
-    
+
     @State private var style = 0
-    
+
     var body: some View {
         VStack {
-            
+
             switch style {
             case 0:
                 List(models) { model in
                     Text(model.name)
-                }.listStyle(.insetGrouped)
+                }
+                    .listStyle(.insetGrouped)
             case 1:
                 List(models) { model in
                     Text(model.name)
-                }.listStyle(.inset)
+                }
+                    .listStyle(.inset)
             case 2:
                 List(models) { model in
                     Text(model.name)
-                }.listStyle(.plain)
-            default :
+                }
+                    .listStyle(.plain)
+            default:
                 List(models) { model in
                     Text(model.name)
-                }.listStyle(.grouped)
+                }
+                    .listStyle(.grouped)
             }
-            
+
             HStack {
                 Button {
                     style = 0
                 } label: {
                     Text("insetGrouped")
-                }.buttonStyle(.borderedProminent)
-                
+                }
+                    .buttonStyle(.borderedProminent)
+
                 Button {
                     style = 1
                 } label: {
                     Text("inset")
-                }.buttonStyle(.borderedProminent)
-                
+                }
+                    .buttonStyle(.borderedProminent)
+
                 Button {
                     style = 2
                 } label: {
                     Text("plain")
-                }.buttonStyle(.borderedProminent)
-                
+                }
+                    .buttonStyle(.borderedProminent)
+
                 Button {
                     style = 3
                 } label: {
                     Text("grouped")
-                }.buttonStyle(.borderedProminent)
+                }
+                    .buttonStyle(.borderedProminent)
             }
-            .padding()
+                .padding()
         }
-        .animation(.easeInOut, value: style)
+            .animation(.easeInOut, value: style)
     }
-    
-    
+
+
 }
 
-struct Model:Identifiable {
-    let name:String
-    
-    var id:String {
+struct Model: Identifiable {
+    let name: String
+
+    var id: String {
         name
     }
 }

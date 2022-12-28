@@ -10,8 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationView {
-                        
-            VStack(spacing:16) {
+            VStack(spacing: 16) {
                 NavigationLink(destination: WWDC22View()) {
                     homeText("WWDC22(iOS16)")
                 }
@@ -24,10 +23,11 @@ struct HomeView: View {
                 NavigationLink(destination: ListView()) {
                     homeText("ListView")
                 }
-            }.padding()
+            }
+                .padding()
         }
     }
-    
+
     func homeText(_ text: String) -> some View {
         Text(text)
             .foregroundColor(.white)
@@ -45,9 +45,7 @@ struct HomeView_Previews: PreviewProvider {
 
 
 extension View {
-    
-
-    func roundedRectBackground(radius: CGFloat = 8.0, style:some ShapeStyle) -> some View {
+    func roundedRectBackground(radius: CGFloat = 8.0, style: some ShapeStyle) -> some View {
         background(RoundedRectangle(cornerRadius: radius).fill(style))
-     }
+    }
 }
