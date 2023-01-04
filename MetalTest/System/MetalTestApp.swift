@@ -13,5 +13,5 @@ struct MetalTestApp: App {
         WindowGroup {
             HomeView()
         }
-    }
+    } 
 }

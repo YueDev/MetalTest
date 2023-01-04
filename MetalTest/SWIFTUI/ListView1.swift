@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListView: View {
+struct ListView1: View {
     
     private let models = {
         var data = [Model]()
@@ -20,7 +20,7 @@ struct ListView: View {
     @State private var style = 0
     
     var body: some View {
-        VStack {
+        VStack { 
             switch style {
             case 0:
                 List(models) { model in
@@ -91,6 +91,6 @@ struct Model: Identifiable {
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView()
+        ListView1()
     }
 }
