@@ -26,8 +26,8 @@ struct HomeView: View {
                 NavigationLink(destination: ListView2()) {
                     homeText("ListView2")
                 }
-                NavigationLink(destination: MetalTextView()) {
-                    homeText("MetalTextView")
+                NavigationLink(destination: SimpleMetalView()) {
+                    homeText("SimpleMetalView")
                 }
             }
                 .padding()

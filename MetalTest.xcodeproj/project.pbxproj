@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1D4C9294C5DE14808E2C9990 /* MetalMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */; };
-		1D4C92D1B9BB82CE4D811F29 /* MetalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9D85B182C39043B985C4 /* MetalTextView.swift */; };
+		1D4C92D1B9BB82CE4D811F29 /* SimpleMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */; };
 		1D4C9A100F0431B86209192D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C90AFDFD0A0C9AF61A890 /* Model.swift */; };
 		1D4C9B450669E92810CDEEF9 /* ListView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C945E49C103AE50CD379A /* ListView1.swift */; };
 		1D4C9C5EC14BBBFA0AD7D4DE /* ListView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E6CD1D88B877EAAFA4F /* ListView2.swift */; };
+		1D4C9DE17AA469D693B37C03 /* SimpleShaderRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C928DA5B5C8DAA3CD991F /* SimpleShaderRender.metal */; };
 		8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */; };
 		8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0C73FC2946E281000A7ADB /* HomeView.swift */; };
 		8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C73FE2946E282000A7ADB /* Assets.xcassets */; };
@@ -26,8 +27,9 @@
 
 /* Begin PBXFileReference section */
 		1D4C90AFDFD0A0C9AF61A890 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		1D4C928DA5B5C8DAA3CD991F /* SimpleShaderRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SimpleShaderRender.metal; sourceTree = "<group>"; };
 		1D4C945E49C103AE50CD379A /* ListView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView1.swift; sourceTree = "<group>"; };
-		1D4C9D85B182C39043B985C4 /* MetalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTextView.swift; sourceTree = "<group>"; };
+		1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMetalView.swift; sourceTree = "<group>"; };
 		1D4C9E6CD1D88B877EAAFA4F /* ListView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView2.swift; sourceTree = "<group>"; };
 		1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMapView.swift; sourceTree = "<group>"; };
 		8A0C73F72946E281000A7ADB /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +63,14 @@
 				1D4C945E49C103AE50CD379A /* ListView1.swift */,
 			);
 			path = ListView;
+			sourceTree = "<group>";
+		};
+		1D4C96E72EA54463A52F886E /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				1D4C928DA5B5C8DAA3CD991F /* SimpleShaderRender.metal */,
+			);
+			path = Shader;
 			sourceTree = "<group>";
 		};
 		1D4C9844D25C377A5C234FBF /* UIKIT */ = {
@@ -117,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
+				1D4C96E72EA54463A52F886E /* Shader */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -131,7 +142,7 @@
 				8AC41C482949530700C5E98B /* WWDC */,
 				1D4C966B36925631F3DC3A01 /* ListView */,
 				1D4C9BA5A60EBB88D95AAAB2 /* TurboCollage */,
-				1D4C9D85B182C39043B985C4 /* MetalTextView.swift */,
+				1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */,
 			);
 			path = SWIFTUI;
 			sourceTree = "<group>";
@@ -245,8 +256,9 @@
 				1D4C9C5EC14BBBFA0AD7D4DE /* ListView2.swift in Sources */,
 				1D4C9B450669E92810CDEEF9 /* ListView1.swift in Sources */,
 				1D4C9A100F0431B86209192D /* Model.swift in Sources */,
-				1D4C92D1B9BB82CE4D811F29 /* MetalTextView.swift in Sources */,
+				1D4C92D1B9BB82CE4D811F29 /* SimpleMetalView.swift in Sources */,
 				1D4C9294C5DE14808E2C9990 /* MetalMapView.swift in Sources */,
+				1D4C9DE17AA469D693B37C03 /* SimpleShaderRender.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
