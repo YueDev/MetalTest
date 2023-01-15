@@ -16,3 +16,5 @@ I aslo add swiftui in this project.
 
 1. WWDC2022:some new feature on iOS16.
 2. Add KirbyView.
+3. Add some view.
+4. Add metal in swiftui.
