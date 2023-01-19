@@ -10,27 +10,33 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                NavigationLink(destination: WWDC22View()) {
-                    homeText("WWDC22(iOS16)")
-                }
-                NavigationLink(destination: KirbyView()) {
-                    homeText("Kirby")
-                }
-                NavigationLink(destination: ShapeStyleView()) {
-                    homeText("ShapeStyle")
-                }
-                NavigationLink(destination: ListView1()) {
-                    homeText("ListView1")
-                }
-                NavigationLink(destination: ListView2()) {
-                    homeText("ListView2")
-                }
-                NavigationLink(destination: SimpleMetalView()) {
-                    homeText("SimpleMetalView")
-                }
+            ScrollView {
+                VStack(spacing: 16) {
+                    NavigationLink(destination: WWDC22View()) {
+                        homeText("WWDC22(iOS16)")
+                    }
+                    NavigationLink(destination: KirbyView()) {
+                        homeText("Kirby")
+                    }
+                    NavigationLink(destination: ShapeStyleView()) {
+                        homeText("ShapeStyle")
+                    }
+                    NavigationLink(destination: ListView1()) {
+                        homeText("ListView1")
+                    }
+                    NavigationLink(destination: ListView2()) {
+                        homeText("ListView2")
+                    }
+                    NavigationLink(destination: SimpleMetalView()) {
+                        homeText("SimpleMetalView")
+                    }
+
+                    NavigationLink(destination: TextureView()) {
+                        homeText("TextureView")
+                    }
+
+                }.padding()
             }
-                .padding()
         }
     }
 
