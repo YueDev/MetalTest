@@ -20,7 +20,6 @@ namespace TextureRender {
         float4 position [[ position ]];
         float2 uv;
     };
-
     vertex VertexOut shader_vertex
     (
     VertexIn in [[ stage_in ]]
