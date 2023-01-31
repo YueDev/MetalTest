@@ -10,6 +10,7 @@
 		1D4C922E12A3224C00B138F1 /* TextureRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C93DBDCCFD497F0C6F9C1 /* TextureRender.metal */; };
 		1D4C9294C5DE14808E2C9990 /* MetalMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */; };
 		1D4C92D1B9BB82CE4D811F29 /* SimpleMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */; };
+		1D4C96A6B352E06499982795 /* TransitionCamera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C926FB2CA9DD413C52D19 /* TransitionCamera.metal */; };
 		1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C95C6B500A9F527814403 /* TextureManager.swift */; };
 		1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */; };
 		1D4C986DF703F35E56E98FE6 /* Model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9AE60696AA5C009595D5 /* Model.metal */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		1D4C90AFDFD0A0C9AF61A890 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1D4C91E69A410FF56F171292 /* SimpleTextureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTextureView.swift; sourceTree = "<group>"; };
+		1D4C926FB2CA9DD413C52D19 /* TransitionCamera.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransitionCamera.metal; sourceTree = "<group>"; };
 		1D4C928DA5B5C8DAA3CD991F /* SimpleShaderRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SimpleShaderRender.metal; sourceTree = "<group>"; };
 		1D4C93DBDCCFD497F0C6F9C1 /* TextureRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TextureRender.metal; sourceTree = "<group>"; };
 		1D4C945E49C103AE50CD379A /* ListView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView1.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				1D4C9AE60696AA5C009595D5 /* Model.metal */,
 				1D4C9557143739ADF15FAC5B /* TransitionSplit.metal */,
 				1D4C9E77F57AC96D4DF41E90 /* Transition3D.metal */,
+				1D4C926FB2CA9DD413C52D19 /* TransitionCamera.metal */,
 			);
 			path = Transition;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				1D4C986DF703F35E56E98FE6 /* Model.metal in Sources */,
 				1D4C99C1B70D1F4A4FA388DD /* TransitionSplit.metal in Sources */,
 				1D4C98D6601100321D70850D /* Transition3D.metal in Sources */,
+				1D4C96A6B352E06499982795 /* TransitionCamera.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
