@@ -75,7 +75,6 @@ public extension UIImage {
 }
 
 // MARK: - Methods
-
 public extension UIImage {
     /// SwifterSwift: Compressed UIImage from original UIImage.
     ///

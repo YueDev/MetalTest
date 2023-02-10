@@ -76,7 +76,6 @@ enum TextureManager {
         return texture
     }
 
-
     static func textTexture(text: String, device: MTLDevice?) -> MTLTexture? {
         let label = UILabel()
         label.text = text
@@ -87,8 +86,6 @@ enum TextureManager {
 
         label.numberOfLines = .max
         label.sizeToFit()
-
-
 
         guard let uiImage = label.createUIImage() else {
             return nil
