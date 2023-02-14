@@ -14,7 +14,6 @@
 		1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C95C6B500A9F527814403 /* TextureManager.swift */; };
 		1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */; };
 		1D4C986DF703F35E56E98FE6 /* Model.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9AE60696AA5C009595D5 /* Model.metal */; };
-		1D4C98D6601100321D70850D /* Transition3D.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E77F57AC96D4DF41E90 /* Transition3D.metal */; };
 		1D4C9A100F0431B86209192D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C90AFDFD0A0C9AF61A890 /* Model.swift */; };
 		1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C98834EEA45D4D17193E1 /* UIImageExtension.swift */; };
 		1D4C9B450669E92810CDEEF9 /* ListView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C945E49C103AE50CD379A /* ListView1.swift */; };
@@ -46,7 +45,6 @@
 		1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMetalView.swift; sourceTree = "<group>"; };
 		1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTextureView.swift; sourceTree = "<group>"; };
 		1D4C9E6CD1D88B877EAAFA4F /* ListView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView2.swift; sourceTree = "<group>"; };
-		1D4C9E77F57AC96D4DF41E90 /* Transition3D.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Transition3D.metal; sourceTree = "<group>"; };
 		1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMapView.swift; sourceTree = "<group>"; };
 		8A0C73F72946E281000A7ADB /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A0C73FA2946E281000A7ADB /* MetalTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTestApp.swift; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				1D4C9AE60696AA5C009595D5 /* Model.metal */,
-				1D4C9E77F57AC96D4DF41E90 /* Transition3D.metal */,
 				1D4C926FB2CA9DD413C52D19 /* TransitionCamera.metal */,
 			);
 			path = Transition;
@@ -305,7 +302,6 @@
 				1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */,
 				1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */,
 				1D4C986DF703F35E56E98FE6 /* Model.metal in Sources */,
-				1D4C98D6601100321D70850D /* Transition3D.metal in Sources */,
 				1D4C96A6B352E06499982795 /* TransitionCamera.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
