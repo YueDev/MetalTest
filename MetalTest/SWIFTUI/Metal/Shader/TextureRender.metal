@@ -9,6 +9,7 @@
 
 using namespace metal;
 
+
 namespace TextureRender {
 
     //输入结构 由于stage_in要求有attribute(0)，因此需要包装下
