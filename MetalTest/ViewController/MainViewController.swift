@@ -91,6 +91,14 @@ class MainViewController: UIViewController {
         UITableView.init(frame: .zero, style: .insetGrouped)
     }()
 
+    private let button = {
+        let b = UIButton.init(type: .roundedRect)
+        b.setTitle("Offscreen render", for: .normal)
+        b.sizeToFit()
+        return b
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -119,6 +127,13 @@ class MainViewController: UIViewController {
             .disposed(by: disposeBag)
 
         view.addSubview(tableView)
+        
+        button.rx.tap.bind { [self] in
+            let vc = MetalOffscreenViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }.disposed(by: disposeBag)
+        
+        view.addSubview(button)
 
     }
 
@@ -126,6 +141,10 @@ class MainViewController: UIViewController {
         super.viewWillLayoutSubviews()
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        button.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-32)
         }
     }
 }

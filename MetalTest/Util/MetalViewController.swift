@@ -198,7 +198,6 @@ class MetalViewController: UIViewController {
         scaleBuffer = device.makeBuffer(bytes: &vertexScaleData, length: MemoryLayout.stride(ofValue: vertexScaleData), options: [])
 
 
-
         //生成fragment buffer 这里和opengl的uniform差不多，给fragment传随时刷新的数据
         var fragmentData: Float = 0
         //这里不是数组的话，必须加上&

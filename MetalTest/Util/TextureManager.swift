@@ -34,9 +34,23 @@ enum TextureManager {
             return nil
         }
         return toMTLTexture(image: image, device: device)
-
     }
 
+    static func emptyTexture(device: MTLDevice?) -> MTLTexture? {
+        
+        guard let device = device else {
+            return nil
+        }
+        
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
+               width: defaultWidth,
+               height: defaultHeight,
+               mipmapped: false)
+        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        return device.makeTexture(descriptor: textureDescriptor)
+        
+    }
+    
     static func toMTLTexture(image: UIImage, device: MTLDevice?) -> MTLTexture? {
 
         guard let device = device else {
