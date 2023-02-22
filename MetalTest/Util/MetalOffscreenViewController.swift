@@ -35,9 +35,6 @@ class MetalOffscreenViewController: UIViewController {
     //离屏的顶点buffer 坐标和fragment的uv
     private var offscreenVertexBuffer: MTLBuffer? = nil
     
-
-    
-    
     //纹理
     //metallayer的纹理，即目标纹理
     private var dstTexture: MTLTexture? = nil
@@ -158,6 +155,7 @@ class MetalOffscreenViewController: UIViewController {
         let pipeLineDescriptor = MTLRenderPipelineDescriptor()
         pipeLineDescriptor.vertexFunction = vertexProgram
         pipeLineDescriptor.fragmentFunction = fragmentProgram
+
         //VertexDescriptor来描述顶点数据 顶点shader那边用[[ state_in ]]接收
         let vertexDescriptor = MTLVertexDescriptor()
         vertexDescriptor.attributes[0].format = .float4

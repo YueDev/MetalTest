@@ -51,6 +51,7 @@ namespace OffscreenShader {
      ){
          float4 out = texture.sample(sampler, in.uv);
 //         out.a *= 0.75;
+//         out = float4(0.0, 1.0, 0.0, 1.0);
          return out;
      }
 }
