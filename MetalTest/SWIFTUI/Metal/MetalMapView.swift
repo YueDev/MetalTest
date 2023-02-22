@@ -21,7 +21,8 @@ struct MetalMapView: UIViewRepresentable {
         mtkView.delegate = context.coordinator
         mtkView.backgroundColor = .red
         mtkView.enableSetNeedsDisplay = true
-        mtkView.sampleCount = 4
+        //mass later
+//        mtkView.sampleCount = 4
         //        mtkView.isPaused = true
         //        mtkView.clearColor = MTLClearColor(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)
         mtkView.drawableSize = mtkView.frame.size
