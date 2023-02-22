@@ -100,7 +100,7 @@ class MetalOffscreenViewController: UIViewController {
         sticker1Model = .init(1.0)
         sticker1Model = sticker1Model.scaledBy(x: 0.5, y: 0.5, z: 1.0)
 //        sticker1Model = sticker1Model.translatedBy(x: 0.0, y: -1.0, z: 0.0)
-        sticker1Model = sticker1Model.rotatedBy(rotationAngle: 90, x: 0.0, y: 0.0, z: 0.1)
+        sticker1Model = sticker1Model.rotatedBy(rotationAngle: 2, x: 0.0, y: 0.0, z: 0.1)
 //        sticker1Model = sticker1Model.translatedBy(x: 0.0, y: 1.0, z: 0.0)
         
         //view
@@ -275,6 +275,7 @@ class MetalOffscreenViewController: UIViewController {
         vertexDescriptor.attributes[0].format = .float4
         vertexDescriptor.attributes[0].bufferIndex = 0
         vertexDescriptor.attributes[0].offset = 0
+        
         // 每组数据的步长 每4个Float数据是一组
         vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0]) * 4
         // 把创建好的vertexDescriptor 传给pipeLineDescriptor
