@@ -6,6 +6,7 @@
 //
 
 #include <metal_stdlib>
+using namespace metal;
 
 namespace SimpleShaderRender {
 
@@ -37,6 +38,42 @@ namespace SimpleShaderRender {
      VertexOut in [[ stage_in ]]
      ){
          return in.color;
+     }
+    
+    
+    // matrix
+    
+    struct MatrixVertexIn {
+        float4 positionAndUV [[ attribute(0) ]];
+    };
+    
+    struct MatrixVertexOut{
+        float4 position [[ position ]];
+        float2 uv;
+    };
+    
+    
+    vertex MatrixVertexOut matrix_vertex
+    (
+     MatrixVertexIn in [[ stage_in ]],
+     constant float4x4& model [[ buffer(1) ]],
+     constant float4x4& view [[ buffer(2) ]],
+     constant float4x4& projection [[ buffer(3) ]]
+     ){
+         MatrixVertexOut out;
+         float4 position = float4(in.positionAndUV.xy, 0.0, 1.0);
+         out.position = projection * view * model * position;
+         out.uv = in.positionAndUV.zw;
+         return out;
+     }
+    
+    fragment float4 matrix_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<float> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]]
+     ){
+         return texture.sample(sampler, in.uv);
      }
     
 }

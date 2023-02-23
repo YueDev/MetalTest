@@ -137,4 +137,20 @@ enum TextureManager {
         return texture
     }
 
+    
+    private func defaultSamplerState(device: MTLDevice) -> MTLSamplerState? {
+        let samplerDescriptor = MTLSamplerDescriptor()
+        //线性采样 默认是临近采样
+        samplerDescriptor.minFilter = .linear
+        samplerDescriptor.magFilter = .linear
+        //以下的可以不写，默认值就很好
+        //s r t三个坐标的 环绕方式，默认就是clampToEdge
+        samplerDescriptor.sAddressMode = .clampToEdge
+        samplerDescriptor.rAddressMode = .clampToEdge
+        samplerDescriptor.tAddressMode = .clampToEdge
+        //标准化到0 1 默认true
+        samplerDescriptor.normalizedCoordinates = true
+        return device.makeSamplerState(descriptor: samplerDescriptor)
+    }
+    
 }

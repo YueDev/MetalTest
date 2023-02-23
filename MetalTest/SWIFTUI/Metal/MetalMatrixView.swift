@@ -26,14 +26,13 @@ struct MetalMatrixView: UIViewRepresentable {
         mtkView.enableSetNeedsDisplay = true
         //mass later
         mtkView.sampleCount = 4
-        //        mtkView.isPaused = true
-        //        mtkView.clearColor = MTLClearColor(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)
         mtkView.drawableSize = mtkView.frame.size
         return mtkView
     }
     
     func updateUIView(_ mtkView: UIViewType, context: Context) {
-        context.coordinator.changeColor(percent: progress)
+        let rotate = Float(progress * 360) - 180.0
+        context.coordinator.changeRotate(rotate)
         mtkView.setNeedsDisplay()
     }
     
@@ -41,25 +40,29 @@ struct MetalMatrixView: UIViewRepresentable {
         Coordinator(device: device)
     }
     
-    
-    
-    
     class Coordinator: NSObject, MTKViewDelegate {
         
         var device: MTLDevice?
+        private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
+        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
         
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
-        private var colorBuffer: MTLBuffer? = nil
         
-        //渲染用的
+        //mvp matrix
+        private var modelMatrix = matrix_float4x4.init(1.0)
+        private var viewMatrix = matrix_float4x4.init(1.0)
+        private var projectionMatrix  = matrix_float4x4.init(1.0)
+        
+        //纹理
+        private var samplerState: MTLSamplerState? = nil
+        private var texture: MTLTexture? = nil
+
+        
+        //渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
         private var pipeLineState: MTLRenderPipelineState? = nil
         private var commandQueue: MTLCommandQueue? = nil
-        
-        //shader
-        private let vertexShaderName = "SimpleShaderRender::simple_vertex"
-        private let fragmentShaderName = "SimpleShaderRender::simple_fragment"
         
         init(device: MTLDevice?) {
             super.init()
@@ -68,37 +71,53 @@ struct MetalMatrixView: UIViewRepresentable {
         }
         
         func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+            guard size.width > 0 && size.height > 0 else {
+                return
+            }
             
+            let scale = Float(size.width) / Float(size.height)
+            let fovy:Float = 45.0
+            let f = 1.0 / tan(fovy * (Float)(Double.pi / 360));
+            viewMatrix = matrix_float4x4.init(eyeX: 0, eyeY: 0, eyeZ: f,
+                                              centerX: 0, centerY: 0, centerZ: 0,
+                                              upX: 0, upY: 1, upZ: 0)
+            //projecttion
+            projectionMatrix = matrix_float4x4.init(fovy: fovy, aspect: scale, zNear: 0.0, zFar: 100.0)
+            view.setNeedsDisplay()
         }
         
+        
         func draw(in view: MTKView) {
+            
             render(in: view)
         }
+        
+        
+        
+        //更新角度
+        func changeRotate(_ rotate: Float) {
+            modelMatrix = .init(1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
+            modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
+        }
+        
+        
         
         private func readyForRender() {
             guard let device = device else {
                 return
             }
             
-            //顶点数据
+            //顶点数据 position和纹理的uv
             let vertexData: [Float] = [
-                -0.9, 0.9, 0.0,
-                 -0.9, -0.9, 0.0,
-                 0.9, 0.9, 0.0,
-                 0.9, -0.9, 0.0
+                -1.0, 1.0, 0.0, 0.0,
+                 -1.0, -1.0, 0.0, 1.0,
+                 1.0, 1.0, 1.0, 0.0,
+                 1.0, -1.0, 1.0, 1.0,
             ]
+            
             let vertexDataSize = MemoryLayout.stride(ofValue: vertexData[0]) * vertexData.count
             vertexBuffer = device.makeBuffer(bytes: vertexData, length: vertexDataSize, options: [])
-            
-            //顶点对应的颜色数据
-            let colorData: [Float] = [
-                            0.5, 0.4, 0.3,
-                            0.6, 0.5, 0.2,
-                            0.2, 0.7, 0.5,
-                            0.5, 0.5, 0.8,
-                        ]
-                        let colorSize = MemoryLayout.stride(ofValue: colorData[0]) * colorData.count
-                        colorBuffer = device.makeBuffer(bytes: colorData, length: colorSize, options: [])
             
             //生成shader program
             guard let defaultLibrary = device.makeDefaultLibrary() else {
@@ -114,14 +133,28 @@ struct MetalMatrixView: UIViewRepresentable {
             pipeLineDescriptor.fragmentFunction = fragmentProgram
             //这里要设置像素格式
             pipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-            
+            //顶点的描述
+            let vertexDescriptor = MTLVertexDescriptor()
+            vertexDescriptor.attributes[0].format = .float4
+            vertexDescriptor.attributes[0].bufferIndex = 0
+            vertexDescriptor.attributes[0].offset = 0
+            // 每组数据的步长 每4个Float数据是一组
+            vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0]) * 4
+            // 把创建好的vertexDescriptor 传给pipeLineDescriptor
+            pipeLineDescriptor.vertexDescriptor = vertexDescriptor
+            //msaa采样数
             pipeLineDescriptor.rasterSampleCount = 4
-            
+            pipeLineDescriptor.sampleCount = 4
+            //生成 pipeLineState
             pipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
             
             //生成命令队列 和 命令buffer
             commandQueue = device.makeCommandQueue()
             
+            //纹理
+            texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
+            samplerState = TextureManager.defaultSamplerState(device: device)
+
         }
         
         private func render(in view: MTKView) {
@@ -137,15 +170,23 @@ struct MetalMatrixView: UIViewRepresentable {
             
             renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
             renderPass.colorAttachments[0].loadAction = .clear
-//            renderPass.colorAttachments[0].storeAction = .
             
             guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
                 return
             }
-            
             renderEncoder.setRenderPipelineState(pipeLineState)
+            
+            //发送顶点buffer
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            renderEncoder.setVertexBuffer(colorBuffer, offset: 0, index: 1)
+            //发送mvp
+            renderEncoder.setVertexBytes(&modelMatrix, length: MemoryLayout.stride(ofValue: modelMatrix), index: 1)
+            renderEncoder.setVertexBytes(&viewMatrix, length: MemoryLayout.stride(ofValue: viewMatrix), index: 2)
+            renderEncoder.setVertexBytes(&projectionMatrix, length: MemoryLayout.stride(ofValue: projectionMatrix), index: 3)
+            
+            //设置纹理
+            renderEncoder.setFragmentTexture(texture, index: 0)
+            renderEncoder.setFragmentSamplerState(samplerState, index: 0)
+            
             //绘制三角形，1个
             renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
             //endEncoding 结束渲染编码
@@ -156,17 +197,7 @@ struct MetalMatrixView: UIViewRepresentable {
             commandBuffer.commit()
         }
 
-        //更新颜色
-        func changeColor(percent: Double) {
-            guard let colors = colorBuffer?.contents().bindMemory(to: Float.self, capacity: 12) else {
-                return
-            }
-            colors[0] = Float(percent)
-            colors[4] = Float(percent)
-            colors[8] = Float(percent)
-            colors[9] = Float(percent)
-            colors[10] = Float(percent)
-        }
+
     }
 }
 
