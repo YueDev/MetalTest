@@ -80,7 +80,7 @@ enum TextureManager {
         let label = UILabel()
         label.text = text
         label.textColor = .orange
-        label.font = UIFont.systemFont(ofSize: 50, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.backgroundColor = UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.2)
         label.alpha = 1.0
 

@@ -28,11 +28,15 @@ struct HomeView: View {
                         homeText("ListView2")
                     }
                     NavigationLink(destination: SimpleMetalView()) {
-                        homeText("SimpleMetalView")
+                        homeText("MetalView")
                     }
 
-                    NavigationLink(destination: TextureView()) {
+                    NavigationLink(destination: SimpleTextureView()) {
                         homeText("TextureView")
+                    }
+                    
+                    NavigationLink(destination: SimpleMatrixView()) {
+                        homeText("MatrixView")
                     }
 
                 }.padding()

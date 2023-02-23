@@ -7,14 +7,19 @@
 
 import SwiftUI
 
-struct TestMetalView: View {
+struct SimpleMatrixView: View {
+    
+    @State private var progress = 0.5
+    
     var body: some View {
-        Text("Test Metal!")
+        MetalMatrixView(progress: progress)
+        Slider(value: $progress, in: 0.0...1.0)
+            .padding(32)
     }
 }
 
 struct TestMetalView_Previews: PreviewProvider {
     static var previews: some View {
-        TestMetalView()
+        SimpleMatrixView()
     }
 }

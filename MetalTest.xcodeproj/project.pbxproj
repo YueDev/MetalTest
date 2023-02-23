@@ -24,7 +24,8 @@
 		8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C73FE2946E282000A7ADB /* Assets.xcassets */; };
 		8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */; };
 		8A1C4BDE2950817500DA5884 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
-		8A7740A4299DD6C100FF8F06 /* TestMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7740A3299DD6C100FF8F06 /* TestMetalView.swift */; };
+		8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */; };
+		8A7740A4299DD6C100FF8F06 /* SImpleMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7740A3299DD6C100FF8F06 /* SImpleMatrixView.swift */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */; };
@@ -51,7 +52,8 @@
 		8A0C73FE2946E282000A7ADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A0C74012946E282000A7ADB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeStyleView.swift; sourceTree = "<group>"; };
-		8A7740A3299DD6C100FF8F06 /* TestMetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMetalView.swift; sourceTree = "<group>"; };
+		8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalMatrixView.swift; sourceTree = "<group>"; };
+		8A7740A3299DD6C100FF8F06 /* SImpleMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SImpleMatrixView.swift; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyRepository.swift; sourceTree = "<group>"; };
@@ -151,10 +153,11 @@
 		8A1359CD2971345400C3257F /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
 				1D4C96E72EA54463A52F886E /* Shader */,
-				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
 				1D4C95488AC3E3A22275A042 /* Util */,
+				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
+				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
+				8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -163,15 +166,15 @@
 			isa = PBXGroup;
 			children = (
 				8A1359CD2971345400C3257F /* Metal */,
-				8A0C73FC2946E281000A7ADB /* HomeView.swift */,
-				8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */,
 				8AF9B22D294AA9D200B03C14 /* Kirby */,
 				8AC41C482949530700C5E98B /* WWDC */,
 				1D4C966B36925631F3DC3A01 /* ListView */,
 				1D4C9BA5A60EBB88D95AAAB2 /* TurboCollage */,
+				8A0C73FC2946E281000A7ADB /* HomeView.swift */,
+				8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */,
 				1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */,
 				1D4C91E69A410FF56F171292 /* SimpleTextureView.swift */,
-				8A7740A3299DD6C100FF8F06 /* TestMetalView.swift */,
+				8A7740A3299DD6C100FF8F06 /* SImpleMatrixView.swift */,
 			);
 			path = SWIFTUI;
 			sourceTree = "<group>";
@@ -282,7 +285,7 @@
 				8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */,
 				8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */,
 				8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */,
-				8A7740A4299DD6C100FF8F06 /* TestMetalView.swift in Sources */,
+				8A7740A4299DD6C100FF8F06 /* SImpleMatrixView.swift in Sources */,
 				1D4C9C5EC14BBBFA0AD7D4DE /* ListView2.swift in Sources */,
 				1D4C9B450669E92810CDEEF9 /* ListView1.swift in Sources */,
 				1D4C9A100F0431B86209192D /* Model.swift in Sources */,
@@ -293,6 +296,7 @@
 				1D4C922E12A3224C00B138F1 /* TextureRender.metal in Sources */,
 				1D4C9CD3AD89045B06C4B11A /* SimpleTextureView.swift in Sources */,
 				1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */,
+				8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */,
 				1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */,
 				1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */,
 			);

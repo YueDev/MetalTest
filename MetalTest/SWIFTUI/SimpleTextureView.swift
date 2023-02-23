@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TextureView: View {
+struct SimpleTextureView: View {
     
     @State private var progress = 0.5
     
