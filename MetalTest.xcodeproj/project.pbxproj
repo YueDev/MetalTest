@@ -17,6 +17,7 @@
 		1D4C9818F25891CC4EDFA88A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C96B10F1D81786B94352E /* MainViewController.swift */; };
 		1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */; };
 		1D4C9DBE7D8336E423375A84 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9C96065691058008C691 /* UIImageExtension.swift */; };
+		1D4C9E389158D6C72757DC23 /* AppFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C988BA2A9E286B7113676 /* AppFileManager.swift */; };
 		1D4C9F553B26659193EA450A /* TransitionSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */; };
 		8A08BABE299F5C84001437F6 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A08BABD299F5C84001437F6 /* Matrix.swift */; };
 		8A0DC2C9293EE73D00FD3310 /* TransitionGL.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A0DC2C8293EE73D00FD3310 /* TransitionGL.metal */; };
@@ -41,6 +42,7 @@
 		1D4C93999731916B97F066B8 /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
 		1D4C95B476BEA42A2D6779DE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		1D4C96B10F1D81786B94352E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1D4C988BA2A9E286B7113676 /* AppFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
 		1D4C9A1BFC9AE9E14BC51A0C /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		1D4C9B34E8E2EE2D50EFA9E0 /* TransitionSimple.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransitionSimple.metal; sourceTree = "<group>"; };
 		1D4C9BF64025397DCFAE54BB /* TransitionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionVC.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				1D4C93999731916B97F066B8 /* MetalViewController.swift */,
 				8A7740A5299E0D1000FF8F06 /* MetalOffscreenViewController.swift */,
 				8A08BABD299F5C84001437F6 /* Matrix.swift */,
+				1D4C988BA2A9E286B7113676 /* AppFileManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				1D4C9785AF7F9148940BD8E6 /* ListViewController.swift in Sources */,
 				1D4C9751E888EB5621B63756 /* TransitionMask.metal in Sources */,
 				1D4C9C5F0076401DAAD07D27 /* TransitionVC.swift in Sources */,
+				1D4C9E389158D6C72757DC23 /* AppFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
