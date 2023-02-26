@@ -13,6 +13,7 @@
 		1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C95C6B500A9F527814403 /* TextureManager.swift */; };
 		1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */; };
 		1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C9E25272FB499A5FE0BD6 /* Matrix.swift */; };
+		1D4C990BDD85230935641A63 /* AppFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C95E0D74EC481F422A646 /* AppFileManager.swift */; };
 		1D4C9A100F0431B86209192D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C90AFDFD0A0C9AF61A890 /* Model.swift */; };
 		1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C98834EEA45D4D17193E1 /* UIImageExtension.swift */; };
 		1D4C9B450669E92810CDEEF9 /* ListView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4C945E49C103AE50CD379A /* ListView1.swift */; };
@@ -40,6 +41,7 @@
 		1D4C93DBDCCFD497F0C6F9C1 /* TextureRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TextureRender.metal; sourceTree = "<group>"; };
 		1D4C945E49C103AE50CD379A /* ListView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView1.swift; sourceTree = "<group>"; };
 		1D4C95C6B500A9F527814403 /* TextureManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureManager.swift; sourceTree = "<group>"; };
+		1D4C95E0D74EC481F422A646 /* AppFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
 		1D4C98834EEA45D4D17193E1 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1D4C9D85B182C39043B985C4 /* SimpleMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMetalView.swift; sourceTree = "<group>"; };
 		1D4C9E25272FB499A5FE0BD6 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		1D4C9844D25C377A5C234FBF /* UIKIT */ = {
 			isa = PBXGroup;
 			children = (
+				1D4C95E0D74EC481F422A646 /* AppFileManager.swift */,
 			);
 			path = UIKIT;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */,
 				1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */,
 				1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */,
+				1D4C990BDD85230935641A63 /* AppFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
