@@ -36,7 +36,7 @@ enum TextureManager {
         return toMTLTexture(image: image, device: device)
     }
 
-    static func emptyTexture(device: MTLDevice?) -> MTLTexture? {
+    static func emptyTexture(device: MTLDevice?, useMSAA: Bool = false) -> MTLTexture? {
         
         guard let device = device else {
             return nil
@@ -47,9 +47,18 @@ enum TextureManager {
                height: defaultHeight,
                mipmapped: false)
         textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        
+        if useMSAA {
+            textureDescriptor.textureType = .type2DMultisample
+            textureDescriptor.sampleCount = 4
+            
+        }
+
+        
         return device.makeTexture(descriptor: textureDescriptor)
         
     }
+    
     
     static func toMTLTexture(image: UIImage, device: MTLDevice?) -> MTLTexture? {
 

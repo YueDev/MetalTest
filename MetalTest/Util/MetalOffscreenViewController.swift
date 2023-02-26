@@ -122,7 +122,7 @@ class MetalOffscreenViewController: UIViewController {
         }
         
         //目标纹理
-        dstTexture = TextureManager.emptyTexture(device: device)
+        dstTexture = TextureManager.emptyTexture(device: device, useMSAA: true)
         bgTexture = TextureManager.defaultTextureByAssets(device: device, name: "test2")
         //贴纸纹理
         stickerTexture1 = TextureManager.defaultTextureByAssets(device: device, name: "sticker1")
@@ -175,6 +175,8 @@ class MetalOffscreenViewController: UIViewController {
         pipeLineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha;
         pipeLineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha;
         pipeLineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha;
+        
+        pipeLineDescriptor.rasterSampleCount = 4
         
         //根据pipeLineDescriptor生成pipeLineState
         offscreenPipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
@@ -301,7 +303,7 @@ class MetalOffscreenViewController: UIViewController {
         else {
             return
         }
-        
+
         //render pass设置纹理
         renderPass.colorAttachments[0].texture = drawable.texture
         
