@@ -144,7 +144,6 @@ struct MetalMatrixView: UIViewRepresentable {
             pipeLineDescriptor.vertexDescriptor = vertexDescriptor
             //msaa采样数
             pipeLineDescriptor.rasterSampleCount = 4
-            pipeLineDescriptor.sampleCount = 4
             //生成 pipeLineState
             pipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
             
