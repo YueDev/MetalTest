@@ -1,15 +1,17 @@
 //
-//  MetalMatrixView.swift
+//  MetalGaussianBlurView.swift
 //  MetalTest
 //
-//  Created by YUE on 2023/2/23.
+//  Created by YUE on 2023/4/12.
 //
+
 
 import Foundation
 import SwiftUI
 import MetalKit
+import MetalPerformanceShaders
 
-struct MetalMatrixView: UIViewRepresentable {
+struct MetalGaussianBlurView: UIViewRepresentable {
     
     let progress:Double
     
@@ -32,8 +34,7 @@ struct MetalMatrixView: UIViewRepresentable {
     }
     
     func updateUIView(_ mtkView: UIViewType, context: Context) {
-        let rotate = Float(progress * 360) - 180.0
-        context.coordinator.changeRotate(rotate)
+        context.coordinator.changeProgress(Float(progress))
         mtkView.setNeedsDisplay()
     }
     
@@ -50,17 +51,21 @@ struct MetalMatrixView: UIViewRepresentable {
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
         
-        //mvp matrix
+        // mvp matrix
         private var modelMatrix = matrix_float4x4.init(1.0)
         private var viewMatrix = matrix_float4x4.init(1.0)
         private var projectionMatrix  = matrix_float4x4.init(1.0)
         
-        //纹理
+        // 纹理
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
-
         
-        //渲染
+        // 渲染的纹理
+        private var renderTexture: MTLTexture? = nil
+
+        private var blurSize: Float = 0.0
+        
+        // 渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
         private var pipeLineState: MTLRenderPipelineState? = nil
         private var commandQueue: MTLCommandQueue? = nil
@@ -94,12 +99,9 @@ struct MetalMatrixView: UIViewRepresentable {
         }
         
         //更新角度
-        func changeRotate(_ rotate: Float) {
-            modelMatrix = .init(1.0)
-            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
-            modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
+        func changeProgress(_ progress: Float) {
+            blurSize = progress * 5
         }
-        
         
         
         private func readyForRender() {
@@ -150,14 +152,44 @@ struct MetalMatrixView: UIViewRepresentable {
             commandQueue = device.makeCommandQueue()
             
             //纹理
-            texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
+            let textureName = TextureManager.getPeopleTextureName()
+            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
             samplerState = TextureManager.defaultSamplerState(device: device)
 
+            modelMatrix = .init(1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
+        }
+        
+        
+        //利用系统的MPSImageGaussianBlur，进行高斯模糊
+        private func blur(in view: MTKView) {
+            guard
+                let device = device,
+                let texture = texture,
+                let drawable = view.currentDrawable,
+                let commandBuffer = commandQueue?.makeCommandBuffer()
+            else {
+                return
+            }
+            
+            renderTexture = TextureManager.newTextureForKernel(device: device, width: texture.width, height: texture.height)
+            guard let renderTexture = renderTexture else {
+                return
+            }
+            
+            let filter = MPSImageGaussianBlur(device: device, sigma: blurSize)
+            filter.encode(commandBuffer: commandBuffer, sourceTexture: texture, destinationTexture: renderTexture)
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
         }
         
         private func render(in view: MTKView) {
+            //用系统的filter进行模糊
+            blur(in: view)
+            
             //drawable和renderPassDescriptor要用MTKView的
             guard
+                let renderTexture = renderTexture,
                 let drawable = view.currentDrawable,
                 let renderPass = view.currentRenderPassDescriptor,
                 let pipeLineState = pipeLineState,
@@ -182,7 +214,7 @@ struct MetalMatrixView: UIViewRepresentable {
             renderEncoder.setVertexBytes(&projectionMatrix, length: MemoryLayout.stride(ofValue: projectionMatrix), index: 3)
             
             //设置纹理
-            renderEncoder.setFragmentTexture(texture, index: 0)
+            renderEncoder.setFragmentTexture(renderTexture, index: 0)
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
             
             //绘制三角形，1个
@@ -196,4 +228,3 @@ struct MetalMatrixView: UIViewRepresentable {
         }
     }
 }
-

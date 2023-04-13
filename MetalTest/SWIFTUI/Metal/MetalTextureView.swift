@@ -34,7 +34,7 @@ struct MetalTextureView: UIViewRepresentable {
     }
 
     class Coordinator: NSObject, MTKViewDelegate {
-
+        
         var device: MTLDevice?
         //shader name
         private let vertexShaderName = "TextureRender::shader_vertex"

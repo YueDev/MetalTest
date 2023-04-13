@@ -10,6 +10,15 @@ import MetalKit
 //纹理相关方法
 
 enum TextureManager {
+    
+    private static var sIndex = 0
+    
+    static func getPeopleTextureName() -> String {
+        let index = sIndex % 8
+        sIndex += 1
+        return "people\(index)"
+    }
+    
 
     private static let defaultWidth = 1024
     private static let defaultHeight = 1024
@@ -40,7 +49,7 @@ enum TextureManager {
 
 
     static func toMTLTexture(image: UIImage, device: MTLDevice?) -> MTLTexture? {
-
+        
         guard let device = device else {
             return nil
         }
@@ -105,6 +114,7 @@ enum TextureManager {
         }
 
         let textureLoader = MTKTextureLoader(device: device)
+        
         //好像要把srgb强制为0关掉，否则偏色严重
         return try? textureLoader.newTexture(cgImage: cgImage, options: [.SRGB: 0])
     }
@@ -126,13 +136,13 @@ enum TextureManager {
     }
 
 
-    static func newTextureForKernel(device: MTLDevice) -> MTLTexture? {
+    static func newTextureForKernel(device: MTLDevice, width:Int = defaultWidth, height: Int = defaultHeight) -> MTLTexture? {
 
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
-               width: defaultWidth, height: defaultHeight, mipmapped: false)
+               width: width, height: height, mipmapped: false)
         // textureDescriptor.usage = MTLTextureUsage(rawValue: MTLTextureUsage.renderTarget.rawValue | MTLTextureUsage.shaderRead.rawValue)
         textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
-
+        
         let texture = device.makeTexture(descriptor: textureDescriptor)
         return texture
     }

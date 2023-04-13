@@ -1,15 +1,15 @@
 //
-//  MetalMatrixView.swift
+//  MetalZoomBlurView.swift
 //  MetalTest
 //
-//  Created by YUE on 2023/2/23.
+//  Created by YUE on 2023/4/11.
 //
 
 import Foundation
 import SwiftUI
 import MetalKit
 
-struct MetalMatrixView: UIViewRepresentable {
+struct MetalZoomBlurView: UIViewRepresentable {
     
     let progress:Double
     
@@ -32,8 +32,7 @@ struct MetalMatrixView: UIViewRepresentable {
     }
     
     func updateUIView(_ mtkView: UIViewType, context: Context) {
-        let rotate = Float(progress * 360) - 180.0
-        context.coordinator.changeRotate(rotate)
+        context.coordinator.changeProgress(Float(progress))
         mtkView.setNeedsDisplay()
     }
     
@@ -45,7 +44,7 @@ struct MetalMatrixView: UIViewRepresentable {
         
         var device: MTLDevice?
         private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
-        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
+        private let fragmentShaderName = "SimpleShaderRender::zoom_fragment"
         
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
@@ -59,6 +58,7 @@ struct MetalMatrixView: UIViewRepresentable {
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
 
+        private var blurSize: Float = 0.0
         
         //渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
@@ -94,10 +94,8 @@ struct MetalMatrixView: UIViewRepresentable {
         }
         
         //更新角度
-        func changeRotate(_ rotate: Float) {
-            modelMatrix = .init(1.0)
-            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
-            modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
+        func changeProgress(_ progress: Float) {
+            blurSize = progress
         }
         
         
@@ -150,9 +148,12 @@ struct MetalMatrixView: UIViewRepresentable {
             commandQueue = device.makeCommandQueue()
             
             //纹理
-            texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
+            let textureName = TextureManager.getPeopleTextureName()
+            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
             samplerState = TextureManager.defaultSamplerState(device: device)
 
+            modelMatrix = .init(1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
         }
         
         private func render(in view: MTKView) {
@@ -180,6 +181,8 @@ struct MetalMatrixView: UIViewRepresentable {
             renderEncoder.setVertexBytes(&modelMatrix, length: MemoryLayout.stride(ofValue: modelMatrix), index: 1)
             renderEncoder.setVertexBytes(&viewMatrix, length: MemoryLayout.stride(ofValue: viewMatrix), index: 2)
             renderEncoder.setVertexBytes(&projectionMatrix, length: MemoryLayout.stride(ofValue: projectionMatrix), index: 3)
+            
+            renderEncoder.setFragmentBytes(&blurSize, length: MemoryLayout.stride(ofValue: blurSize), index: 0)
             
             //设置纹理
             renderEncoder.setFragmentTexture(texture, index: 0)

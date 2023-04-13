@@ -1,18 +1,17 @@
 //
-//  MetalMatrixView.swift
+//  MetalShapeView.swift
 //  MetalTest
 //
-//  Created by YUE on 2023/2/23.
+//  Created by YUE on 2023/3/23.
 //
 
-import Foundation
 import SwiftUI
 import MetalKit
 
-struct MetalMatrixView: UIViewRepresentable {
+struct MetalShapeView: UIViewRepresentable {
     
     let progress:Double
-    
+
     typealias UIViewType = MTKView
     
     let device = {
@@ -32,8 +31,7 @@ struct MetalMatrixView: UIViewRepresentable {
     }
     
     func updateUIView(_ mtkView: UIViewType, context: Context) {
-        let rotate = Float(progress * 360) - 180.0
-        context.coordinator.changeRotate(rotate)
+        context.coordinator.changeProgress(progress: Float(progress))
         mtkView.setNeedsDisplay()
     }
     
@@ -41,72 +39,66 @@ struct MetalMatrixView: UIViewRepresentable {
         Coordinator(device: device)
     }
     
+    
+    
     class Coordinator: NSObject, MTKViewDelegate {
         
         var device: MTLDevice?
-        private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
-        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
+
+        private let vertexShaderName = "SimpleShaderRender::shape_vertex"
+        private let fragmentShaderName = "SimpleShaderRender::shape_fragment"
         
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
-        
-        //mvp matrix
-        private var modelMatrix = matrix_float4x4.init(1.0)
-        private var viewMatrix = matrix_float4x4.init(1.0)
-        private var projectionMatrix  = matrix_float4x4.init(1.0)
+        private var progressBuffer: MTLBuffer? = nil
+        private var ratioBufer: MTLBuffer? = nil
         
         //纹理
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
-
         
         //渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
         private var pipeLineState: MTLRenderPipelineState? = nil
         private var commandQueue: MTLCommandQueue? = nil
+    
+        
+        
+        public func changeProgress(progress: Float) {
+            guard let ptr = progressBuffer?.contents().bindMemory(to: Float.self, capacity: 1) else {
+                return
+            }
+            ptr.pointee = progress
+        }
+        
         
         init(device: MTLDevice?) {
             super.init()
             self.device = device
             readyForRender()
         }
-        
+        //尺寸更改
         func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-            guard size.width > 0 && size.height > 0 else {
+            guard
+                let ptr = ratioBufer?.contents().bindMemory(to: Float.self, capacity: 1),
+                size.width > 0,
+                size.height > 0
+            else {
                 return
             }
-            
             let scale = Float(size.width) / Float(size.height)
-            let fovy:Float = 45.0
-            let f = 1.0 / tan(fovy * (Float)(Double.pi / 360));
-            viewMatrix = matrix_float4x4.init(eyeX: 0, eyeY: 0, eyeZ: f,
-                                              centerX: 0, centerY: 0, centerZ: 0,
-                                              upX: 0, upY: 1, upZ: 0)
-            //projecttion
-            projectionMatrix = matrix_float4x4.init(fovy: fovy, aspect: scale, zNear: 0.0, zFar: 100.0)
+            ptr.pointee = scale
             view.setNeedsDisplay()
         }
         
-        
         func draw(in view: MTKView) {
-            
             render(in: view)
         }
-        
-        //更新角度
-        func changeRotate(_ rotate: Float) {
-            modelMatrix = .init(1.0)
-            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
-            modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
-        }
-        
-        
         
         private func readyForRender() {
             guard let device = device else {
                 return
             }
-            
             //顶点数据 position和纹理的uv
             let vertexData: [Float] = [
                 -1.0, 1.0, 0.0, 0.0,
@@ -118,14 +110,19 @@ struct MetalMatrixView: UIViewRepresentable {
             let vertexDataSize = MemoryLayout.stride(ofValue: vertexData[0]) * vertexData.count
             vertexBuffer = device.makeBuffer(bytes: vertexData, length: vertexDataSize, options: [])
             
+            //fragment buffer
+            var progress : Float = 0.5
+            progressBuffer = device.makeBuffer(bytes: &progress, length: MemoryLayout<Float>.stride, options: [])
+            var ratio = 1.0
+            ratioBufer = device.makeBuffer(bytes: &ratio, length: MemoryLayout<Float>.stride, options: [])
+
+            
             //生成shader program
             guard let defaultLibrary = device.makeDefaultLibrary() else {
                 return
             }
-            
             let vertexProgram = defaultLibrary.makeFunction(name: vertexShaderName)
             let fragmentProgram = defaultLibrary.makeFunction(name: fragmentShaderName)
-            
             //设置pipeLineDescriptor 生成pipeLineState
             let pipeLineDescriptor = MTLRenderPipelineDescriptor()
             pipeLineDescriptor.vertexFunction = vertexProgram
@@ -152,7 +149,7 @@ struct MetalMatrixView: UIViewRepresentable {
             //纹理
             texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
             samplerState = TextureManager.defaultSamplerState(device: device)
-
+            
         }
         
         private func render(in view: MTKView) {
@@ -165,7 +162,6 @@ struct MetalMatrixView: UIViewRepresentable {
             else {
                 return
             }
-            
             renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
             renderPass.colorAttachments[0].loadAction = .clear
             
@@ -176,15 +172,14 @@ struct MetalMatrixView: UIViewRepresentable {
             
             //发送顶点buffer
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            //发送mvp
-            renderEncoder.setVertexBytes(&modelMatrix, length: MemoryLayout.stride(ofValue: modelMatrix), index: 1)
-            renderEncoder.setVertexBytes(&viewMatrix, length: MemoryLayout.stride(ofValue: viewMatrix), index: 2)
-            renderEncoder.setVertexBytes(&projectionMatrix, length: MemoryLayout.stride(ofValue: projectionMatrix), index: 3)
+            //fragment buffer
+            renderEncoder.setFragmentBuffer(progressBuffer, offset: 0, index: 1)
+            renderEncoder.setFragmentBuffer(ratioBufer, offset: 0, index: 2)
+
             
             //设置纹理
             renderEncoder.setFragmentTexture(texture, index: 0)
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
-            
             //绘制三角形，1个
             renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
             //endEncoding 结束渲染编码
@@ -195,5 +190,17 @@ struct MetalMatrixView: UIViewRepresentable {
             commandBuffer.commit()
         }
     }
+    
+    
 }
 
+
+
+
+
+//preview
+struct MetalShapeView_Previews: PreviewProvider {
+    static var previews: some View {
+        MetalShapeView(progress: 0.5)
+    }
+}

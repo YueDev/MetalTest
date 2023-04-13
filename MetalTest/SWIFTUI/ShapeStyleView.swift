@@ -19,7 +19,9 @@ struct ShapeStyleView: View {
             Rectangle()
                 .foregroundStyle(.image(Image("charaBtn-waddledee")))
             // 用渐变去填充文字
-            Text("Chaocode2-4").font(.largeTitle).bold()
+            Text("Chaocode2-4")
+                .font(.largeTitle)
+                .bold()
                 .foregroundStyle(.linearGradient(colors: [Color.indigo, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing))
         }
         .padding()

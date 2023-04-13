@@ -1,15 +1,18 @@
 //
-//  MetalMatrixView.swift
+//  MetalRotateBlurView.swift
 //  MetalTest
 //
-//  Created by YUE on 2023/2/23.
+//  通过着色器来旋转图片 旋转模糊的基础
+//
+//  Created by YUE on 2023/4/13.
 //
 
 import Foundation
 import SwiftUI
 import MetalKit
+import MetalPerformanceShaders
 
-struct MetalMatrixView: UIViewRepresentable {
+struct MetalRotateView: UIViewRepresentable {
     
     let progress:Double
     
@@ -32,8 +35,7 @@ struct MetalMatrixView: UIViewRepresentable {
     }
     
     func updateUIView(_ mtkView: UIViewType, context: Context) {
-        let rotate = Float(progress * 360) - 180.0
-        context.coordinator.changeRotate(rotate)
+        context.coordinator.changeProgress(Float(progress))
         mtkView.setNeedsDisplay()
     }
     
@@ -45,25 +47,29 @@ struct MetalMatrixView: UIViewRepresentable {
         
         var device: MTLDevice?
         private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
-        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
+        private let fragmentShaderName = "SimpleShaderRender::rotate_fragment"
         
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
         
-        //mvp matrix
+        // mvp matrix
         private var modelMatrix = matrix_float4x4.init(1.0)
         private var viewMatrix = matrix_float4x4.init(1.0)
         private var projectionMatrix  = matrix_float4x4.init(1.0)
         
-        //纹理
+        // 纹理
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
-
         
-        //渲染
+        private var blurSize: Float = 0.0
+        
+        // 渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
         private var pipeLineState: MTLRenderPipelineState? = nil
         private var commandQueue: MTLCommandQueue? = nil
+        
+        //强制图片比例，测试旋转的比例是痘正确
+        private var ratio: Float = 2.0 / 3.0
         
         init(device: MTLDevice?) {
             super.init()
@@ -94,12 +100,9 @@ struct MetalMatrixView: UIViewRepresentable {
         }
         
         //更新角度
-        func changeRotate(_ rotate: Float) {
-            modelMatrix = .init(1.0)
-            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
-            modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
+        func changeProgress(_ progress: Float) {
+            blurSize = progress * 5
         }
-        
         
         
         private func readyForRender() {
@@ -150,14 +153,22 @@ struct MetalMatrixView: UIViewRepresentable {
             commandQueue = device.makeCommandQueue()
             
             //纹理
-            texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
+            let textureName = TextureManager.getPeopleTextureName()
+            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
             samplerState = TextureManager.defaultSamplerState(device: device)
 
+            modelMatrix = .init(1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
+            
+            modelMatrix = modelMatrix.scaledBy(x: ratio, y: 1.0, z: 1.0)
         }
+    
         
         private func render(in view: MTKView) {
+
             //drawable和renderPassDescriptor要用MTKView的
             guard
+                let texture = texture,
                 let drawable = view.currentDrawable,
                 let renderPass = view.currentRenderPassDescriptor,
                 let pipeLineState = pipeLineState,
@@ -185,6 +196,9 @@ struct MetalMatrixView: UIViewRepresentable {
             renderEncoder.setFragmentTexture(texture, index: 0)
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
             
+            renderEncoder.setFragmentBytes(&blurSize, length: MemoryLayout.stride(ofValue: blurSize), index: 0)
+            renderEncoder.setFragmentBytes(&ratio, length: MemoryLayout.stride(ofValue: ratio), index: 1)
+
             //绘制三角形，1个
             renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
             //endEncoding 结束渲染编码
@@ -196,4 +210,3 @@ struct MetalMatrixView: UIViewRepresentable {
         }
     }
 }
-

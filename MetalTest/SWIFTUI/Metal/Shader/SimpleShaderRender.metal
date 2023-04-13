@@ -73,7 +73,193 @@ namespace SimpleShaderRender {
      texture2d<float> texture [[ texture(0) ]],
      sampler sampler [[ sampler(0) ]]
      ){
+         
          return texture.sample(sampler, in.uv);
      }
     
+    
+    //MARK: - blur
+    
+    // https://github.com/BradLarson/GPUImage3/blob/master/framework/Source/Operations/ZoomBlur.metal
+    // zoom blur
+    // size: 模糊强度。center模糊中心点
+    // 用的半径度提高效率
+    fragment half4 zoom_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<half> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]],
+     constant float& size [[ buffer(0) ]]
+     ){
+         float2 uv = float2(in.uv);
+         
+         float2 center = float2(0.5, 0.5);
+
+         float2 samplingOffset = 1.0/100.0 * (center - uv) * size;
+         
+//         float2 samplingOffset = float2(0, 1.0/100.0 * size);
+         
+         half4 color = texture.sample(sampler, uv)  * 0.18h;
+         
+         color += texture.sample(sampler, uv + samplingOffset) * 0.15h;
+         color += texture.sample(sampler, uv + (2.0h * samplingOffset)) *  0.12h;
+         color += texture.sample(sampler, uv + (3.0h * samplingOffset)) * 0.09h;
+         color += texture.sample(sampler, uv + (4.0h * samplingOffset)) * 0.05h;
+         color += texture.sample(sampler, uv - samplingOffset) * 0.15h;
+         color += texture.sample(sampler, uv - (2.0h * samplingOffset)) *  0.12h;
+         color += texture.sample(sampler, uv - (3.0h * samplingOffset)) * 0.09h;
+         color += texture.sample(sampler, uv - (4.0h * samplingOffset)) * 0.05h;
+         
+         return color;
+     }
+
+    
+    // 旋转坐标
+    // uv输入坐标 rotate旋转弧度 rotateCenter旋转中心 ratio图片的比例
+    // 返回旋转后的坐标
+    float2 rotateUV(float2 uv, float rotate, float2 rotateCenter, float ratio) {
+        
+        float aSin = sin(rotate);
+        float aCos = cos(rotate);
+
+        float2x2 rotMat = float2x2(aCos, -aSin, aSin, aCos);
+        float2x2 scaleMat = float2x2(ratio, 0.0, 0.0, 1.0);
+        float2x2 scaleMatInv = float2x2(1.0 / ratio, 0.0, 0.0, 1.0);
+
+        float2 pos = uv;
+        
+        pos -= rotateCenter;
+        pos = scaleMatInv * rotMat * scaleMat * pos;
+        pos += rotateCenter;
+        return pos;
+    }
+    
+    
+    //着色器旋转图片
+    fragment half4 rotate_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<half> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]],
+     constant float& size [[ buffer(0) ]],
+     constant float& ratio[[ buffer(1) ]]
+     ){
+         float2 uv = in.uv;
+         
+         float rotate = size * 2 * 3.14159;
+         
+         float2 center = float2(0.5, 0.5);
+         
+         uv = rotateUV(uv, rotate, center, ratio);
+         
+         half4 color = texture.sample(sampler, uv);
+         
+         return color;
+     }
+    
+    //旋转模糊
+    fragment half4 rotate_blur_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<half> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]],
+     constant float& size [[ buffer(0) ]],
+     constant float& ratio[[ buffer(1) ]]
+     ){
+         float2 uv = in.uv;
+         
+         float2 center = float2(0.5, 0.5);
+         
+         float angle = 0.01 * size;
+         
+         float2 uvOffset1 = rotateUV(uv, angle, center, ratio);
+         float2 uvOffset2 = rotateUV(uv, 2.0 * angle, center, ratio);
+         float2 uvOffset3 = rotateUV(uv, 3.0 * angle, center, ratio);
+         float2 uvOffset4 = rotateUV(uv, 4.0 * angle, center, ratio);
+         
+         float2 uvOffset1n = rotateUV(uv, -angle, center, ratio);
+         float2 uvOffset2n = rotateUV(uv, -2.0 * angle, center, ratio);
+         float2 uvOffset3n = rotateUV(uv, -3.0 * angle, center, ratio);
+         float2 uvOffset4n = rotateUV(uv, -4.0 * angle, center, ratio);
+         
+         half4 color = texture.sample(sampler, uv)  * 0.18h;
+         
+         color += texture.sample(sampler, uvOffset1) * 0.15h;
+         color += texture.sample(sampler, uvOffset2) *  0.12h;
+         color += texture.sample(sampler, uvOffset3) * 0.09h;
+         color += texture.sample(sampler, uvOffset4) * 0.05h;
+         
+         color += texture.sample(sampler, uvOffset1n) * 0.15h;
+         color += texture.sample(sampler, uvOffset2n) *  0.12h;
+         color += texture.sample(sampler, uvOffset3n) * 0.09h;
+         color += texture.sample(sampler, uvOffset4n) * 0.05h;
+         
+         return color;
+     }
+    
+    //MARK: - shape
+    
+    vertex MatrixVertexOut shape_vertex
+    (
+     MatrixVertexIn in [[ stage_in ]]
+     ){
+         MatrixVertexOut out;
+         out.position = float4(in.positionAndUV.xy, 0.0, 1.0);
+         out.uv = in.positionAndUV.zw;
+         return out;
+     }
+    
+    
+    float2 rotate(float2 uv, float arc) {
+      return float2x2(cos(arc), sin(arc), -sin(arc), cos(arc)) * uv;
+    }
+    
+    
+    //圆形 center圆心 r是半径  返回大于0 不再圆内， 小于 0 圆内部 等于0 圆环
+    float sdfCircle(float2 uv, float2 center, float r) {
+        return length(uv - center) - r;
+    }
+    
+    //方形 center方形的中心 size方形的尺寸 边长/2
+    float sdfSquare(float2 uv, float2 center, float size) {
+        float2 pos = uv - center;
+        return max(abs(pos.x), abs(pos.y)) - size;
+    }
+
+    //画一个圆和一个方
+    float3 drawScreen1(float2 uv) {
+        
+        //先画圆形
+        float2 center = float2(0.5, 0.5);
+        float r = 0.25;
+        float d = sdfCircle(uv, center, r);
+        float3 bg = float3(0.2, 0.2, 0.3);
+        float3 colorCircle = float3(0.5, 0.6, 0.8);
+        float3 color = mix(colorCircle, bg, step(0.0, d));
+        
+        
+        //再方形， 把之前画好的图形，即color的颜色，当作mix的背景处理即可
+        center = float2(0.75, 0.75);
+        r = 0.25;
+        d = sdfSquare(uv, center, r);
+        float3 colorSquare = float3(0.8, 0.3, 0.2);
+        color = mix(colorSquare, color, step(0.0, d));
+        
+        return color;
+    }
+    
+    
+    fragment float4 shape_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<float> texture [[ texture(0) ]],
+     constant float& progress[[ buffer(1) ]],
+     constant float& ratio[[ buffer(2) ]],
+     sampler sampler [[ sampler(0) ]]
+     ){
+         float2 uv = in.uv;
+         uv.y /= ratio;
+         
+         return float4(drawScreen1(uv), 1.0);
+     }
 }

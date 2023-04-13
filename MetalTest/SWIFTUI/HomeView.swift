@@ -11,33 +11,54 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 16) {
-                    NavigationLink(destination: WWDC22View()) {
-                        homeText("WWDC22(iOS16)")
+                VStack {
+                    VStack(spacing: 16) {
+                        NavigationLink(destination: WWDC22View()) {
+                            homeText("WWDC22(iOS16)")
+                        }
+                        NavigationLink(destination: KirbyView()) {
+                            homeText("Kirby")
+                        }
+                        NavigationLink(destination: ShapeStyleView()) {
+                            homeText("ShapeStyle")
+                        }
+                        NavigationLink(destination: ListView1()) {
+                            homeText("ListView1")
+                        }
+                        NavigationLink(destination: ListView2()) {
+                            homeText("ListView2")
+                        }
+                        NavigationLink(destination: SimpleMetalView()) {
+                            homeText("MetalView")
+                        }
+                        
+                        NavigationLink(destination: SimpleTextureView()) {
+                            homeText("TextureView")
+                        }
+                        
+                        NavigationLink(destination: SimpleMatrixView()) {
+                            homeText("MatrixView")
+                        }
+                        NavigationLink(destination: SimpleMetalShapeView()) {
+                            homeText("ShapeView")
+                        }
                     }
-                    NavigationLink(destination: KirbyView()) {
-                        homeText("Kirby")
-                    }
-                    NavigationLink(destination: ShapeStyleView()) {
-                        homeText("ShapeStyle")
-                    }
-                    NavigationLink(destination: ListView1()) {
-                        homeText("ListView1")
-                    }
-                    NavigationLink(destination: ListView2()) {
-                        homeText("ListView2")
-                    }
-                    NavigationLink(destination: SimpleMetalView()) {
-                        homeText("MetalView")
+                    VStack(spacing: 16) {
+                        NavigationLink(destination: SimpleZoomBlurView()) {
+                            homeText("ZoomBlurView")
+                        }
+                        NavigationLink(destination: SimpleGaussianBlurView()) {
+                            homeText("GaussianBlurView")
+                        }
+                        NavigationLink(destination: SimpleRotateView()) {
+                            homeText("RotateView")
+                        }
+                        NavigationLink(destination: SimpleRotateBlurView()) {
+                            homeText("RotateBlurView")
+                        }
                     }
 
-                    NavigationLink(destination: SimpleTextureView()) {
-                        homeText("TextureView")
-                    }
-                    
-                    NavigationLink(destination: SimpleMatrixView()) {
-                        homeText("MatrixView")
-                    }
+
 
                 }.padding()
             }
