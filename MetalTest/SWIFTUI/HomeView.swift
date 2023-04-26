@@ -56,6 +56,9 @@ struct HomeView: View {
                         NavigationLink(destination: SimpleRotateBlurView()) {
                             homeText("RotateBlurView")
                         }
+                        NavigationLink(destination: SimpleCardView()) {
+                            homeText("CardView")
+                        }
                     }
 
 

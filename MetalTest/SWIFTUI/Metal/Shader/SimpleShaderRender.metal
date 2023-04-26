@@ -209,11 +209,9 @@ namespace SimpleShaderRender {
          return out;
      }
     
-    
     float2 rotate(float2 uv, float arc) {
       return float2x2(cos(arc), sin(arc), -sin(arc), cos(arc)) * uv;
     }
-    
     
     //圆形 center圆心 r是半径  返回大于0 不再圆内， 小于 0 圆内部 等于0 圆环
     float sdfCircle(float2 uv, float2 center, float r) {
@@ -225,7 +223,15 @@ namespace SimpleShaderRender {
         float2 pos = uv - center;
         return max(abs(pos.x), abs(pos.y)) - size;
     }
-
+    
+    //圆角矩形
+    float sdRoundedBox(float2 uv, float2 size, float2 center, float radius)
+    {
+        float2 pos = uv - center;
+        float2 d = abs(pos) - size + radius;
+        return length(max(d, 0.0)) + min(max(d.x,d.y), 0.0) - radius;
+    }
+    
     //画一个圆和一个方
     float3 drawScreen1(float2 uv) {
         
@@ -236,7 +242,6 @@ namespace SimpleShaderRender {
         float3 bg = float3(0.2, 0.2, 0.3);
         float3 colorCircle = float3(0.5, 0.6, 0.8);
         float3 color = mix(colorCircle, bg, step(0.0, d));
-        
         
         //再方形， 把之前画好的图形，即color的颜色，当作mix的背景处理即可
         center = float2(0.75, 0.75);
@@ -249,6 +254,22 @@ namespace SimpleShaderRender {
     }
     
     
+    //绘制圆角矩形 通过进度更改圆角的弧度
+    float4 drawScreen2(float2 uv, float progress) {
+        float4 color = float4(0.0, 0.0, 0.0, 0.0);
+        float4 bgColor = float4(1.0, 1.0, 1.0, 1.0);
+        
+        float d = sdRoundedBox(uv, float2(0.25, 0.25), float2(0.5), progress * 0.1);
+        
+        
+        float alpha = min(d, 1.0);
+        alpha = max(alpha, 0.0);
+        
+        float3 c = color.rgb * alpha + bgColor.rgb * (1.0 - alpha);
+        
+        return float4(c, 1.0);
+    }
+    
     fragment float4 shape_fragment
     (
      MatrixVertexOut in [[ stage_in ]],
@@ -258,8 +279,8 @@ namespace SimpleShaderRender {
      sampler sampler [[ sampler(0) ]]
      ){
          float2 uv = in.uv;
-         uv.y /= ratio;
+         ratio < 1.0 ? uv.y /= ratio : uv.x *= ratio;
          
-         return float4(drawScreen1(uv), 1.0);
+         return drawScreen2(uv, progress);
      }
 }

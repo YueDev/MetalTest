@@ -31,6 +31,7 @@
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */; };
+		8ADCC85629EE700E00DFA0FC /* MetalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */; };
 		8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */; };
 		8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B228294AA7FF00B03C14 /* KirbyView.swift */; };
 		8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */; };
@@ -62,6 +63,7 @@
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalShapeView.swift; sourceTree = "<group>"; };
+		8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCardView.swift; sourceTree = "<group>"; };
 		8AF9B227294AA7FF00B03C14 /* KirbyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyRepository.swift; sourceTree = "<group>"; };
 		8AF9B228294AA7FF00B03C14 /* KirbyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyView.swift; sourceTree = "<group>"; };
 		8AF9B229294AA7FF00B03C14 /* KirbyCharaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KirbyCharaView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */,
 				8A896A3029E79573000C3F2C /* MetalRotateView.swift */,
 				8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */,
+				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */,
 				1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */,
 				8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */,
+				8ADCC85629EE700E00DFA0FC /* MetalCardView.swift in Sources */,
 				1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

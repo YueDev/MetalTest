@@ -105,3 +105,15 @@ struct SimpleRotateBlurView: View {
     }
 }
 
+struct SimpleCardView: View {
+    
+    @State private var progress = 0.5
+    
+    var body: some View {
+        VStack {
+            MetalCardView(progress: progress)
+            Slider(value: $progress, in: 0.0...1.0)
+                .padding(32)
+        }
+    }
+}

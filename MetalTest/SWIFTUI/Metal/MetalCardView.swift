@@ -1,16 +1,15 @@
 //
-//  MetalRotateBlurView.swift
+//  MetalCardView.swift
 //  MetalTest
 //
-//  Created by YUE on 2023/4/13.
+//  Created by YUE on 2023/4/18.
 //
 
 import Foundation
 import SwiftUI
 import MetalKit
-import MetalPerformanceShaders
 
-struct MetalRotateBlurView: UIViewRepresentable {
+struct MetalCardView: UIViewRepresentable {
     
     let progress:Double
     
@@ -45,29 +44,25 @@ struct MetalRotateBlurView: UIViewRepresentable {
         
         var device: MTLDevice?
         private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
-        private let fragmentShaderName = "SimpleShaderRender::rotate_blur_fragment"
+        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
         
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
         
-        // mvp matrix
+        //mvp matrix
         private var modelMatrix = matrix_float4x4.init(1.0)
         private var viewMatrix = matrix_float4x4.init(1.0)
         private var projectionMatrix  = matrix_float4x4.init(1.0)
         
-        // 纹理
+        //纹理
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
+
         
-        private var blurSize: Float = 0.0
-        
-        // 渲染
+        //渲染
         private var renderPass: MTLRenderPassDescriptor? = nil
         private var pipeLineState: MTLRenderPipelineState? = nil
         private var commandQueue: MTLCommandQueue? = nil
-        
-        //强制图片比例，测试旋转的比例是痘正确
-        private var ratio: Float = 2.0 / 3.0
         
         init(device: MTLDevice?) {
             super.init()
@@ -97,9 +92,9 @@ struct MetalRotateBlurView: UIViewRepresentable {
             render(in: view)
         }
         
-        //更新角度
+
         func changeProgress(_ progress: Float) {
-            blurSize = progress * 2
+            
         }
         
         private func readyForRender() {
@@ -150,20 +145,17 @@ struct MetalRotateBlurView: UIViewRepresentable {
             commandQueue = device.makeCommandQueue()
             
             //纹理
-            let textureName = TextureManager.getPeopleTextureName()
-            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
+            texture = TextureManager.defaultTextureByAssets(device: device, name: TextureManager.getPeopleTextureName())
             samplerState = TextureManager.defaultSamplerState(device: device)
-
+            
             modelMatrix = .init(1.0)
             modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
-            modelMatrix = modelMatrix.scaledBy(x: ratio, y: 1.0, z: 1.0)
+
         }
         
         private func render(in view: MTKView) {
-
             //drawable和renderPassDescriptor要用MTKView的
             guard
-                let texture = texture,
                 let drawable = view.currentDrawable,
                 let renderPass = view.currentRenderPassDescriptor,
                 let pipeLineState = pipeLineState,
@@ -191,9 +183,6 @@ struct MetalRotateBlurView: UIViewRepresentable {
             renderEncoder.setFragmentTexture(texture, index: 0)
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
             
-            renderEncoder.setFragmentBytes(&blurSize, length: MemoryLayout.stride(ofValue: blurSize), index: 0)
-            renderEncoder.setFragmentBytes(&ratio, length: MemoryLayout.stride(ofValue: ratio), index: 1)
-
             //绘制三角形，1个
             renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
             //endEncoding 结束渲染编码
@@ -205,4 +194,3 @@ struct MetalRotateBlurView: UIViewRepresentable {
         }
     }
 }
-
