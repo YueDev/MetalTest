@@ -98,6 +98,23 @@ namespace SimpleShaderRender {
          return texture.sample(sampler, in.uv);
      }
     
+    fragment float4 resolve_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d_ms<float> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]]
+     ){
+         float4 sum = float4(0.0);
+         int numSamples = texture.get_num_samples();
+         for (int i = 0; i < numSamples; ++i) {
+             int w = texture.get_width() * in.uv.x;
+             int h = texture.get_height() * in.uv.y;
+             sum += texture.read(uint2(w, h), i);
+         }
+         float4 avg = sum / numSamples; // 对样本值取平均值
+         return avg;
+     }
+    
     
     //MARK: - blur
     

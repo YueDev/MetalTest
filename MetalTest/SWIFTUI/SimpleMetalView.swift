@@ -125,6 +125,7 @@ struct SimpleMSAAView: View {
     var body: some View {
         VStack {
         MetalMSAAView(progress: progress)
+                .aspectRatio(1.0, contentMode: .fit)
         Slider(value: $progress, in: 0.0...1.0)
             .padding(32)
         }

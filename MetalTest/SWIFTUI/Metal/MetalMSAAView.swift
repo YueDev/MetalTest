@@ -55,7 +55,6 @@ struct MetalMSAAView: UIViewRepresentable {
         private let offscreenVShader = "SimpleShaderRender::matrix_vertex"
         private let offscreenFShader = "SimpleShaderRender::matrix_fragment"
         
-        
         //buffer
         private var vertexBuffer: MTLBuffer? = nil
         private var offscreenVertexBuffer: MTLBuffer? = nil
@@ -69,13 +68,15 @@ struct MetalMSAAView: UIViewRepresentable {
         private var samplerState: MTLSamplerState? = nil
         private var texture: MTLTexture? = nil
         private var dstTexture: MTLTexture? = nil
-
+        private var msaaTexture: MTLTexture? = nil
         
         //渲染管线
         private var pipeLineState: MTLRenderPipelineState? = nil
         
         private var offscreenPipeLineState: MTLRenderPipelineState? = nil
         private var offscreenRenderPass: MTLRenderPassDescriptor? = nil
+        
+                
         //公用
         private var commandQueue: MTLCommandQueue? = nil
         
@@ -92,7 +93,9 @@ struct MetalMSAAView: UIViewRepresentable {
                 return
             }
             
-            let scale = Float(size.width) / Float(size.height)
+//            let scale = Float(size.width) / Float(size.height)
+            //这里是离屏窗口的比例，按照1：1来
+            let scale = Float(1.0)
             let fovy:Float = 45.0
             let f = 1.0 / tan(fovy * (Float)(Double.pi / 360));
             viewMatrix = matrix_float4x4.init(eyeX: 0, eyeY: 0, eyeZ: f,
@@ -112,7 +115,7 @@ struct MetalMSAAView: UIViewRepresentable {
         //更新角度
         func changeRotate(_ rotate: Float) {
             modelMatrix = .init(1.0)
-            modelMatrix = modelMatrix.scaledBy(x: 0.5, y: 0.5, z: 1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.9, y: 0.9, z: 1.0)
             modelMatrix = modelMatrix.rotatedBy(rotationAngle: rotate, x: 0.0, y: 0.0, z: 1.0)
         }
         
@@ -128,7 +131,8 @@ struct MetalMSAAView: UIViewRepresentable {
             //纹理
             texture = TextureManager.defaultTextureByAssets(device: device, name: "landscape")
             dstTexture = TextureManager.emptyTexture(device: device)
-            
+            msaaTexture = TextureManager.emptyTexture(device: device, useMSAA: true)
+
             samplerState = TextureManager.defaultSamplerState(device: device)
             
             
@@ -155,10 +159,10 @@ struct MetalMSAAView: UIViewRepresentable {
             let pipeLineDescriptor = MTLRenderPipelineDescriptor()
             pipeLineDescriptor.vertexFunction = vertexProgram
             pipeLineDescriptor.fragmentFunction = fragmentProgram
-            //这里要设置像素格式
             
             //设置colorAttachments[0]，主要是设置像素格式 这里要和目标纹理一直
-            pipeLineDescriptor.colorAttachments[0].pixelFormat = dstTexture?.pixelFormat ?? .bgra8Unorm
+            pipeLineDescriptor.rasterSampleCount = 4 // 设置采样次数
+            pipeLineDescriptor.colorAttachments[0].pixelFormat = msaaTexture?.pixelFormat ?? .bgra8Unorm
             
             //顶点的描述
             let vertexDescriptor = MTLVertexDescriptor()
@@ -172,11 +176,17 @@ struct MetalMSAAView: UIViewRepresentable {
             //生成 pipeLineState
             offscreenPipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
             
+            
             //离屏的RenderPassDescriptor， 渲染的直接拿view.currentRenderPassDescriptor即可
             offscreenRenderPass = MTLRenderPassDescriptor()
             offscreenRenderPass?.colorAttachments[0].loadAction = .clear
             offscreenRenderPass?.colorAttachments[0].clearColor = .init(red: 0.78, green: 0.85, blue: 0.82, alpha: 1.0)
-            offscreenRenderPass?.colorAttachments[0].texture = dstTexture
+            offscreenRenderPass?.colorAttachments[0].texture = msaaTexture
+            //multisampleResolve表示将多重纹理的数据存到resolveTexture
+            //storeAndMultisampleResolve表示把多重纹理的数据保存到内存中，并且还会放到resolveTexture中
+            offscreenRenderPass?.colorAttachments[0].storeAction = .multisampleResolve
+            offscreenRenderPass?.colorAttachments[0].resolveTexture = dstTexture
+            
         }
         
         
@@ -224,7 +234,6 @@ struct MetalMSAAView: UIViewRepresentable {
 //            pipeLineDescriptor.rasterSampleCount = 4
             //生成 pipeLineState
             pipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
-            
         }
         
         //离屏渲染
@@ -241,6 +250,7 @@ struct MetalMSAAView: UIViewRepresentable {
             guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: offscreenRenderPass) else {
                 return
             }
+
              renderEncoder.setRenderPipelineState(offscreenPipeLineState)
             
             //发送顶点buffer
@@ -258,6 +268,7 @@ struct MetalMSAAView: UIViewRepresentable {
             //endEncoding 结束渲染编码
             renderEncoder.endEncoding()
             commandBuffer.commit()
+
         }
         
         //渲染
