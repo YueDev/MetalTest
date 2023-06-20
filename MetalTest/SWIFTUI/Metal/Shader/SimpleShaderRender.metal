@@ -77,6 +77,27 @@ namespace SimpleShaderRender {
          return texture.sample(sampler, in.uv);
      }
     
+    vertex MatrixVertexOut normal_vertex
+    (
+     MatrixVertexIn in [[ stage_in ]]
+     ){
+         MatrixVertexOut out;
+         float4 position = float4(in.positionAndUV.xy, 0.0, 1.0);
+         out.position = position;
+         out.uv = in.positionAndUV.zw;
+         return out;
+     }
+    
+    fragment float4 normal_fragment
+    (
+     MatrixVertexOut in [[ stage_in ]],
+     texture2d<float> texture [[ texture(0) ]],
+     sampler sampler [[ sampler(0) ]]
+     ){
+         
+         return texture.sample(sampler, in.uv);
+     }
+    
     
     //MARK: - blur
     

@@ -59,6 +59,10 @@ struct HomeView: View {
                         NavigationLink(destination: SimpleCardView()) {
                             homeText("CardView")
                         }
+                        NavigationLink(destination: SimpleMSAAView()) {
+                            homeText("MSAAView")
+                        }
+
                     }
 
 

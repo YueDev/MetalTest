@@ -117,3 +117,17 @@ struct SimpleCardView: View {
         }
     }
 }
+
+struct SimpleMSAAView: View {
+    
+    @State private var progress = 0.5
+    
+    var body: some View {
+        VStack {
+        MetalMSAAView(progress: progress)
+        Slider(value: $progress, in: 0.0...1.0)
+            .padding(32)
+        }
+
+    }
+}

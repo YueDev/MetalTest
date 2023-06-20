@@ -25,6 +25,7 @@
 		8A1C4BDE2950817500DA5884 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
 		8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */; };
 		8A3C812E29E68316007B1ED6 /* MetalGaussianBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */; };
+		8A4014B52A413E1F00387AE7 /* MetalMSAAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */; };
 		8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3029E79573000C3F2C /* MetalRotateView.swift */; };
 		8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */; };
 		8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */; };
@@ -57,6 +58,7 @@
 		8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeStyleView.swift; sourceTree = "<group>"; };
 		8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalMatrixView.swift; sourceTree = "<group>"; };
 		8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGaussianBlurView.swift; sourceTree = "<group>"; };
+		8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalMSAAView.swift; sourceTree = "<group>"; };
 		8A896A3029E79573000C3F2C /* MetalRotateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateView.swift; sourceTree = "<group>"; };
 		8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateBlurView.swift; sourceTree = "<group>"; };
 		8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalZoomBlurView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				8A896A3029E79573000C3F2C /* MetalRotateView.swift */,
 				8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */,
 				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
+				8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				1D4C92D1B9BB82CE4D811F29 /* SimpleMetalView.swift in Sources */,
 				1D4C9294C5DE14808E2C9990 /* MetalMapView.swift in Sources */,
 				1D4C9DE17AA469D693B37C03 /* SimpleShaderRender.metal in Sources */,
+				8A4014B52A413E1F00387AE7 /* MetalMSAAView.swift in Sources */,
 				8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */,
 				1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */,
 				1D4C922E12A3224C00B138F1 /* TextureRender.metal in Sources */,

@@ -163,4 +163,27 @@ enum TextureManager {
         return device.makeSamplerState(descriptor: samplerDescriptor)
     }
     
+    
+    
+    static func emptyTexture(device: MTLDevice?, useMSAA: Bool = false) -> MTLTexture? {
+        
+        guard let device = device else {
+            return nil
+        }
+        
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
+                                                                         width: defaultWidth,
+                                                                         height: defaultHeight,
+                                                                         mipmapped: false)
+        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        
+        if useMSAA {
+            textureDescriptor.textureType = .type2DMultisample
+            textureDescriptor.sampleCount = 4
+            
+        }
+        return device.makeTexture(descriptor: textureDescriptor)
+        
+    }
+    
 }
