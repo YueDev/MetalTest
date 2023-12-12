@@ -1,5 +1,5 @@
 # MetalTest
-learn metal with SwiftUI.
+use metal with SwiftUI.
 
 Completed:
 1. "hello metal": draw a triangle.
