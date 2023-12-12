@@ -100,7 +100,7 @@ struct MetalGaussianBlurView: UIViewRepresentable {
         
         //更新角度
         func changeProgress(_ progress: Float) {
-            blurSize = progress * 5
+            blurSize = progress * 100.0
         }
         
         
@@ -178,6 +178,8 @@ struct MetalGaussianBlurView: UIViewRepresentable {
             }
             
             let filter = MPSImageGaussianBlur(device: device, sigma: blurSize)
+            //MPSImageGaussianBlur默认边缘模式是zero，会出现黑色的边，指定clmap就会好很多
+            filter.edgeMode = .clamp
             filter.encode(commandBuffer: commandBuffer, sourceTexture: texture, destinationTexture: renderTexture)
             commandBuffer.present(drawable)
             commandBuffer.commit()

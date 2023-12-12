@@ -86,13 +86,14 @@ struct MetalMapView: UIViewRepresentable {
             
             //顶点对应的颜色数据
             let colorData: [Float] = [
-                            0.5, 0.4, 0.3,
-                            0.6, 0.5, 0.2,
-                            0.2, 0.7, 0.5,
-                            0.5, 0.5, 0.8,
-                        ]
-                        let colorSize = MemoryLayout.stride(ofValue: colorData[0]) * colorData.count
-                        colorBuffer = device.makeBuffer(bytes: colorData, length: colorSize, options: [])
+                0.5, 0.4, 0.3,
+                0.6, 0.5, 0.2,
+                0.2, 0.7, 0.5,
+                0.5, 0.5, 0.8,
+            ]
+            
+            let colorSize = MemoryLayout.stride(ofValue: colorData[0]) * colorData.count
+            colorBuffer = device.makeBuffer(bytes: colorData, length: colorSize, options: [])
             
             //生成shader program
             guard let defaultLibrary = device.makeDefaultLibrary() else {

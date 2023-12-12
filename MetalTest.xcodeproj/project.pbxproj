@@ -163,18 +163,18 @@
 		8A1359CD2971345400C3257F /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
+				8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */,
+				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
+				8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */,
+				8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */,
+				8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */,
+				8A896A3029E79573000C3F2C /* MetalRotateView.swift */,
+				8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */,
+				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
+				8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */,
 				1D4C96E72EA54463A52F886E /* Shader */,
 				1D4C95488AC3E3A22275A042 /* Util */,
-				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
-				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
-				8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */,
-				8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */,
-				8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */,
-				8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */,
-				8A896A3029E79573000C3F2C /* MetalRotateView.swift */,
-				8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */,
-				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
-				8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";

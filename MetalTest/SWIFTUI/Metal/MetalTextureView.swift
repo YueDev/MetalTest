@@ -125,7 +125,7 @@ struct MetalTextureView: UIViewRepresentable {
                                                        hahaha
                                                        12345678
                                                        (*&^*(&%^^&%$$%#@
-                                                       阿水洞
+                                                       阿斯顿
                                                        里的开发和你说东方i
                                                        """, device: device)
 //            texture = TextureManager.defaultTextureByAssets(device: device, name: "png_2023")
