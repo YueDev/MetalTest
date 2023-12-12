@@ -7,3 +7,4 @@ Completed:
 3. Simply add Texture.
 4. Add Matrix extension, calculate mvp coordinates with Matrix.
 5. Add some blur effect.
+6. Add MetalMSAAView: use MSAA for anti-aliasing.
