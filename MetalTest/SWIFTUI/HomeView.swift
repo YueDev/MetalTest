@@ -13,6 +13,11 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     VStack(spacing: 16) {
+                        
+                        NavigationLink(destination: SimpleMetalVideoView()) {
+                            homeText("VideoView")
+                        }
+                        
                         NavigationLink(destination: WWDC22View()) {
                             homeText("WWDC22(iOS16)")
                         }

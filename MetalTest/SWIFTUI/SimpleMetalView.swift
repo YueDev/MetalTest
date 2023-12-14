@@ -1,5 +1,20 @@
 import SwiftUI
 
+struct SimpleMetalVideoView: View {
+    
+    @State private var progress = 0.5
+    
+    var body: some View {
+        VStack {
+        MetalVideoView(progress: progress)
+        Slider(value: $progress, in: 0.0...1.0)
+            .padding(32)
+        }
+
+    }
+}
+
+
 struct SimpleMetalView: View {
     
     @State private var progress = 0.5

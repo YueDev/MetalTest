@@ -118,7 +118,16 @@ enum TextureManager {
         //好像要把srgb强制为0关掉，否则偏色严重
         return try? textureLoader.newTexture(cgImage: cgImage, options: [.SRGB: 0])
     }
+    
 
+    static func toMTLTexture(cgImage: CGImage, device: MTLDevice?) -> MTLTexture? {
+        guard let device = device else {
+            return nil
+        }
+        let textureLoader = MTKTextureLoader(device: device)
+        return try? textureLoader.newTexture(cgImage: cgImage, options: [.SRGB: 0])
+
+    }
 
     static func defaultSamplerState(device: MTLDevice) -> MTLSamplerState? {
         let samplerDescriptor = MTLSamplerDescriptor()

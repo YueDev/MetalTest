@@ -94,7 +94,6 @@ struct MetalGaussianBlurView: UIViewRepresentable {
         
         
         func draw(in view: MTKView) {
-            
             render(in: view)
         }
         

@@ -1,0 +1,260 @@
+//
+//  MetalVideoView.swift
+//  MetalTest
+//
+//  利用AVAssetImageGenerator解码视频，有些视频解不出来。
+//  没有做异步，直接在主线程解的。解码到纹理上给metal上屏显示。
+//
+
+
+import Foundation
+import SwiftUI
+import MetalKit
+import MetalPerformanceShaders
+import AVFoundation
+
+struct MetalVideoView: UIViewRepresentable {
+    
+    let progress:Double
+    
+    typealias UIViewType = MTKView
+    
+    let device = {
+        MTLCreateSystemDefaultDevice()
+    }()
+    
+    func makeUIView(context: Context) -> UIViewType {
+        let mtkView = MTKView()
+        mtkView.device = device
+        mtkView.delegate = context.coordinator
+        mtkView.backgroundColor = .red
+        mtkView.enableSetNeedsDisplay = true
+        //msaa later
+//        mtkView.sampleCount = 4
+        mtkView.drawableSize = mtkView.frame.size
+        return mtkView
+    }
+    
+    func updateUIView(_ mtkView: UIViewType, context: Context) {
+        context.coordinator.changeProgress(Float(progress))
+        mtkView.setNeedsDisplay()
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(device: device)
+    }
+    
+    class Coordinator: NSObject, MTKViewDelegate {
+        
+        var device: MTLDevice?
+        private let vertexShaderName = "SimpleShaderRender::matrix_vertex"
+        private let fragmentShaderName = "SimpleShaderRender::matrix_fragment"
+        
+        //buffer
+        private var vertexBuffer: MTLBuffer? = nil
+        
+        // mvp matrix
+        private var modelMatrix = matrix_float4x4.init(1.0)
+        private var viewMatrix = matrix_float4x4.init(1.0)
+        private var projectionMatrix  = matrix_float4x4.init(1.0)
+        
+        // 纹理
+        private var samplerState: MTLSamplerState? = nil
+        private var texture: MTLTexture? = nil
+        
+        // 渲染的纹理
+        private var renderTexture: MTLTexture? = nil
+
+        private var progress: Float = 0.0
+        
+        // 渲染
+        private var renderPass: MTLRenderPassDescriptor? = nil
+        private var pipeLineState: MTLRenderPipelineState? = nil
+        private var commandQueue: MTLCommandQueue? = nil
+        
+        private var asset: AVAsset? = nil
+        private var imageGenerator:AVAssetImageGenerator? = nil
+        
+        init(device: MTLDevice?) {
+            super.init()
+            self.device = device
+            readyForRender()
+            
+
+        }
+        
+        func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+            guard size.width > 0 && size.height > 0 else {
+                return
+            }
+            
+            guard let url = Bundle.main.url(forResource: "tesla_1.mp4", withExtension: nil) else {return}
+            let asset = AVAsset(url: url)
+            let imageGenerator = AVAssetImageGenerator(asset: asset)
+            imageGenerator.appliesPreferredTrackTransform = true
+            imageGenerator.maximumSize = size
+            imageGenerator.requestedTimeToleranceBefore = .zero
+            imageGenerator.requestedTimeToleranceAfter = .zero
+            
+            self.imageGenerator = imageGenerator
+            self.asset = asset
+            
+            
+            let scale = Float(size.width) / Float(size.height)
+            let fovy:Float = 45.0
+            let f = 1.0 / tan(fovy * (Float)(Double.pi / 360));
+            viewMatrix = matrix_float4x4.init(eyeX: 0, eyeY: 0, eyeZ: f,
+                                              centerX: 0, centerY: 0, centerZ: 0,
+                                              upX: 0, upY: 1, upZ: 0)
+            //projecttion
+            projectionMatrix = matrix_float4x4.init(fovy: fovy, aspect: scale, zNear: 0.0, zFar: 100.0)
+            view.setNeedsDisplay()
+        }
+        
+        
+        func draw(in view: MTKView) {
+            render(in: view)
+        }
+        
+        //更新角度
+        func changeProgress(_ progress: Float) {
+            self.progress = progress
+        }
+        
+        
+        private func readyForRender() {
+            guard let device = device else {
+                return
+            }
+            
+            //顶点数据 position和纹理的uv
+            let vertexData: [Float] = [
+                -1.0, 1.0, 0.0, 0.0,
+                 -1.0, -1.0, 0.0, 1.0,
+                 1.0, 1.0, 1.0, 0.0,
+                 1.0, -1.0, 1.0, 1.0,
+            ]
+            
+            let vertexDataSize = MemoryLayout.stride(ofValue: vertexData[0]) * vertexData.count
+            vertexBuffer = device.makeBuffer(bytes: vertexData, length: vertexDataSize, options: [])
+            
+            //生成shader program
+            guard let defaultLibrary = device.makeDefaultLibrary() else {
+                return
+            }
+            
+            let vertexProgram = defaultLibrary.makeFunction(name: vertexShaderName)
+            let fragmentProgram = defaultLibrary.makeFunction(name: fragmentShaderName)
+            
+            //设置pipeLineDescriptor 生成pipeLineState
+            let pipeLineDescriptor = MTLRenderPipelineDescriptor()
+            pipeLineDescriptor.vertexFunction = vertexProgram
+            pipeLineDescriptor.fragmentFunction = fragmentProgram
+            //这里要设置像素格式
+            pipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+            //顶点的描述
+            let vertexDescriptor = MTLVertexDescriptor()
+            vertexDescriptor.attributes[0].format = .float4
+            vertexDescriptor.attributes[0].bufferIndex = 0
+            vertexDescriptor.attributes[0].offset = 0
+            // 每组数据的步长 每4个Float数据是一组
+            vertexDescriptor.layouts[0].stride = MemoryLayout.stride(ofValue: vertexData[0]) * 4
+            // 把创建好的vertexDescriptor 传给pipeLineDescriptor
+            pipeLineDescriptor.vertexDescriptor = vertexDescriptor
+            //msaa采样数
+//            pipeLineDescriptor.rasterSampleCount = 4
+            //生成 pipeLineState
+            pipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
+            
+            //生成命令队列 和 命令buffer
+            commandQueue = device.makeCommandQueue()
+            
+            //纹理
+            let textureName = TextureManager.getPeopleTextureName()
+            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
+            samplerState = TextureManager.defaultSamplerState(device: device)
+            
+            modelMatrix = .init(1.0)
+            modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
+        }
+        
+        
+        //获取视频帧
+        private func getVideoFrame(at time: CMTime) -> CGImage?{
+            guard let imageGenerator = imageGenerator else {return nil}
+            return try? imageGenerator.copyCGImage(at: time, actualTime: nil)
+        }
+        
+        private func render(in view: MTKView) {
+            //获取视频帧数
+            guard let asset = asset else {return}
+            let second = Double(progress) * asset.duration.seconds
+            let time = CMTimeMakeWithSeconds(second, preferredTimescale: asset.duration.timescale)
+            guard let frame = getVideoFrame(at: time) else {return}
+            renderTexture = TextureManager.toMTLTexture(cgImage: frame, device: device)
+            
+            //drawable和renderPassDescriptor要用MTKView的
+            guard
+                let renderTexture = renderTexture,
+                let drawable = view.currentDrawable,
+                let renderPass = view.currentRenderPassDescriptor,
+                let pipeLineState = pipeLineState,
+                let commandBuffer = commandQueue?.makeCommandBuffer()
+            else {
+                return
+            }
+            
+            // 获取视频的比例 并设置正确的matrix
+            // 已经做mvp映射，
+            // model x y 默认1.0 1.0 的时候， 视频是方形，充满视图高度
+            if let track = asset.tracks(withMediaType: .video).first {
+                let viewRatio = view.frame.width / view.frame.height
+                let videoRatio = track.naturalSize.width / track.naturalSize.height
+                
+                var scaleX = 1.0
+                var scaleY = 1.0
+                if viewRatio > videoRatio {
+                    //窗口比视频宽 填满高度
+                    scaleX = scaleX * videoRatio
+                } else {
+                    //窗口比视频窄，填满宽度
+                    scaleX = scaleX * viewRatio
+                    scaleY = scaleX / videoRatio
+                }
+
+                modelMatrix = .init(1.0)
+                modelMatrix = modelMatrix.scaledBy(x: Float(scaleX), y: Float(scaleY), z: 1.0)
+            }
+
+            
+            
+            renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.2, 0.4, 0.3, 1.0)
+            renderPass.colorAttachments[0].loadAction = .clear
+            
+            guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
+                return
+            }
+            renderEncoder.setRenderPipelineState(pipeLineState)
+            
+            //发送顶点buffer
+            renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+            //发送mvp
+            renderEncoder.setVertexBytes(&modelMatrix, length: MemoryLayout.stride(ofValue: modelMatrix), index: 1)
+            renderEncoder.setVertexBytes(&viewMatrix, length: MemoryLayout.stride(ofValue: viewMatrix), index: 2)
+            renderEncoder.setVertexBytes(&projectionMatrix, length: MemoryLayout.stride(ofValue: projectionMatrix), index: 3)
+            
+            //设置纹理
+            renderEncoder.setFragmentTexture(renderTexture, index: 0)
+            renderEncoder.setFragmentSamplerState(samplerState, index: 0)
+            
+            //绘制三角形，1个
+            renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4, instanceCount: 1)
+            //endEncoding 结束渲染编码
+            renderEncoder.endEncoding()
+            
+            //commandBuffer 设置drawable并提交
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
+        }
+    }
+}
