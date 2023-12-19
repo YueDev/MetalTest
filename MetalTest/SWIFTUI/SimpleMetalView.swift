@@ -1,10 +1,41 @@
 import SwiftUI
 
 
+struct SimpleMetalFold3TransView: View {
+    
+    @State private var progress = 0.0
+    
+    var body: some View {
+        VStack {
+            MetalFold3TransView(progress: progress)
+            HStack {
+                Slider(value: $progress, in: 0.0...1.0)
+                    .padding(32)
+            }
+        }
+    }
+}
+
+
+struct SimpleMetalFoldTransView: View {
+    
+    @State private var progress = 0.0
+    
+    var body: some View {
+        VStack {
+            MetalFoldTransView(progress: progress)
+            HStack {
+                Slider(value: $progress, in: 0.0...1.0)
+                    .padding(32)
+            }
+        }
+    }
+}
+
 
 struct SimpleMetalKernelTransitionView: View {
     
-    @State private var progress = 0.5
+    @State private var progress = 0.0
     
     var body: some View {
         VStack {
@@ -14,14 +45,13 @@ struct SimpleMetalKernelTransitionView: View {
                     .padding(32)
             }
         }
-
     }
 }
 
 
 struct SimpleMetalVideoView: View {
     
-    @State private var progress = 0.5
+    @State private var progress = 0.0
     
     var body: some View {
         VStack {

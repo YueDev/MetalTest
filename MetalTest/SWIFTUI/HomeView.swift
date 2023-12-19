@@ -14,6 +14,14 @@ struct HomeView: View {
                 VStack {
                     VStack(spacing: 16) {
                         
+                        NavigationLink(destination: SimpleMetalFold3TransView()) {
+                            homeText("KernelFold3TransView")
+                        }
+                        
+                        NavigationLink(destination: SimpleMetalFoldTransView()) {
+                            homeText("KernelFoldTransView")
+                        }
+                        
                         NavigationLink(destination: SimpleMetalKernelTransitionView()) {
                             homeText("KernelTransitionView")
                         }
@@ -71,16 +79,16 @@ struct HomeView: View {
                         NavigationLink(destination: SimpleMSAAView()) {
                             homeText("MSAAView")
                         }
-
+                        
                     }
-
-
-
+                    
+                    
+                    
                 }.padding()
             }
         }
     }
-
+    
     func homeText(_ text: String) -> some View {
         Text(text)
             .foregroundColor(.white)

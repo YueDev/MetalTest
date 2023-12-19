@@ -36,6 +36,8 @@
 		8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3029E79573000C3F2C /* MetalRotateView.swift */; };
 		8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */; };
 		8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */; };
+		8AA01C7E2B316DB800E15771 /* MetalFoldTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */; };
+		8AA01C822B3194D500E15771 /* MetalFold3TransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */; };
@@ -76,6 +78,8 @@
 		8A896A3029E79573000C3F2C /* MetalRotateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateView.swift; sourceTree = "<group>"; };
 		8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateBlurView.swift; sourceTree = "<group>"; };
 		8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalZoomBlurView.swift; sourceTree = "<group>"; };
+		8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFoldTransView.swift; sourceTree = "<group>"; };
+		8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFold3TransView.swift; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalShapeView.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				1D4C96E72EA54463A52F886E /* Shader */,
+				8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */,
+				8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */,
 				8A0928332B298F1400FC8DD1 /* MetalVideoView.swift */,
 				8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */,
 				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
@@ -324,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA01C822B3194D500E15771 /* MetalFold3TransView.swift in Sources */,
 				8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */,
 				8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */,
 				8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */,
@@ -343,6 +350,7 @@
 				1D4C9294C5DE14808E2C9990 /* MetalMapView.swift in Sources */,
 				1D4C9DE17AA469D693B37C03 /* SimpleShaderRender.metal in Sources */,
 				8A0928342B298F1400FC8DD1 /* MetalVideoView.swift in Sources */,
+				8AA01C7E2B316DB800E15771 /* MetalFoldTransView.swift in Sources */,
 				8A4014B52A413E1F00387AE7 /* MetalMSAAView.swift in Sources */,
 				8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */,
 				1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */,
