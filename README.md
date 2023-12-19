@@ -9,3 +9,4 @@ Completed:
 5. Add some blur effect.
 6. Add MetalMSAAView: use MSAA for antialiasing.
 7. MetalVideoView: Use FrameTor to capture video frames.
+8. MetalKernelTransitionView: Use compute function to transition between two images.

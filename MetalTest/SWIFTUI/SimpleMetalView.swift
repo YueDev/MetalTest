@@ -1,5 +1,24 @@
 import SwiftUI
 
+
+
+struct SimpleMetalKernelTransitionView: View {
+    
+    @State private var progress = 0.5
+    
+    var body: some View {
+        VStack {
+            MetalKernelTransitionView(progress: progress)
+            HStack {
+                Slider(value: $progress, in: 0.0...1.0)
+                    .padding(32)
+            }
+        }
+
+    }
+}
+
+
 struct SimpleMetalVideoView: View {
     
     @State private var progress = 0.5

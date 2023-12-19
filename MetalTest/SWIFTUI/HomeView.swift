@@ -14,6 +14,10 @@ struct HomeView: View {
                 VStack {
                     VStack(spacing: 16) {
                         
+                        NavigationLink(destination: SimpleMetalKernelTransitionView()) {
+                            homeText("KernelTransitionView")
+                        }
+                        
                         NavigationLink(destination: SimpleMetalVideoView()) {
                             homeText("VideoView")
                         }

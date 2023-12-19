@@ -28,8 +28,11 @@
 		8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */; };
 		8A1C4BDE2950817500DA5884 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C74012946E282000A7ADB /* Preview Assets.xcassets */; };
 		8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */; };
+		8A338EF42B2FDF4D00807A98 /* MetalKernelTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */; };
+		8A338EF62B30255700807A98 /* Transition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A338EF52B30255700807A98 /* Transition.metal */; };
 		8A3C812E29E68316007B1ED6 /* MetalGaussianBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */; };
 		8A4014B52A413E1F00387AE7 /* MetalMSAAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */; };
+		8A43A8C12B30457A002748F0 /* TransitionEffect.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8A43A8C02B30457A002748F0 /* TransitionEffect.metal */; };
 		8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3029E79573000C3F2C /* MetalRotateView.swift */; };
 		8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */; };
 		8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */; };
@@ -65,8 +68,11 @@
 		8A0C74012946E282000A7ADB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A1C4BCF294ED14E00DA5884 /* ShapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeStyleView.swift; sourceTree = "<group>"; };
 		8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalMatrixView.swift; sourceTree = "<group>"; };
+		8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalKernelTransitionView.swift; sourceTree = "<group>"; };
+		8A338EF52B30255700807A98 /* Transition.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Transition.metal; sourceTree = "<group>"; };
 		8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGaussianBlurView.swift; sourceTree = "<group>"; };
 		8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalMSAAView.swift; sourceTree = "<group>"; };
+		8A43A8C02B30457A002748F0 /* TransitionEffect.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionEffect.metal; sourceTree = "<group>"; };
 		8A896A3029E79573000C3F2C /* MetalRotateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateView.swift; sourceTree = "<group>"; };
 		8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateBlurView.swift; sourceTree = "<group>"; };
 		8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalZoomBlurView.swift; sourceTree = "<group>"; };
@@ -112,6 +118,7 @@
 		1D4C96E72EA54463A52F886E /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				8A43A8C22B3045B5002748F0 /* Transition */,
 				1D4C928DA5B5C8DAA3CD991F /* SimpleShaderRender.metal */,
 				1D4C93DBDCCFD497F0C6F9C1 /* TextureRender.metal */,
 			);
@@ -174,7 +181,9 @@
 		8A1359CD2971345400C3257F /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				1D4C96E72EA54463A52F886E /* Shader */,
 				8A0928332B298F1400FC8DD1 /* MetalVideoView.swift */,
+				8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */,
 				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
 				8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */,
 				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
@@ -185,10 +194,18 @@
 				8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */,
 				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
 				8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */,
-				1D4C96E72EA54463A52F886E /* Shader */,
 				1D4C95488AC3E3A22275A042 /* Util */,
 			);
 			path = Metal;
+			sourceTree = "<group>";
+		};
+		8A43A8C22B3045B5002748F0 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				8A338EF52B30255700807A98 /* Transition.metal */,
+				8A43A8C02B30457A002748F0 /* TransitionEffect.metal */,
+			);
+			path = Transition;
 			sourceTree = "<group>";
 		};
 		8AC41C432949516600C5E98B /* SWIFTUI */ = {
@@ -312,8 +329,10 @@
 				8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */,
 				8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */,
 				8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */,
+				8A43A8C12B30457A002748F0 /* TransitionEffect.metal in Sources */,
 				8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */,
 				8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */,
+				8A338EF62B30255700807A98 /* Transition.metal in Sources */,
 				8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */,
 				8AF9B22C294AA7FF00B03C14 /* KirbyCharaView.swift in Sources */,
 				8A3C812E29E68316007B1ED6 /* MetalGaussianBlurView.swift in Sources */,
@@ -332,6 +351,7 @@
 				8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */,
 				8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */,
 				1D4C9B1A3DD69A47E26FEA24 /* UIImageExtension.swift in Sources */,
+				8A338EF42B2FDF4D00807A98 /* MetalKernelTransitionView.swift in Sources */,
 				8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */,
 				8ADCC85629EE700E00DFA0FC /* MetalCardView.swift in Sources */,
 				1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */,
