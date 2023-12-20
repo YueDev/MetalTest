@@ -12,11 +12,17 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack {
+                    
                     VStack(spacing: 16) {
                         
                         NavigationLink(destination: SimpleMetalFold3TransView()) {
                             homeText("KernelFold3TransView")
                         }
+                        
+                    }
+                    
+                    VStack(spacing: 16) {
+    
                         
                         NavigationLink(destination: SimpleMetalFoldTransView()) {
                             homeText("KernelFoldTransView")
@@ -60,6 +66,7 @@ struct HomeView: View {
                             homeText("ShapeView")
                         }
                     }
+                    
                     VStack(spacing: 16) {
                         NavigationLink(destination: SimpleZoomBlurView()) {
                             homeText("ZoomBlurView")
