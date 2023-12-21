@@ -14,11 +14,9 @@ struct HomeView: View {
                 VStack {
                     
                     VStack(spacing: 16) {
-                        
                         NavigationLink(destination: SimpleMetalFold3TransView()) {
                             homeText("KernelFold3TransView")
                         }
-                        
                     }
                     
                     VStack(spacing: 16) {
