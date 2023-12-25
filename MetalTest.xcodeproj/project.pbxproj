@@ -38,6 +38,10 @@
 		8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */; };
 		8AA01C7E2B316DB800E15771 /* MetalFoldTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */; };
 		8AA01C822B3194D500E15771 /* MetalFold3TransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */; };
+		8AA01C862B39310E00E15771 /* MetalVideo2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C852B39310E00E15771 /* MetalVideo2View.swift */; };
+		8AA01C892B3951AE00E15771 /* tran_10013.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C872B3951AE00E15771 /* tran_10013.mp4 */; };
+		8AA01C8A2B3951AE00E15771 /* tran_10015.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C882B3951AE00E15771 /* tran_10015.mp4 */; };
+		8AA01C8C2B39546200E15771 /* TransitionVideo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C8B2B39546200E15771 /* TransitionVideo.metal */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */; };
@@ -80,6 +84,10 @@
 		8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalZoomBlurView.swift; sourceTree = "<group>"; };
 		8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFoldTransView.swift; sourceTree = "<group>"; };
 		8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFold3TransView.swift; sourceTree = "<group>"; };
+		8AA01C852B39310E00E15771 /* MetalVideo2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalVideo2View.swift; sourceTree = "<group>"; };
+		8AA01C872B3951AE00E15771 /* tran_10013.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_10013.mp4; sourceTree = "<group>"; };
+		8AA01C882B3951AE00E15771 /* tran_10015.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_10015.mp4; sourceTree = "<group>"; };
+		8AA01C8B2B39546200E15771 /* TransitionVideo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionVideo.metal; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalShapeView.swift; sourceTree = "<group>"; };
@@ -140,6 +148,8 @@
 		8A0928312B298BF800FC8DD1 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				8AA01C872B3951AE00E15771 /* tran_10013.mp4 */,
+				8AA01C882B3951AE00E15771 /* tran_10015.mp4 */,
 				8A09283B2B2AACDB00FC8DD1 /* vertical.mp4 */,
 				8A0928372B2A8ED800FC8DD1 /* tesla_1.mp4 */,
 				8A0928392B2A91D200FC8DD1 /* small_bunny_1080p_60fps.mp4 */,
@@ -185,13 +195,11 @@
 		8A1359CD2971345400C3257F /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				1D4C96E72EA54463A52F886E /* Shader */,
-				8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */,
-				8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */,
-				8A0928332B298F1400FC8DD1 /* MetalVideoView.swift */,
-				8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */,
 				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
+				8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */,
+				8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */,
 				8A3C812D29E68316007B1ED6 /* MetalGaussianBlurView.swift */,
+				8A338EF32B2FDF4D00807A98 /* MetalKernelTransitionView.swift */,
 				1D4C9F75DF318974A77FD3E2 /* MetalMapView.swift */,
 				8A27A14F29A7109B00ADFB89 /* MetalMatrixView.swift */,
 				8A4014B42A413E1F00387AE7 /* MetalMSAAView.swift */,
@@ -199,7 +207,10 @@
 				8A896A3029E79573000C3F2C /* MetalRotateView.swift */,
 				8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */,
 				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
+				8A0928332B298F1400FC8DD1 /* MetalVideoView.swift */,
+				8AA01C852B39310E00E15771 /* MetalVideo2View.swift */,
 				8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */,
+				1D4C96E72EA54463A52F886E /* Shader */,
 				1D4C95488AC3E3A22275A042 /* Util */,
 			);
 			path = Metal;
@@ -209,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				8A338EF52B30255700807A98 /* Transition.metal */,
+				8AA01C8B2B39546200E15771 /* TransitionVideo.metal */,
 				8A43A8C02B30457A002748F0 /* TransitionEffect.metal */,
 			);
 			path = Transition;
@@ -315,9 +327,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA01C892B3951AE00E15771 /* tran_10013.mp4 in Resources */,
 				8A09283A2B2A91D200FC8DD1 /* small_bunny_1080p_60fps.mp4 in Resources */,
 				8A1C4BDE2950817500DA5884 /* Preview Assets.xcassets in Resources */,
 				8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */,
+				8AA01C8A2B3951AE00E15771 /* tran_10015.mp4 in Resources */,
 				8A0928382B2A8ED800FC8DD1 /* tesla_1.mp4 in Resources */,
 				8A09283C2B2AACDB00FC8DD1 /* vertical.mp4 in Resources */,
 			);
@@ -330,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA01C862B39310E00E15771 /* MetalVideo2View.swift in Sources */,
 				8AA01C822B3194D500E15771 /* MetalFold3TransView.swift in Sources */,
 				8A0C73FD2946E281000A7ADB /* HomeView.swift in Sources */,
 				8AF9B22A294AA7FF00B03C14 /* KirbyRepository.swift in Sources */,
@@ -362,6 +377,7 @@
 				8A338EF42B2FDF4D00807A98 /* MetalKernelTransitionView.swift in Sources */,
 				8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */,
 				8ADCC85629EE700E00DFA0FC /* MetalCardView.swift in Sources */,
+				8AA01C8C2B39546200E15771 /* TransitionVideo.metal in Sources */,
 				1D4C985315B98675EC42B5FC /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

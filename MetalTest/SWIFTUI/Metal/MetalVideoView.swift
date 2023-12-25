@@ -79,8 +79,7 @@ struct MetalVideoView: UIViewRepresentable {
             super.init()
             self.device = device
             readyForRender()
-            
-
+        
         }
         
         func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
