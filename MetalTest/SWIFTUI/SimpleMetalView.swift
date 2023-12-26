@@ -1,6 +1,37 @@
 import SwiftUI
 
 
+struct SimpleMetalVideoMixView: View {
+    
+    @State private var progress = 0.0
+    
+    var body: some View {
+        VStack {
+            MetalVideoMixView(progress: progress)
+            HStack {
+                Slider(value: $progress, in: 0.0...1.0)
+                    .padding(32)
+            }
+        }
+    }
+}
+
+struct SimpleMetalVideoScreenView: View {
+    
+    @State private var progress = 0.0
+    
+    var body: some View {
+        VStack {
+            MetalVideoScreenView(progress: progress)
+            HStack {
+                Slider(value: $progress, in: 0.0...1.0)
+                    .padding(32)
+            }
+        }
+    }
+}
+
+
 struct SimpleMetalVideo2View: View {
     
     @State private var progress = 0.0

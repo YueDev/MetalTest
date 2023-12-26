@@ -42,6 +42,12 @@
 		8AA01C892B3951AE00E15771 /* tran_10013.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C872B3951AE00E15771 /* tran_10013.mp4 */; };
 		8AA01C8A2B3951AE00E15771 /* tran_10015.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C882B3951AE00E15771 /* tran_10015.mp4 */; };
 		8AA01C8C2B39546200E15771 /* TransitionVideo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C8B2B39546200E15771 /* TransitionVideo.metal */; };
+		8AA01C912B3974FB00E15771 /* tran_video_mix_2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C8D2B3974FB00E15771 /* tran_video_mix_2.mp4 */; };
+		8AA01C922B3974FB00E15771 /* tran_video_screen_2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C8E2B3974FB00E15771 /* tran_video_screen_2.mp4 */; };
+		8AA01C932B3974FB00E15771 /* tran_video_screen_1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C8F2B3974FB00E15771 /* tran_video_screen_1.mp4 */; };
+		8AA01C942B3974FB00E15771 /* tran_video_mix_1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8AA01C902B3974FB00E15771 /* tran_video_mix_1.mp4 */; };
+		8AA01C962B39782500E15771 /* MetalVideoMixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C952B39782500E15771 /* MetalVideoMixView.swift */; };
+		8AA01C982B39782800E15771 /* MetalVideoScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C972B39782800E15771 /* MetalVideoScreenView.swift */; };
 		8AC41C462949521C00C5E98B /* WWDC22View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C452949521C00C5E98B /* WWDC22View.swift */; };
 		8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC41C4B294AA4D000C5E98B /* VLineShape.swift */; };
 		8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */; };
@@ -88,6 +94,12 @@
 		8AA01C872B3951AE00E15771 /* tran_10013.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_10013.mp4; sourceTree = "<group>"; };
 		8AA01C882B3951AE00E15771 /* tran_10015.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_10015.mp4; sourceTree = "<group>"; };
 		8AA01C8B2B39546200E15771 /* TransitionVideo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TransitionVideo.metal; sourceTree = "<group>"; };
+		8AA01C8D2B3974FB00E15771 /* tran_video_mix_2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_video_mix_2.mp4; sourceTree = "<group>"; };
+		8AA01C8E2B3974FB00E15771 /* tran_video_screen_2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_video_screen_2.mp4; sourceTree = "<group>"; };
+		8AA01C8F2B3974FB00E15771 /* tran_video_screen_1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_video_screen_1.mp4; sourceTree = "<group>"; };
+		8AA01C902B3974FB00E15771 /* tran_video_mix_1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tran_video_mix_1.mp4; sourceTree = "<group>"; };
+		8AA01C952B39782500E15771 /* MetalVideoMixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalVideoMixView.swift; sourceTree = "<group>"; };
+		8AA01C972B39782800E15771 /* MetalVideoScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalVideoScreenView.swift; sourceTree = "<group>"; };
 		8AC41C452949521C00C5E98B /* WWDC22View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWDC22View.swift; sourceTree = "<group>"; };
 		8AC41C4B294AA4D000C5E98B /* VLineShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLineShape.swift; sourceTree = "<group>"; };
 		8AC62C4629CC796D00D9FB9D /* MetalShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalShapeView.swift; sourceTree = "<group>"; };
@@ -153,6 +165,10 @@
 				8A09283B2B2AACDB00FC8DD1 /* vertical.mp4 */,
 				8A0928372B2A8ED800FC8DD1 /* tesla_1.mp4 */,
 				8A0928392B2A91D200FC8DD1 /* small_bunny_1080p_60fps.mp4 */,
+				8AA01C902B3974FB00E15771 /* tran_video_mix_1.mp4 */,
+				8AA01C8D2B3974FB00E15771 /* tran_video_mix_2.mp4 */,
+				8AA01C8F2B3974FB00E15771 /* tran_video_screen_1.mp4 */,
+				8AA01C8E2B3974FB00E15771 /* tran_video_screen_2.mp4 */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -209,6 +225,8 @@
 				1D4C9E6A97DEB7B20756D244 /* MetalTextureView.swift */,
 				8A0928332B298F1400FC8DD1 /* MetalVideoView.swift */,
 				8AA01C852B39310E00E15771 /* MetalVideo2View.swift */,
+				8AA01C952B39782500E15771 /* MetalVideoMixView.swift */,
+				8AA01C972B39782800E15771 /* MetalVideoScreenView.swift */,
 				8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */,
 				1D4C96E72EA54463A52F886E /* Shader */,
 				1D4C95488AC3E3A22275A042 /* Util */,
@@ -327,10 +345,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA01C932B3974FB00E15771 /* tran_video_screen_1.mp4 in Resources */,
 				8AA01C892B3951AE00E15771 /* tran_10013.mp4 in Resources */,
 				8A09283A2B2A91D200FC8DD1 /* small_bunny_1080p_60fps.mp4 in Resources */,
+				8AA01C922B3974FB00E15771 /* tran_video_screen_2.mp4 in Resources */,
 				8A1C4BDE2950817500DA5884 /* Preview Assets.xcassets in Resources */,
+				8AA01C942B3974FB00E15771 /* tran_video_mix_1.mp4 in Resources */,
 				8A0C73FF2946E282000A7ADB /* Assets.xcassets in Resources */,
+				8AA01C912B3974FB00E15771 /* tran_video_mix_2.mp4 in Resources */,
 				8AA01C8A2B3951AE00E15771 /* tran_10015.mp4 in Resources */,
 				8A0928382B2A8ED800FC8DD1 /* tesla_1.mp4 in Resources */,
 				8A09283C2B2AACDB00FC8DD1 /* vertical.mp4 in Resources */,
@@ -351,6 +373,7 @@
 				8AF9B22B294AA7FF00B03C14 /* KirbyView.swift in Sources */,
 				8A0C73FB2946E281000A7ADB /* MetalTestApp.swift in Sources */,
 				8A1C4BD0294ED14E00DA5884 /* ShapeStyleView.swift in Sources */,
+				8AA01C962B39782500E15771 /* MetalVideoMixView.swift in Sources */,
 				8A43A8C12B30457A002748F0 /* TransitionEffect.metal in Sources */,
 				8AC41C4F294AA4D000C5E98B /* VLineShape.swift in Sources */,
 				8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */,
@@ -370,6 +393,7 @@
 				8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */,
 				1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */,
 				1D4C922E12A3224C00B138F1 /* TextureRender.metal in Sources */,
+				8AA01C982B39782800E15771 /* MetalVideoScreenView.swift in Sources */,
 				1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */,
 				8AC62C4729CC796D00D9FB9D /* MetalShapeView.swift in Sources */,
 				8A27A15029A7109B00ADFB89 /* MetalMatrixView.swift in Sources */,

@@ -74,4 +74,76 @@ namespace TransitionVideo {
      }
     
     
+    //mix 遮照类的视频
+    kernel void transition_video_mix
+    (
+     texture2d<float, access::sample> inTexture1 [[texture(0)]],
+     texture2d<float, access::sample> inTexture2 [[texture(1)]],
+     texture2d<float, access::write> outTexture [[texture(2)]],
+     texture2d<float, access::sample> inTexture3 [[texture(3)]],
+     sampler sampler [[ sampler(0) ]],
+     constant TransitionPara &tranPara [[buffer(0)]],
+     constant float& ratio [[ buffer(1) ]],
+     uint2 grid [[thread_position_in_grid]]
+     ) {
+         float progress = tranPara.percent;
+         float2 textureCoordinate = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
+         
+         float4 color1 = getFromColor(textureCoordinate, inTexture1, sampler);
+         float4 color2 = getToColor(textureCoordinate, inTexture2, sampler);
+         
+         float2 pos = textureCoordinate;
+         
+         float ratio2= float(inTexture3.get_width()) / float(inTexture3.get_height());
+         
+         if(ratio>ratio2){
+             pos.y=0.5+(pos.y-0.5)/ratio*ratio2;
+         }else{
+             pos.x=0.5+(pos.x-0.5)*ratio/ratio2;
+         }
+                  
+         
+         float4 colormix = inTexture3.sample(sampler, pos);
+         
+         float4 out = mix(color1, color2, colormix);
+         
+         outTexture.write(out, grid);
+     }
+    
+    
+    //screen 光效类的
+    kernel void transition_video_screen
+    (
+     texture2d<float, access::sample> inTexture1 [[texture(0)]],
+     texture2d<float, access::sample> inTexture2 [[texture(1)]],
+     texture2d<float, access::write> outTexture [[texture(2)]],
+     texture2d<float, access::sample> inTexture3 [[texture(3)]],
+     sampler sampler [[ sampler(0) ]],
+     constant TransitionPara &tranPara [[buffer(0)]],
+     constant float& ratio [[ buffer(1) ]],
+     uint2 grid [[thread_position_in_grid]]
+     ) {
+         float progress = tranPara.percent;
+         float2 textureCoordinate = float2(grid) / float2(outTexture.get_width(), outTexture.get_height());
+         
+         float4 color = progress > 0.5 ?  getToColor(textureCoordinate, inTexture2, sampler) : getFromColor(textureCoordinate, inTexture1, sampler);
+         
+         
+         float2 pos = textureCoordinate;
+         
+         float ratio2= float(inTexture3.get_width()) / float(inTexture3.get_height());
+         
+         if(ratio>ratio2){
+             pos.y=0.5+(pos.y-0.5)/ratio*ratio2;
+         }else{
+             pos.x=0.5+(pos.x-0.5)*ratio/ratio2;
+         }
+         
+         float4 screencolor = inTexture3.sample(sampler, pos);
+         
+         float4 out = getscreencolor(color, screencolor);
+         
+         outTexture.write(out, grid);
+     }
+    
 }
