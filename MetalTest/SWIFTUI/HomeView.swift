@@ -13,7 +13,6 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     VStack(spacing: 16) {
-                        
                         NavigationLink(destination: SimpleMetalVideoMixView()) {
                             homeText("VideoMixView")
                         }
