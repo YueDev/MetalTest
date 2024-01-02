@@ -36,6 +36,7 @@
 		8A896A3129E79573000C3F2C /* MetalRotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3029E79573000C3F2C /* MetalRotateView.swift */; };
 		8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */; };
 		8A89716C29E52D3F009B0C9E /* MetalZoomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */; };
+		8A89F2ED2B44007600B30AA5 /* MetalKernelEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A89F2EC2B44007600B30AA5 /* MetalKernelEffectView.swift */; };
 		8AA01C7E2B316DB800E15771 /* MetalFoldTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */; };
 		8AA01C822B3194D500E15771 /* MetalFold3TransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */; };
 		8AA01C862B39310E00E15771 /* MetalVideo2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA01C852B39310E00E15771 /* MetalVideo2View.swift */; };
@@ -88,6 +89,7 @@
 		8A896A3029E79573000C3F2C /* MetalRotateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateView.swift; sourceTree = "<group>"; };
 		8A896A3229E7A3EF000C3F2C /* MetalRotateBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRotateBlurView.swift; sourceTree = "<group>"; };
 		8A89716B29E52D3E009B0C9E /* MetalZoomBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalZoomBlurView.swift; sourceTree = "<group>"; };
+		8A89F2EC2B44007600B30AA5 /* MetalKernelEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalKernelEffectView.swift; sourceTree = "<group>"; };
 		8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFoldTransView.swift; sourceTree = "<group>"; };
 		8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFold3TransView.swift; sourceTree = "<group>"; };
 		8AA01C852B39310E00E15771 /* MetalVideo2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalVideo2View.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		8A1359CD2971345400C3257F /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				8A89F2EC2B44007600B30AA5 /* MetalKernelEffectView.swift */,
 				8ADCC85529EE700E00DFA0FC /* MetalCardView.swift */,
 				8AA01C812B3194D500E15771 /* MetalFold3TransView.swift */,
 				8AA01C7D2B316DB800E15771 /* MetalFoldTransView.swift */,
@@ -392,6 +395,7 @@
 				8A4014B52A413E1F00387AE7 /* MetalMSAAView.swift in Sources */,
 				8A896A3329E7A3EF000C3F2C /* MetalRotateBlurView.swift in Sources */,
 				1D4C9741AF01D714DAC06499 /* MetalTextureView.swift in Sources */,
+				8A89F2ED2B44007600B30AA5 /* MetalKernelEffectView.swift in Sources */,
 				1D4C922E12A3224C00B138F1 /* TextureRender.metal in Sources */,
 				8AA01C982B39782800E15771 /* MetalVideoScreenView.swift in Sources */,
 				1D4C9703A4407D2EB06D5549 /* TextureManager.swift in Sources */,
