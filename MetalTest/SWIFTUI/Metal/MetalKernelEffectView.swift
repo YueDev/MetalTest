@@ -2,7 +2,7 @@
 //  MetalKernelEffectView.swift
 //  MetalTest
 //
-//  metal计算函数处理两个纹理的专场效果，一个项目的老模块用到的。
+//  metal计算函数处理纹理加特效效果，一个项目的老模块用到的。
 //  先利用计算函数将纹理加上转场计算到一个纹理上，然后在把这个纹理渲染到mtkview上
 //
 
@@ -51,8 +51,7 @@ struct MetalKernelEffectView: UIViewRepresentable {
         
         // 纹理
         private var samplerState: MTLSamplerState? = nil
-        private var texture1: MTLTexture? = nil
-        private var texture2: MTLTexture? = nil
+        private var texture: MTLTexture? = nil
         private var renderTexure: MTLTexture? = nil
 
         // 转场进度
@@ -125,14 +124,12 @@ struct MetalKernelEffectView: UIViewRepresentable {
             commandQueue = device.makeCommandQueue()
             
             // 计算的输入纹理
-            let textureName1 = TextureManager.getPeopleTextureName()
-            texture1 = TextureManager.defaultTextureByAssets(device: device, name: textureName1)
-            let textureName2 = TextureManager.getPeopleTextureName()
-            texture2 = TextureManager.defaultTextureByAssets(device: device, name: textureName2)
+            let textureName = TextureManager.getPeopleTextureName()
+            texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
             
             // 计算的输出纹理，即渲染的纹理
-            if let texture1 = texture1 {
-                renderTexure = TextureManager.newTextureForKernel(device: device, width: texture1.width, height: texture1.height)
+            if let texture = texture {
+                renderTexure = TextureManager.newTextureForKernel(device: device, width: texture.width, height: texture.height)
             }
             
             samplerState = TextureManager.defaultSamplerState(device: device)
@@ -203,8 +200,7 @@ struct MetalKernelEffectView: UIViewRepresentable {
         private func compute() {
             
             guard
-                let texture1 = texture1,
-                let texture2 = texture2,
+                let texture = texture,
                 let renderTexure = renderTexure,
                 let pipelineState = computePipelineState,
                 let commandBuffer = commandQueue?.makeCommandBuffer(),
@@ -232,9 +228,8 @@ struct MetalKernelEffectView: UIViewRepresentable {
 
             
             // 设置纹理
-            commandEncoder.setTexture(texture1, index: 0)
-            commandEncoder.setTexture(texture2, index: 1)
-            commandEncoder.setTexture(renderTexure, index: 2)
+            commandEncoder.setTexture(texture, index: 0)
+            commandEncoder.setTexture(renderTexure, index: 1)
             
             commandEncoder.setSamplerState(samplerState, index: 0)
             
