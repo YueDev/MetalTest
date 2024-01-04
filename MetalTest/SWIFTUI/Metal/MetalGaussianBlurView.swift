@@ -28,7 +28,7 @@ struct MetalGaussianBlurView: UIViewRepresentable {
         mtkView.backgroundColor = .red
         mtkView.enableSetNeedsDisplay = true
         //msaa later
-//        mtkView.sampleCount = 4
+        //        mtkView.sampleCount = 4
         mtkView.drawableSize = mtkView.frame.size
         return mtkView
     }
@@ -62,7 +62,7 @@ struct MetalGaussianBlurView: UIViewRepresentable {
         
         // 渲染的纹理
         private var renderTexture: MTLTexture? = nil
-
+        
         private var blurSize: Float = 0.0
         
         // 渲染
@@ -143,7 +143,7 @@ struct MetalGaussianBlurView: UIViewRepresentable {
             // 把创建好的vertexDescriptor 传给pipeLineDescriptor
             pipeLineDescriptor.vertexDescriptor = vertexDescriptor
             //msaa采样数
-//            pipeLineDescriptor.rasterSampleCount = 4
+            //pipeLineDescriptor.rasterSampleCount = 4
             //生成 pipeLineState
             pipeLineState = try? device.makeRenderPipelineState(descriptor: pipeLineDescriptor)
             
@@ -154,7 +154,7 @@ struct MetalGaussianBlurView: UIViewRepresentable {
             let textureName = TextureManager.getPeopleTextureName()
             texture = TextureManager.defaultTextureByAssets(device: device, name: textureName)
             samplerState = TextureManager.defaultSamplerState(device: device)
-
+            
             modelMatrix = .init(1.0)
             modelMatrix = modelMatrix.scaledBy(x: 0.8, y: 0.8, z: 1.0)
         }
