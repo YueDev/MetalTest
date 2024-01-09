@@ -16,7 +16,7 @@ struct HomeView: View {
                         NavigationLink(destination: SimpleMetalVideoMixView()) {
                             homeText("VideoMixView")
                         }
-                        
+
                         NavigationLink(destination: SimpleMetalVideoScreenView()) {
                             homeText("VideoScreenView")
                         }
