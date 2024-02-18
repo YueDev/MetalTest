@@ -80,15 +80,21 @@ struct MetalFold3TransView: UIViewRepresentable {
             guard size.width > 0 && size.height > 0 else {
                 return
             }
-            
             let scale = Float(size.width) / Float(size.height)
-            let fovy:Float = 45.0
+
+            
+            //以下的vp的设置能保证图片的高充满视口，宽度自己结合图片的比例缩放下即可，这里直接1:1偷懒了
+            
+            //正常用45比较合适，符合人眼的效果 这里设计给了个27.91度
+            let fovy:Float = 27.91
+            
             let f = 1.0 / tan(fovy * (Float)(Double.pi / 360));
+           
             viewMatrix = matrix_float4x4.init(eyeX: 0, eyeY: 0, eyeZ: f,
                                               centerX: 0, centerY: 0, centerZ: 0.0,
                                               upX: 0, upY: 1, upZ: 0)
             //projecttion
-            projectionMatrix = matrix_float4x4.init(fovy: fovy, aspect: scale, zNear: 0.0, zFar: 100.0)
+            projectionMatrix = matrix_float4x4.init(fovy: fovy, aspect: scale, zNear: 0.1, zFar: 100.0)
             
             modelMatrix = .init(1.0)
             
